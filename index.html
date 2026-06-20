@@ -13,13 +13,24 @@
     /* --- Sistema de Diseño Suizo Minimalista --- */
     :root {
       --bg-light: #ffffff;
-      --bg-dark: #000000;
       --text-main: #000000;
       --text-muted: #71717a;
       --text-light: #a1a1aa;
       --border: rgba(0, 0, 0, 0.08);
+      --header-bg: rgba(255, 255, 255, 0.9);
+      --bg-letter-color: rgba(0, 0, 0, 0.02);
       --transition-smooth: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
       --transition-slow: all 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    html.dark-theme {
+      --bg-light: #000000;
+      --text-main: #ffffff;
+      --text-muted: #a1a1aa;
+      --text-light: #71717a;
+      --border: rgba(255, 255, 255, 0.12);
+      --header-bg: rgba(0, 0, 0, 0.9);
+      --bg-letter-color: rgba(255, 255, 255, 0.02);
     }
 
     * {
@@ -32,6 +43,7 @@
       scroll-behavior: smooth;
       scroll-snap-type: y mandatory;
       background-color: var(--bg-light);
+      transition: background-color 0.8s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     body {
@@ -40,6 +52,8 @@
       overflow-x: hidden;
       line-height: 1.6;
       background-color: var(--bg-light);
+      transition: background-color 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+                  color 0.8s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     h1, h2, h3, .story-title, .story-quote {
@@ -83,7 +97,7 @@
 
     header.scrolled {
       padding: 24px 64px;
-      background-color: rgba(255, 255, 255, 0.9);
+      background-color: var(--header-bg);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border);
@@ -217,6 +231,20 @@
     }
 
     nav a:hover, nav a.active {
+      color: var(--text-main);
+    }
+
+    .theme-toggle {
+      text-decoration: none;
+      color: var(--text-muted);
+      font-weight: 600;
+      font-size: 0.9rem;
+      text-transform: lowercase;
+      transition: var(--transition-smooth);
+      cursor: pointer;
+    }
+
+    .theme-toggle:hover {
       color: var(--text-main);
     }
 
@@ -434,12 +462,13 @@
       position: absolute;
       font-size: 28rem;
       font-weight: 800;
-      color: rgba(0, 0, 0, 0.02);
+      color: var(--bg-letter-color);
       user-select: none;
       z-index: -1;
       line-height: 1;
       font-family: 'Geist', sans-serif;
       text-transform: lowercase; /* Forzar minúsculas */
+      transition: color 0.8s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     .visual-svg {
@@ -451,6 +480,11 @@
       stroke-width: 1px;
       fill: none;
       overflow: visible;
+      transition: stroke 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .visual-svg line {
+      transition: stroke 0.8s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     /* --- Animaciones de Gráficos SVGs al Intersecar --- */
@@ -459,7 +493,8 @@
     #quantitative .visual-svg path {
       stroke-dasharray: 600;
       stroke-dashoffset: 600;
-      transition: stroke-dashoffset 3.0s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      transition: stroke-dashoffset 3.0s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                  stroke 0.8s cubic-bezier(0.16, 1, 0.3, 1);
     }
     #quantitative.active .visual-svg path {
       stroke-dashoffset: 0;
@@ -468,7 +503,8 @@
     #trading .visual-svg path {
       stroke-dasharray: 1200;
       stroke-dashoffset: 1200;
-      transition: stroke-dashoffset 3.75s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      transition: stroke-dashoffset 3.75s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                  stroke 0.8s cubic-bezier(0.16, 1, 0.3, 1);
     }
     #trading.active .visual-svg path {
       stroke-dashoffset: 0;
@@ -477,7 +513,8 @@
     #research .visual-svg path {
       stroke-dasharray: 800;
       stroke-dashoffset: -800; /* Dibuja en reversa (del centro hacia afuera) */
-      transition: stroke-dashoffset 3.75s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      transition: stroke-dashoffset 3.75s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                  stroke 0.8s cubic-bezier(0.16, 1, 0.3, 1);
     }
     #research.active .visual-svg path {
       stroke-dashoffset: 0;
@@ -488,7 +525,8 @@
       opacity: 0;
       transform: scale(0.9);
       transform-origin: 169px 39px; /* Centro aproximado de la espiral */
-      transition: opacity 2.25s ease, transform 2.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      transition: opacity 2.25s ease, transform 2.25s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                  stroke 0.8s cubic-bezier(0.16, 1, 0.3, 1);
       transition-delay: 0.75s;
     }
     #research.active .visual-svg rect {
@@ -523,7 +561,7 @@
       height: 1px;
       background-color: var(--text-main);
       opacity: 0.25;
-      transition: width 0.4s ease, opacity 0.4s ease;
+      transition: width 0.4s ease, opacity 0.4s ease, background-color 0.8s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     .progress-dot-wrapper:hover .progress-dash {
@@ -624,8 +662,8 @@
         transition: all 2.0s cubic-bezier(0.8, 0, 0.9, 0.1);
       }
 
-      /* Ocultar links de secciones secundarias del menú para evitar colapso horizontal, mostrando solo "login" */
-      nav ul li:not(:last-child) {
+      /* Ocultar links de secciones secundarias del menú para evitar colapso horizontal, mostrando solo "login" y el selector de tema */
+      .nav-item-hide {
         display: none;
       }
       
@@ -732,10 +770,11 @@
     
     <nav>
       <ul>
-        <li><a href="#hero" class="nav-link active" data-target="hero">inicio</a></li>
-        <li><a href="#quantitative" class="nav-link" data-target="quantitative">quantitative</a></li>
-        <li><a href="#research" class="nav-link" data-target="research">research</a></li>
-        <li><a href="#trading" class="nav-link" data-target="trading">trading</a></li>
+        <li class="nav-item-hide"><a href="#hero" class="nav-link active" data-target="hero">inicio</a></li>
+        <li class="nav-item-hide"><a href="#quantitative" class="nav-link" data-target="quantitative">quantitative</a></li>
+        <li class="nav-item-hide"><a href="#research" class="nav-link" data-target="research">research</a></li>
+        <li class="nav-item-hide"><a href="#trading" class="nav-link" data-target="trading">trading</a></li>
+        <li><a href="#" id="theme-toggle" class="theme-toggle">dark</a></li>
         <li><a href="#" class="btn-cta">login</a></li>
       </ul>
     </nav>
@@ -872,6 +911,26 @@
     const sections = document.querySelectorAll('.hero, .story-section');
     const dotWrappers = document.querySelectorAll('.progress-dot-wrapper');
     const navLinks = document.querySelectorAll('nav a.nav-link');
+    const themeToggle = document.getElementById('theme-toggle');
+
+    // --- Control de Dark Mode ---
+    const savedTheme = localStorage.getItem('theme');
+    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    
+    if (savedTheme === 'dark' || (!savedTheme && systemPrefersDark)) {
+      document.documentElement.classList.add('dark-theme');
+      themeToggle.textContent = 'light';
+    } else {
+      document.documentElement.classList.remove('dark-theme');
+      themeToggle.textContent = 'dark';
+    }
+
+    themeToggle.addEventListener('click', (e) => {
+      e.preventDefault();
+      const isDark = document.documentElement.classList.toggle('dark-theme');
+      themeToggle.textContent = isDark ? 'light' : 'dark';
+      localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    });
 
     // --- Control de Scroll & Clases de Sticky Header ---
     window.addEventListener('scroll', () => {
