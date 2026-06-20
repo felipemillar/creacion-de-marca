@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QRT: Typography Sandbox (50 Opciones de Letra para Rebranding)</title>
+  
+  <!-- Importaciones de Fuentes Web (Google Fonts y Fontshare) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@500;700&family=Chivo:wght@500;700&family=DM+Sans:wght@500;700&family=Fira+Code:wght@500&family=Geist:wght@500;700&family=Geist+Mono:wght@500&family=IBM+Plex+Mono:wght@500&family=IBM+Plex+Sans:wght@500;700&family=Inconsolata:wght@500&family=Inter:wght@500;700&family=JetBrains+Mono:wght@500&family=Jost:wght@500;700&family=Krona+One&family=Lexend:wght@500;700&family=Manrope:wght@500;700&family=Montserrat:wght@500;700&family=Outfit:wght@500;700&family=Plus+Jakarta+Sans:wght@500;700&family=Public+Sans:wght@500;700&family=Roboto+Mono:wght@500&family=Roboto:wght@500;700&family=Schibsted+Grotesk:wght@500;700&family=Sora:wght@500;700&family=Space+Grotesk:wght@500;700&family=Space+Mono:wght@500&family=Spline+Sans:wght@500;700&family=Syncopate:wght@700&family=Syne:wght@500;700;800&display=swap" rel="stylesheet">
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@500,700&f[]=clash-display@500,700&f[]=cabinet-grotesk@500,700&f[]=general-sans@500,700&display=swap" rel="stylesheet">
+
+  <style>
+    /* --- Sistema de Diseño (Monocromático de Alta Gama) --- */
+    :root {
+      --bg-main: #ffffff;
+      --bg-card: #f9f9fb;
+      --text-main: #000000;
+      --text-muted: #71717a;
+      --border: rgba(0, 0, 0, 0.08);
+      --accent: #000000;
+      --transition-fast: all 0.2s ease;
+      --transition-smooth: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+
+    body.dark-mode {
+      --bg-main: #09090b;
+      --bg-card: #121215;
+      --text-main: #ffffff;
+      --text-muted: #a1a1aa;
+      --border: rgba(255, 255, 255, 0.08);
+      --accent: #ffffff;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      font-family: 'Inter', sans-serif;
+      transition: var(--transition-fast);
+      padding-bottom: 120px;
+    }
+
+    /* --- Cabecera --- */
+    header {
+      padding: 40px 64px;
+      border-bottom: 1px solid var(--border);
+      background: var(--bg-main);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      transition: var(--transition-fast);
+    }
+
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+    }
+
+    h1 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+    }
+
+    .theme-toggle {
+      background: none;
+      border: 1px solid var(--border);
+      color: var(--text-main);
+      padding: 8px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.85rem;
+      font-family: 'Inter', sans-serif;
+      transition: var(--transition-fast);
+    }
+
+    .theme-toggle:hover {
+      background: var(--bg-card);
+    }
+
+    /* --- Barra de Controles de Prefiltro --- */
+    .controls-bar {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: center;
+    }
+
+    .filter-buttons {
+      display: flex;
+      gap: 8px;
+    }
+
+    .btn-filter {
+      background: var(--bg-main);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 0.85rem;
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+      transition: var(--transition-fast);
+    }
+
+    .btn-filter.active, .btn-filter:hover {
+      border-color: var(--text-main);
+      color: var(--text-main);
+    }
+
+    .view-controls {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .slider-container {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    input[type="range"] {
+      cursor: pointer;
+      accent-color: var(--accent);
+    }
+
+    /* Toggle del Estado del Logo (Expansión) */
+    .toggle-state-btn {
+      background: var(--text-main);
+      color: var(--bg-main);
+      border: 1px solid var(--text-main);
+      padding: 10px 20px;
+      border-radius: 6px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+      transition: var(--transition-fast);
+    }
+
+    /* --- Contenedor de la Cuadrícula de Fuentes --- */
+    .sandbox-container {
+      max-width: 1400px;
+      margin: 40px auto 0 auto;
+      padding: 0 64px;
+    }
+
+    .grid-specimen {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 32px;
+    }
+
+    @media (max-width: 900px) {
+      .grid-specimen {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Tarjeta de Especímen de Fuente */
+    .font-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 32px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 280px;
+      transition: var(--transition-fast);
+    }
+
+    .font-card:hover {
+      box-shadow: 0 10px 30px rgba(0,0,0,0.02);
+      border-color: var(--text-main);
+    }
+
+    .font-info {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 24px;
+    }
+
+    .font-name {
+      font-weight: 700;
+      font-size: 1rem;
+      letter-spacing: -0.01em;
+    }
+
+    .font-category {
+      background: rgba(0,0,0,0.05);
+      color: var(--text-main);
+      font-size: 0.65rem;
+      font-weight: 700;
+      padding: 4px 8px;
+      border-radius: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    body.dark-mode .font-category {
+      background: rgba(255,255,255,0.08);
+    }
+
+    /* Representación de Logo Previsualizada */
+    .logo-preview-box {
+      margin: 16px 0;
+      min-height: 80px;
+      display: flex;
+      align-items: center;
+      transition: var(--transition-smooth);
+    }
+
+    .logo-rendered {
+      font-size: 2.2rem;
+      font-weight: 500;
+      letter-spacing: -0.04em;
+      white-space: normal;
+      word-break: break-all;
+      transition: var(--transition-smooth);
+    }
+
+    /* Exponente del logo */
+    .logo-rendered .exponent {
+      font-size: 0.75em;
+      position: relative;
+      top: -0.3em;
+      margin-left: 2px;
+      font-weight: 500;
+      display: inline-block;
+    }
+
+    /* Detalles y código */
+    .font-action-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 24px;
+      border-top: 1px solid var(--border);
+      padding-top: 16px;
+    }
+
+    .font-description {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      max-width: 70%;
+    }
+
+    .btn-copy-css {
+      background: none;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      padding: 6px 12px;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+      transition: var(--transition-fast);
+    }
+
+    .btn-copy-css:hover {
+      border-color: var(--text-main);
+      color: var(--text-main);
+    }
+
+    /* Buscador */
+    .search-input {
+      background: var(--bg-main);
+      border: 1px solid var(--border);
+      color: var(--text-main);
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      font-family: 'Inter', sans-serif;
+      width: 240px;
+      transition: var(--transition-fast);
+    }
+
+    .search-input:focus {
+      outline: none;
+      border-color: var(--text-main);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Cabecera de Control General -->
+  <header>
+    <div class="header-top">
+      <div>
+        <h1>QRT: Typography Sandbox</h1>
+        <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 4px;">Interactúa y compara 50 tipografías preseleccionadas para el rebranding de QRT.</p>
+      </div>
+      <button class="theme-toggle" onclick="toggleTheme()">Modo Oscuro</button>
+    </div>
+
+    <div class="controls-bar">
+      <!-- Filtro por Categorías -->
+      <div class="filter-buttons">
+        <button class="btn-filter active" onclick="filterCategory('selected')">Top 10 Recomendadas ⭐</button>
+        <button class="btn-filter" onclick="filterCategory('all')">Todas (50)</button>
+        <button class="btn-filter" onclick="filterCategory('mono')">Terminal & Mono</button>
+        <button class="btn-filter" onclick="filterCategory('swiss')">Rigor Suizo</button>
+        <button class="btn-filter" onclick="filterCategory('geometric')">Geométrica Afilada</button>
+        <button class="btn-filter" onclick="filterCategory('industrial')">Industrial</button>
+        <button class="btn-filter" onclick="filterCategory('display')">Display / Vanguardia</button>
+      </div>
+
+      <!-- Buscador y Escalador de Fuente -->
+      <div class="view-controls">
+        <input type="text" class="search-input" placeholder="Buscar tipografía..." oninput="searchFont(this.value)">
+        
+        <div class="slider-container">
+          <span>Tamaño</span>
+          <input type="range" min="1.5" max="3.5" step="0.1" value="2.2" oninput="scaleFontSize(this.value)">
+        </div>
+
+        <button class="toggle-state-btn" onclick="toggleLogoState()">Expandir / Colapsar Todo</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Sandbox Grid -->
+  <div class="sandbox-container">
+    <div class="grid-specimen" id="font-grid">
+      <!-- Las tarjetas se generan dinámicamente con JavaScript -->
+    </div>
+  </div>
+
+  <script>
+    // Configuración de los 50 Fuentes
+    const fontsData = [
+      // CATEGORIA 1: Mono & Terminal
+      { name: "Space Mono", stack: "'Space Mono', monospace", cat: "mono", desc: "Retro-futurista de la NASA. Ángulos muy afilados." },
+      { name: "Fira Code", stack: "'Fira Code', monospace", cat: "mono", desc: "Favorita de programadores con ligaduras y cortes técnicos." },
+      { name: "JetBrains Mono", stack: "'JetBrains Mono', monospace", cat: "mono", desc: "Estructurada, rectilínea y de terminaciones limpias." },
+      { name: "IBM Plex Mono", stack: "'IBM Plex Mono', monospace", cat: "mono", desc: "Tributo a la ingeniería con un balance mecánico perfecto.", selected: true },
+      { name: "Roboto Mono", stack: "'Roboto Mono', monospace", cat: "mono", desc: "Estructura en cuadrícula muy rígida y estable." },
+      { name: "Space Grotesk", stack: "'Space Grotesk', sans-serif", cat: "mono", desc: "Look terminal con proporciones optimizadas para logos.", selected: true },
+      { name: "Source Code Pro", stack: "'Source Code Pro', monospace", cat: "mono", desc: "Diseño técnico estable con remates de terminal rectos." },
+      { name: "Inconsolata", stack: "'Inconsolata', monospace", cat: "mono", desc: "Compacta, matemática, de rasgos humanistas limpios." },
+      { name: "Intel One Mono", stack: "'Intel One Mono', monospace, Courier", cat: "mono", desc: "Foco en claridad absoluta. Muy fría y geométrica." },
+      { name: "Input Mono", stack: "'Input Mono', monospace, Courier", cat: "mono", desc: "Look de ciberseguridad militar sumamente profesional." },
+      { name: "Geist Mono", stack: "'Geist Mono', monospace", cat: "mono", desc: "La versión monoespaciada de Geist. La consola de ingeniería definitiva.", selected: true },
+
+      // CATEGORIA 2: Rigor Suizo
+      { name: "Inter", stack: "'Inter', sans-serif", cat: "swiss", desc: "Limpia, neutra, calibrada para interfaces institucionales." },
+      { name: "Helvetica Now", stack: "'Helvetica Now', 'Helvetica Neue', Helvetica, sans-serif", cat: "swiss", desc: "Evolución del clásico suizo de neutralidad y rigor absoluto." },
+      { name: "SF Pro", stack: "-apple-system, BlinkMacSystemFont, sans-serif", cat: "swiss", desc: "La fuente del sistema macOS. Seguridad y robustez visual." },
+      { name: "Akkurat", stack: "'Akkurat', 'Inter', sans-serif", cat: "swiss", desc: "Ícono del minimalismo suizo. Estructurada y limpia." },
+      { name: "Unica 77", stack: "'Unica 77', 'Inter', sans-serif", cat: "swiss", desc: "Rediseño de la mítica Haas Unica. Rectilínea e implacable.", selected: true },
+      { name: "Monument Grotesk", stack: "'Monument Grotesk', 'Inter', sans-serif", cat: "swiss", desc: "Grotesca cruda contemporánea. Rustica, sólida y potente.", selected: true },
+      { name: "National 2", stack: "'National 2', 'Inter', sans-serif", cat: "swiss", desc: "Rasgos grotescos históricos con un toque corporativo formal." },
+      { name: "Acumin Pro", stack: "'Acumin Pro', 'Inter', sans-serif", cat: "swiss", desc: "Estructura geométrica neutra óptima en versión condensada." },
+      { name: "Larsseit", stack: "'Larsseit', 'Inter', sans-serif", cat: "swiss", desc: "Uniones recortadas al ras que le dan aspecto técnico moderno." },
+      { name: "Suisse Int'l", stack: "'Suisse Int\\'l', 'Inter', sans-serif", cat: "swiss", desc: "Clasicismo suizo de máxima limpieza y balance." },
+
+      // CATEGORIA 3: Geometricas Afiladas
+      { name: "Outfit", stack: "'Outfit', sans-serif", cat: "geometric", desc: "Círculos puros con terminales diagonales de corte láser.", selected: true },
+      { name: "Futura (Jost)", stack: "'Jost', 'Futura', sans-serif", cat: "geometric", desc: "Geometría pura de la Bauhaus con vértices puntiagudos y rectos." },
+      { name: "Satoshi", stack: "'Satoshi', sans-serif", cat: "geometric", desc: "Fuerza geométrica y balance grotesco de alta presencia.", selected: true },
+      { name: "Plus Jakarta Sans", stack: "'Plus Jakarta Sans', sans-serif", cat: "geometric", desc: "Círculos amplios con terminales afiladas contemporáneas." },
+      { name: "Gellix", stack: "'Gellix', 'Outfit', sans-serif", cat: "geometric", desc: "Cortes de terminal inclinados que asemejan un vector láser." },
+      { name: "Circular Std", stack: "'Circular Std', 'Inter', sans-serif", cat: "geometric", desc: "Equilibrio y grosor constante. Gran peso en software premium." },
+      { name: "Albert Sans", stack: "'Albert Sans', sans-serif", cat: "geometric", desc: "Inspirada en tipos de la Bauhaus. Mecánica y estable." },
+      { name: "Neuzeit Grotesk", stack: "'Neuzeit Grotesk', 'Inter', sans-serif", cat: "geometric", desc: "Industrial clásica alemana. Fría y con círculos exactos." },
+      { name: "Lexend", stack: "'Lexend', sans-serif", cat: "geometric", desc: "Estructura simplificada al máximo y cortes planos limpios." },
+      { name: "Urbanist", stack: "'Urbanist', sans-serif", cat: "geometric", desc: "Cortes minimalistas óptimos para diseño fintech." },
+
+      // CATEGORIA 4: Industriales
+      { name: "DIN 1451", stack: "'DIN 1451', 'Bahnschrift', sans-serif", cat: "industrial", desc: "Norma industrial alemana de ingeniería. Fría e implacable.", selected: true },
+      { name: "Bahnschrift", stack: "'Bahnschrift', 'DIN 1451', sans-serif", cat: "industrial", desc: "La versión variable de DIN de Windows. Angular y sólida." },
+      { name: "Geist Sans", stack: "'Geist', sans-serif", cat: "industrial", desc: "El estándar minimalista de Vercel. Afilada, técnica y optimizada para código.", selected: true },
+      { name: "Chivo", stack: "'Chivo', sans-serif", cat: "industrial", desc: "Muy densa y pesada. Transmite solidez de base de datos masiva." },
+      { name: "Public Sans", stack: "'Public Sans', sans-serif", cat: "industrial", desc: "Diseñada con fines gubernamentales. Claridad absoluta." },
+      { name: "Gothic A1", stack: "'Gothic A1', sans-serif", cat: "industrial", desc: "Líneas gruesas de terminales cuadradas y sin remates." },
+      { name: "Krona One", stack: "'Krona One', sans-serif", cat: "industrial", desc: "Ancho extendido horizontal que simula robustez extrema." },
+      { name: "Syncopate", stack: "'Syncopate', sans-serif", cat: "industrial", desc: "Geometría extendida ideal para logotipos en mayúsculas." },
+      { name: "DM Sans", stack: "'DM Sans', sans-serif", cat: "industrial", desc: "Industrial limpia y simplificada de trazos simétricos." },
+      { name: "Arimo", stack: "'Arimo', sans-serif", cat: "industrial", desc: "Ángulos rectos muy limpios diseñados para legibilidad extrema." },
+
+      // CATEGORIA 5: Display & Vanguardia
+      { name: "Clash Display", stack: "'Clash Display', sans-serif", cat: "display", desc: "Diseñada para logos. Tiene terminales muy afiladas." },
+      { name: "General Sans", stack: "'General Sans', sans-serif", cat: "display", desc: "Neo-grotesca refinada con terminales de corte plano directo." },
+      { name: "Syne", stack: "'Syne', sans-serif", cat: "display", desc: "En pesos altos adopta formas angulares y geométricas extremas." },
+      { name: "Sora", stack: "'Sora', sans-serif", cat: "display", desc: "Diseñada para Fintech con terminales y cortes cuadrados.", selected: true },
+      { name: "Manrope", stack: "'Manrope', sans-serif", cat: "display", desc: "Combinación de geometría contemporánea y minimalismo suizo." },
+      { name: "Cabinet Grotesk", stack: "'Cabinet Grotesk', sans-serif", cat: "display", desc: "Tiene terminales de corte afilado muy característicos." },
+      { name: "Spline Sans", stack: "'Spline Sans', sans-serif", cat: "display", desc: "Diseñada para entornos de desarrollo y analítica." },
+      { name: "Schibsted Grotesk", stack: "'Schibsted Grotesk', sans-serif", cat: "display", desc: "Limpia, corporativa y con excelente contraste digital." },
+      { name: "Tenor Sans", stack: "'Tenor Sans', sans-serif", cat: "display", desc: "Ancho ligeramente extendido de elegancia matemática." },
+      { name: "Cabinet Black", stack: "'Cabinet Grotesk', sans-serif", cat: "display", desc: "Excelente peso visual, ideal para isotipos impactantes." }
+    ];
+
+    let currentCategory = 'selected';
+    let searchQuery = '';
+    let isExpanded = false; // Estado inicial del logo: Colapsado ("qrt^")
+    let baseFontSize = 2.2; // en rem
+
+    // Renderizar tarjetas
+    function renderGrid() {
+      const grid = document.getElementById('font-grid');
+      grid.innerHTML = '';
+
+      const filtered = fontsData.filter(font => {
+        const matchesCat = currentCategory === 'all' || 
+                           (currentCategory === 'selected' ? font.selected : font.cat === currentCategory);
+        const matchesSearch = font.name.toLowerCase().includes(searchQuery.toLowerCase());
+        return matchesCat && matchesSearch;
+      });
+
+      filtered.forEach(font => {
+        const card = document.createElement('div');
+        card.className = 'font-card';
+        card.setAttribute('data-cat', font.cat);
+
+        // Definir texto según el estado de expansión
+        const logoText = isExpanded 
+          ? `(quantitative research trading)<span class="exponent">^</span>` 
+          : `qrt<span class="exponent">^</span>`;
+
+        card.innerHTML = `
+          <div class="font-info">
+            <span class="font-name">${font.name}</span>
+            <span class="font-category">${getCategoryLabel(font.cat)}</span>
+          </div>
+
+          <div class="logo-preview-box">
+            <div class="logo-rendered" style="font-family: ${font.stack}; font-size: ${baseFontSize}rem;">
+              ${logoText}
+            </div>
+          </div>
+
+          <div class="font-action-bar">
+            <span class="font-description">${font.desc}</span>
+            <button class="btn-copy-css" onclick="copyCSS('${font.stack}')">Copiar CSS</button>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    function getCategoryLabel(cat) {
+      switch(cat) {
+        case 'mono': return 'Terminal & Mono';
+        case 'swiss': return 'Rigor Suizo';
+        case 'geometric': return 'Geométrica';
+        case 'industrial': return 'Industrial';
+        case 'display': return 'Vanguardia';
+        case 'selected': return 'Top 10';
+        default: return '';
+      }
+    }
+
+    // Cambiar de categoría
+    function filterCategory(cat) {
+      currentCategory = cat;
+      document.querySelectorAll('.btn-filter').forEach(btn => btn.classList.remove('active'));
+      event.currentTarget.classList.add('active');
+      renderGrid();
+    }
+
+    // Buscar fuente
+    function searchFont(query) {
+      searchQuery = query;
+      renderGrid();
+    }
+
+    // Escalar tamaño de fuente
+    function scaleFontSize(val) {
+      baseFontSize = val;
+      document.querySelectorAll('.logo-rendered').forEach(el => {
+        el.style.fontSize = `${val}rem`;
+      });
+    }
+
+    // Alternar expansión/colapso de letras del logo
+    function toggleLogoState() {
+      isExpanded = !isExpanded;
+      renderGrid();
+    }
+
+    // Alternar tema oscuro/claro
+    function toggleTheme() {
+      const body = document.body;
+      body.classList.toggle('dark-mode');
+      const isDark = body.classList.contains('dark-mode');
+      document.querySelector('.theme-toggle').innerText = isDark ? 'Modo Claro' : 'Modo Oscuro';
+    }
+
+    // Copiar CSS al portapapeles
+    function copyCSS(stack) {
+      const cssString = `font-family: ${stack}; font-weight: 500;`;
+      navigator.clipboard.writeText(cssString).then(() => {
+        const btn = event.target;
+        btn.innerText = '¡Copiado!';
+        setTimeout(() => { btn.innerText = 'Copiar CSS'; }, 1500);
+      });
+    }
+
+    // Inicializar
+    window.onload = renderGrid;
+  </script>
+</body>
+</html>

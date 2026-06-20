@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QRT^ & IA: Integración Artística de Fibonacci</title>
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+  
+  <style>
+    /* --- Sistema de Diseño Premium (Minimalista & Artístico) --- */
+    :root {
+      --bg-light: #ffffff;
+      --bg-card: #f9f9fb;
+      --text-main: #000000;
+      --text-muted: #8e8e93;
+      --border: rgba(0, 0, 0, 0.06);
+      --transition-smooth: all 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+      --transition-slow: all 1.5s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-light);
+      color: var(--text-main);
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+      line-height: 1.6;
+      min-height: 180vh; /* Permite scroll para animaciones */
+    }
+
+    /* --- Cabecera Sticky Minimalista --- */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 100;
+      padding: 48px 64px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: transparent;
+      transition: var(--transition-smooth);
+    }
+
+    header.scrolled {
+      padding: 24px 64px;
+      background-color: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* --- Logotipo Expansivo Limpio --- */
+    .logo-container {
+      display: inline-flex;
+      align-items: center;
+      text-decoration: none;
+      color: var(--text-main);
+      font-weight: 500;
+      font-size: 2.8rem;
+      letter-spacing: -0.04em;
+      transition: var(--transition-smooth);
+    }
+
+    header.scrolled .logo-container {
+      font-size: 1.8rem;
+    }
+
+    .logo-always {
+      color: var(--text-main);
+      font-weight: 500;
+      transition: var(--transition-smooth);
+    }
+
+    .logo-exponent {
+      font-size: 0.85em;
+      position: relative;
+      top: -0.25em;
+      margin-left: 4px;
+      font-weight: 500;
+      display: inline-block;
+      transition: var(--transition-smooth);
+    }
+
+    .logo-parenthesis {
+      display: inline-block;
+      max-width: 0;
+      opacity: 0;
+      overflow: hidden;
+      font-weight: 500;
+      transform: scale(0.5);
+      transition: max-width 1.2s cubic-bezier(0.25, 1, 0.5, 1),
+                  opacity 1.0s ease,
+                  transform 1.2s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+
+    header.scrolled .logo-parenthesis {
+      max-width: 30px;
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .p-start { transform-origin: right center; margin-right: 0; }
+    .p-end { transform-origin: left center; margin-left: 0; }
+    header.scrolled .p-start { margin-right: 4px; }
+    header.scrolled .p-end { margin-left: 4px; }
+
+    .logo-collapsible {
+      display: inline-block;
+      max-width: 0;
+      opacity: 0;
+      overflow: hidden;
+      white-space: nowrap;
+      font-weight: 500;
+      transform: scaleX(0);
+      transform-origin: left center;
+      transition: max-width 1.4s cubic-bezier(0.25, 1, 0.5, 1),
+                  opacity 1.0s ease,
+                  transform 1.4s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+
+    header.scrolled .logo-collapsible {
+      max-width: 400px;
+      opacity: 1;
+      transform: scaleX(1);
+    }
+
+    .logo-space {
+      display: inline-block;
+      width: 0;
+      transition: all 1.4s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+
+    header.scrolled .logo-space {
+      width: 8px;
+    }
+
+    nav ul {
+      display: flex;
+      list-style: none;
+      gap: 32px;
+      align-items: center;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: var(--text-muted);
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: var(--transition-smooth);
+    }
+
+    nav a:hover {
+      color: var(--text-main);
+    }
+
+    .btn-cta {
+      background-color: var(--text-main);
+      color: var(--bg-light);
+      padding: 10px 22px;
+      border-radius: 4px;
+      font-weight: 600;
+      border: 1px solid var(--text-main);
+    }
+
+    /* --- CANVAS / CONTENEDOR ARTÍSTICO DE FONDO --- */
+    .artistic-canvas-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 1;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .artistic-svg {
+      width: 100%;
+      height: 100%;
+      display: none;
+    }
+
+    .artistic-svg.active {
+      display: block;
+    }
+
+    /* --- ESTILOS DE CADA PROPUESTA ARTÍSTICA / IA --- */
+
+    /* Propuesta 1: La Senda Latente (Nodos Neuronales) */
+    .neural-node {
+      fill: var(--text-main);
+      transition: cx 1.5s cubic-bezier(0.25, 1, 0.5, 1), cy 1.5s cubic-bezier(0.25, 1, 0.5, 1), r 0.8s ease;
+    }
+    .neural-edge {
+      stroke: var(--text-main);
+      stroke-width: 0.4;
+      opacity: 0.15;
+      transition: all 1.5s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+    
+    /* Propuesta 2: Flujo Binario Áureo (TextPath en Espiral) */
+    .fibonacci-path-base {
+      stroke: rgba(0, 0, 0, 0.03);
+      stroke-width: 1;
+      fill: none;
+    }
+    .binary-text {
+      font-family: 'Fira Code', monospace;
+      font-size: 8px;
+      fill: var(--text-main);
+      opacity: 0.6;
+      letter-spacing: 2px;
+    }
+
+    /* Propuesta 3: Mapa de Atención (Transformer Self-Attention) */
+    .attention-ray {
+      stroke: var(--text-main);
+      stroke-width: 0.35;
+      opacity: 0.08;
+      stroke-dasharray: 2 2;
+      transition: var(--transition-slow);
+    }
+    .attention-node {
+      fill: none;
+      stroke: var(--text-main);
+      stroke-width: 0.5;
+      opacity: 0.4;
+      transition: var(--transition-smooth);
+    }
+    .attention-heat {
+      fill: var(--text-main);
+      opacity: 0.03;
+      transition: var(--transition-slow);
+    }
+
+    /* --- DISEÑO DEL CONTENIDO --- */
+    .main-content {
+      position: relative;
+      z-index: 10;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 220px 24px 80px 24px;
+    }
+
+    .hero-section {
+      margin-bottom: 60px;
+    }
+
+    .hero-section h1 {
+      font-size: 3.5rem;
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.04em;
+      margin-bottom: 24px;
+    }
+
+    .hero-section p {
+      font-size: 1.2rem;
+      color: var(--text-muted);
+      max-width: 600px;
+      margin-bottom: 40px;
+    }
+
+    /* Panel de Control Interactivo */
+    .control-dashboard {
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 32px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02);
+    }
+
+    .dashboard-tabs {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .tab-btn {
+      background: var(--bg-light);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      padding: 16px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+      text-align: left;
+      transition: var(--transition-smooth);
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .tab-btn.active {
+      border-color: var(--text-main);
+      color: var(--text-main);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+    }
+
+    .tab-btn span.tag {
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+    }
+
+    .tab-btn.active span.tag {
+      color: var(--text-main);
+    }
+
+    /* Racionales Artísticos */
+    .rationale-content {
+      border-top: 1px solid var(--border);
+      padding-top: 24px;
+      display: none;
+    }
+
+    .rationale-content.active {
+      display: block;
+    }
+
+    .rationale-title {
+      font-weight: 700;
+      font-size: 1.15rem;
+      margin-bottom: 8px;
+    }
+
+    .rationale-desc {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-bottom: 16px;
+    }
+
+    .rationale-badge {
+      display: inline-block;
+      background: rgba(0, 0, 0, 0.04);
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 4px;
+      margin-right: 8px;
+    }
+
+    /* Interacción Manual */
+    .interaction-panel {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--bg-light);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px 24px;
+      margin-top: 24px;
+    }
+
+    .btn-action {
+      background: var(--text-main);
+      color: var(--bg-light);
+      border: none;
+      padding: 10px 20px;
+      border-radius: 4px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+      transition: var(--transition-smooth);
+    }
+
+    .btn-action:hover {
+      opacity: 0.9;
+    }
+
+    /* Indicador de scroll */
+    .scroll-indicator {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      margin-top: 80px;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      font-weight: 600;
+      animation: float 2.5s ease-in-out infinite;
+    }
+
+    .scroll-indicator svg {
+      width: 20px;
+      height: 20px;
+      fill: var(--text-main);
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(8px); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Cabecera Sticky Minimalista (Logo limpio) -->
+  <header id="main-header">
+    <a href="#" class="logo-container">
+      <span class="logo-parenthesis p-start">(</span>
+      <span class="logo-always">q</span>
+      <span class="logo-collapsible">uantitative</span>
+      <span class="logo-space"></span>
+      <span class="logo-always">r</span>
+      <span class="logo-collapsible">esearch</span>
+      <span class="logo-space"></span>
+      <span class="logo-always">t</span>
+      <span class="logo-collapsible">rading</span>
+      <span class="logo-parenthesis p-end">)</span>
+      <span class="logo-exponent">^</span>
+    </a>
+    
+    <nav>
+      <ul>
+        <li><a href="#conceptos">Conceptos</a></li>
+        <li><a href="#explicacion">Explicación</a></li>
+        <li><a href="#" class="btn-cta">Fintech Console</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- LIENZO ARTÍSTICO DE FONDO (Interacciones de IA y Fibonacci) -->
+  <div class="artistic-canvas-container">
+    
+    <!-- PROPUESTA A: La Senda Latente (Nodos Neuronales alineándose) -->
+    <svg id="svg-concept-a" class="artistic-svg active" viewBox="0 0 1000 600">
+      <!-- Conexiones (Edges) -->
+      <line id="edge-1" class="neural-edge" x1="150" y1="100" x2="350" y2="400" />
+      <line id="edge-2" class="neural-edge" x1="350" y1="400" x2="600" y2="250" />
+      <line id="edge-3" class="neural-edge" x1="600" y1="250" x2="750" y2="480" />
+      <line id="edge-4" class="neural-edge" x1="750" y1="480" x2="850" y2="150" />
+      <line id="edge-5" class="neural-edge" x1="850" y1="150" x2="900" y2="350" />
+      <line id="edge-6" class="neural-edge" x1="150" y1="100" x2="600" y2="250" />
+      <line id="edge-7" class="neural-edge" x1="350" y1="400" x2="750" y2="480" />
+      <line id="edge-8" class="neural-edge" x1="600" y1="250" x2="850" y2="150" />
+
+      <!-- Nodos de la Red (Alineados dinámicamente) -->
+      <!-- Estado Caótico (AI inicial) -> Estado Fibonacci (Alineación Áurea) -->
+      <circle id="node-1" class="neural-node" cx="150" cy="100" r="4" />
+      <circle id="node-2" class="neural-node" cx="350" cy="400" r="5" />
+      <circle id="node-3" class="neural-node" cx="600" cy="250" r="4" />
+      <circle id="node-4" class="neural-node" cx="750" cy="480" r="6" />
+      <circle id="node-5" class="neural-node" cx="850" cy="150" r="5" />
+      <circle id="node-6" class="neural-node" cx="900" cy="350" r="4" />
+    </svg>
+
+    <!-- PROPUESTA B: Flujo Binario Áureo (Data stream en espiral) -->
+    <svg id="svg-concept-b" class="artistic-svg" viewBox="0 0 1000 600">
+      <!-- Espiral de Fibonacci base -->
+      <path id="fibonacci-curve" class="fibonacci-path-base" d="M300,450 A377,377 0 0,0 677,73 A233,233 0 0,0 444,306 A144,144 0 0,0 588,162 A89,89 0 0,0 499,251 A55,55 0 0,0 554,196 A34,34 0 0,0 520,230" />
+      
+      <!-- Flujo de datos binarios recorriendo la espiral -->
+      <text class="binary-text">
+        <textPath href="#fibonacci-curve" startOffset="0%" id="binary-stream">
+          01011010011010110110001101010010110111001011010100101101110010110101001011011100
+        </textPath>
+      </text>
+      <text class="binary-text" style="opacity: 0.25;">
+        <textPath href="#fibonacci-curve" startOffset="30%" id="binary-stream-2">
+          w_0=0.618  w_1=1.618  f(x)=sigmoid(Wx+b)  layer_1_weights  parameters_active  entropy_loss=0.08
+        </textPath>
+      </text>
+    </svg>
+
+    <!-- PROPUESTA C: Mapa de Atención (Self-Attention Head) -->
+    <svg id="svg-concept-c" class="artistic-svg" viewBox="0 0 1000 600">
+      <!-- Centro de la espiral (Foco de atención) -->
+      <circle cx="500" cy="300" r="250" class="attention-heat" />
+      <circle cx="500" cy="300" r="120" class="attention-heat" />
+      <circle cx="500" cy="300" r="50" class="attention-heat" />
+
+      <!-- Rayos de atención conectando puntos clave del canvas -->
+      <!-- Puntos alineados con la espiral -->
+      <line class="attention-ray" x1="100" y1="100" x2="500" y2="300" />
+      <line class="attention-ray" x1="900" y1="500" x2="500" y2="300" />
+      <line class="attention-ray" x1="800" y1="100" x2="500" y2="300" />
+      <line class="attention-ray" x1="200" y1="500" x2="500" y2="300" />
+      <line class="attention-ray" x1="500" y1="50" x2="500" y2="300" />
+      <line class="attention-ray" x1="500" y1="550" x2="500" y2="300" />
+      
+      <!-- Red de nodos e intersecciones -->
+      <circle cx="500" cy="300" r="5" class="attention-node" />
+      <circle cx="346" cy="204" r="13" class="attention-node" />
+      <circle cx="595" cy="189" r="8" class="attention-node" />
+      <circle cx="441" cy="389" r="21" class="attention-node" />
+      <circle cx="550" cy="350" r="3" class="attention-node" />
+    </svg>
+
+  </div>
+
+  <!-- Contenido de la Página -->
+  <main class="main-content">
+    
+    <!-- Hero -->
+    <section class="hero-section" id="conceptos">
+      <h1>Geometría Generativa QRT</h1>
+      <p>
+        Tres propuestas artísticas y conceptuales de vanguardia para integrar la curva exponencial de Fibonacci en la web, enlazándola directamente con la naturaleza computacional de la Inteligencia Artificial.
+      </p>
+    </section>
+
+    <!-- Dashboard Interactivo -->
+    <section class="control-dashboard">
+      <div class="dashboard-tabs">
+        <button class="tab-btn active" onclick="activateConcept('a')">
+          <span class="tag">Propuesta A</span>
+          La Senda Latente
+        </button>
+        <button class="tab-btn" onclick="activateConcept('b')">
+          <span class="tag">Propuesta B</span>
+          Flujo Binario Áureo
+        </button>
+        <button class="tab-btn" onclick="activateConcept('c')">
+          <span class="tag">Propuesta C</span>
+          Mapa de Atención
+        </button>
+      </div>
+
+      <!-- Racional A -->
+      <div class="rationale-content active" id="rationale-a">
+        <h3 class="rationale-title">Propuesta A: La Senda Latente (Nodos Neuronales)</h3>
+        <p class="rationale-desc">
+          Representa los nodos de una red neuronal artificial. Al inicio, los nodos están dispersos y conectados de forma asimétrica (caos algorítmico). Al hacer scroll o interactuar, <strong>la red se alinea y migra con precisión matemática</strong> para trazar la curva de Fibonacci. Simboliza cómo la IA ordena datos masivos bajo principios geométricos universales.
+        </p>
+        <span class="rationale-badge">Física de Partículas</span>
+        <span class="rationale-badge">Alineación de Redes</span>
+        <span class="rationale-badge">Sutil & Dinámico</span>
+      </div>
+
+      <!-- Racional B -->
+      <div class="rationale-content" id="rationale-b">
+        <h3 class="rationale-title">Propuesta B: Flujo Binario Áureo (Data Stream)</h3>
+        <p class="rationale-desc">
+          La curva de Fibonacci es apenas visible como un trazo tenue. Sin embargo, <strong>cadenas dinámicas de código binario y ecuaciones de redes neuronales</strong> (tales como funciones de activación y pesos tensoriales) fluyen y viajan a lo largo del recorrido espiral. Representa la información binaria pura fluyendo de forma natural y orgánica.
+        </p>
+        <span class="rationale-badge">Flujo de Datos</span>
+        <span class="rationale-badge">Código Autogenerado</span>
+        <span class="rationale-badge">Ecuaciones de Peso</span>
+      </div>
+
+      <!-- Racional C -->
+      <div class="rationale-content" id="rationale-c">
+        <h3 class="rationale-title">Propuesta C: Mapa de Atención (Self-Attention Head)</h3>
+        <p class="rationale-desc">
+          En los modelos GPT y Transformers, los "mapas de atención" calculan la relevancia entre tokens. Aquí, una serie de vectores radiales sumamente tenues y punteados conectan los elementos de la web hacia el origen de la espiral de Fibonacci. Muestra los "focos de atención" de un agente artificial analizando la retícula y la marca.
+        </p>
+        <span class="rationale-badge">Mecanismo de Atención</span>
+        <span class="rationale-badge">Vectores Radiales</span>
+        <span class="rationale-badge">Diseño Arquitectónico</span>
+      </div>
+
+      <!-- Barra de Interacción Manual -->
+      <div class="interaction-panel">
+        <div>
+          <strong style="display: block; font-size: 0.95rem;">Comportamiento Dinámico</strong>
+          <span style="font-size: 0.85rem; color: var(--text-muted);">Simula cómo se expande el logo y cómo muta la geometría artística.</span>
+        </div>
+        <button class="btn-action" onclick="togglePlayState()">Simular Interacción</button>
+      </div>
+
+    </section>
+
+    <!-- Indicador de Scroll -->
+    <div class="scroll-indicator">
+      <span>Desliza para explorar la física del lienzo</span>
+      <svg viewBox="0 0 24 24">
+        <path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" />
+      </svg>
+    </div>
+
+  </main>
+
+  <script>
+    const mainHeader = document.getElementById('main-header');
+    let isToggled = false;
+
+    // Coordenadas para los Nodos en la Propuesta A
+    // Estado 1 (Caótico / Red Neuronal Inicial)
+    const neuralState = [
+      { cx: 150, cy: 100, r: 4 },
+      { cx: 350, cy: 400, r: 5 },
+      { cx: 600, cy: 250, r: 4 },
+      { cx: 750, cy: 480, r: 6 },
+      { cx: 850, cy: 150, r: 5 },
+      { cx: 900, cy: 350, r: 4 }
+    ];
+
+    // Estado 2 (Alineación Áurea / Puntos específicos sobre la Espiral de Fibonacci)
+    const fibonacciState = [
+      { cx: 300, cy: 450, r: 5 }, // Punto en radio 377
+      { cx: 677, cy: 73,  r: 4 }, // Punto en radio 233
+      { cx: 444, cy: 306, r: 6 }, // Punto en radio 144
+      { cx: 588, cy: 162, r: 4 }, // Punto en radio 89
+      { cx: 499, cy: 251, r: 5 }, // Punto en radio 55
+      { cx: 554, cy: 196, r: 4 }  // Punto en radio 34
+    ];
+
+    // Cambiar de propuesta visual interactiva
+    function activateConcept(concept) {
+      // Desactivar SVGs previos y activar el seleccionado
+      document.querySelectorAll('.artistic-svg').forEach(svg => svg.classList.remove('active'));
+      document.getElementById(`svg-concept-${concept}`).classList.add('active');
+
+      // Activar botón en UI
+      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+      event.currentTarget.classList.add('active');
+
+      // Activar racional
+      document.querySelectorAll('.rationale-content').forEach(rat => rat.classList.remove('active'));
+      document.getElementById(`rationale-${concept}`).classList.add('active');
+
+      resetStates();
+    }
+
+    function resetStates() {
+      isToggled = false;
+      applyVisualStates();
+    }
+
+    function togglePlayState() {
+      isToggled = !isToggled;
+      applyVisualStates();
+    }
+
+    function applyVisualStates() {
+      // Animación de Cabecera
+      if (isToggled) {
+        mainHeader.classList.add('scrolled');
+      } else {
+        mainHeader.classList.remove('scrolled');
+      }
+
+      // Animación Propuesta A (Nodos Neuronales)
+      const targetNodes = isToggled ? fibonacciState : neuralState;
+      targetNodes.forEach((node, index) => {
+        const circle = document.getElementById(`node-${index + 1}`);
+        if (circle) {
+          circle.setAttribute('cx', node.cx);
+          circle.setAttribute('cy', node.cy);
+          circle.setAttribute('r', node.r);
+        }
+      });
+
+      // Animación de conexiones en Propuesta A
+      if (isToggled) {
+        // Enlazar nodos secuencialmente sobre la espiral
+        document.getElementById('edge-1').setAttribute('x1', '300'); document.getElementById('edge-1').setAttribute('y1', '450');
+        document.getElementById('edge-1').setAttribute('x2', '677'); document.getElementById('edge-1').setAttribute('y2', '73');
+
+        document.getElementById('edge-2').setAttribute('x1', '677'); document.getElementById('edge-2').setAttribute('y1', '73');
+        document.getElementById('edge-2').setAttribute('x2', '444'); document.getElementById('edge-2').setAttribute('y2', '306');
+
+        document.getElementById('edge-3').setAttribute('x1', '444'); document.getElementById('edge-3').setAttribute('y1', '306');
+        document.getElementById('edge-3').setAttribute('x2', '588'); document.getElementById('edge-3').setAttribute('y2', '162');
+
+        document.getElementById('edge-4').setAttribute('x1', '588'); document.getElementById('edge-4').setAttribute('y1', '162');
+        document.getElementById('edge-4').setAttribute('x2', '499'); document.getElementById('edge-4').setAttribute('y2', '251');
+
+        document.getElementById('edge-5').setAttribute('x1', '499'); document.getElementById('edge-5').setAttribute('y1', '251');
+        document.getElementById('edge-5').setAttribute('x2', '554'); document.getElementById('edge-5').setAttribute('y2', '196');
+
+        // Ocultar líneas extra para ver el trazo limpio de la espiral
+        document.getElementById('edge-6').style.opacity = '0';
+        document.getElementById('edge-7').style.opacity = '0';
+        document.getElementById('edge-8').style.opacity = '0';
+      } else {
+        // Regresar a conexiones de red neuronal clásica
+        document.getElementById('edge-1').setAttribute('x1', '150'); document.getElementById('edge-1').setAttribute('y1', '100');
+        document.getElementById('edge-1').setAttribute('x2', '350'); document.getElementById('edge-1').setAttribute('y2', '400');
+
+        document.getElementById('edge-2').setAttribute('x1', '350'); document.getElementById('edge-2').setAttribute('y1', '400');
+        document.getElementById('edge-2').setAttribute('x2', '600'); document.getElementById('edge-2').setAttribute('y2', '250');
+
+        document.getElementById('edge-3').setAttribute('x1', '600'); document.getElementById('edge-3').setAttribute('y1', '250');
+        document.getElementById('edge-3').setAttribute('x2', '750'); document.getElementById('edge-3').setAttribute('y2', '480');
+
+        document.getElementById('edge-4').setAttribute('x1', '750'); document.getElementById('edge-4').setAttribute('y1', '480');
+        document.getElementById('edge-4').setAttribute('x2', '850'); document.getElementById('edge-4').setAttribute('y2', '150');
+
+        document.getElementById('edge-5').setAttribute('x1', '850'); document.getElementById('edge-5').setAttribute('y1', '150');
+        document.getElementById('edge-5').setAttribute('x2', '900'); document.getElementById('edge-5').setAttribute('y2', '350');
+
+        document.getElementById('edge-6').style.opacity = '0.15';
+        document.getElementById('edge-6').setAttribute('x1', '150'); document.getElementById('edge-6').setAttribute('y1', '100');
+        document.getElementById('edge-6').setAttribute('x2', '600'); document.getElementById('edge-6').setAttribute('y2', '250');
+
+        document.getElementById('edge-7').style.opacity = '0.15';
+        document.getElementById('edge-7').setAttribute('x1', '350'); document.getElementById('edge-7').setAttribute('y1', '400');
+        document.getElementById('edge-7').setAttribute('x2', '750'); document.getElementById('edge-7').setAttribute('y2', '480');
+
+        document.getElementById('edge-8').style.opacity = '0.15';
+        document.getElementById('edge-8').setAttribute('x1', '600'); document.getElementById('edge-8').setAttribute('y1', '250');
+        document.getElementById('edge-8').setAttribute('x2', '850'); document.getElementById('edge-8').setAttribute('y2', '150');
+      }
+
+      // Animación Propuesta B: Desplazamiento del flujo de datos
+      if (isToggled) {
+        document.getElementById('binary-stream').setAttribute('startOffset', '15%');
+        document.getElementById('binary-stream-2').setAttribute('startOffset', '45%');
+      } else {
+        document.getElementById('binary-stream').setAttribute('startOffset', '0%');
+        document.getElementById('binary-stream-2').setAttribute('startOffset', '30%');
+      }
+    }
+
+    // Detector de scroll real
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 60) {
+        mainHeader.classList.add('scrolled');
+        isToggled = true;
+      } else {
+        mainHeader.classList.remove('scrolled');
+        isToggled = false;
+      }
+      applyVisualStates();
+    });
+  </script>
+</body>
+</html>

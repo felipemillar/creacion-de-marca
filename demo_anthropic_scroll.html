@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Demo: Animación de Logo Anthropic en Scroll</title>
+  <!-- Google Fonts: Outfit e Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+  
+  <style>
+    /* --- Sistema de Diseño --- */
+    :root {
+      --bg-dark: #0b0b0f;
+      --bg-card: rgba(18, 18, 24, 0.7);
+      --accent: #e0d0c0; /* Tono beige/arena premium similar al de Anthropic */
+      --accent-glow: rgba(224, 208, 192, 0.15);
+      --text-main: #f3f3f6;
+      --text-muted: #a0a0ab;
+      --border: rgba(255, 255, 255, 0.08);
+      --transition-smooth: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+      line-height: 1.6;
+      /* Espacio abajo para poder hacer scroll */
+      min-height: 250vh;
+    }
+
+    /* --- Fondo de Gradientes Animados --- */
+    .bg-gradient-glow {
+      position: fixed;
+      top: -20%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80vw;
+      height: 60vh;
+      background: radial-gradient(circle, var(--accent-glow) 0%, rgba(11, 11, 15, 0) 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* --- Encabezado Sticky (Glassmorphism) --- */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 100;
+      padding: 32px 48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid transparent;
+      background-color: transparent;
+      backdrop-filter: blur(0px);
+      -webkit-backdrop-filter: blur(0px);
+      transition: var(--transition-smooth);
+    }
+
+    /* Estado cuando se ha hecho scroll */
+    header.scrolled {
+      padding: 16px 48px;
+      background-color: rgba(11, 11, 15, 0.75);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* --- Animación del Logo de Anthropic (El Ethos del Efecto) --- */
+    .logo-container {
+      display: inline-flex;
+      align-items: center;
+      text-decoration: none;
+      color: var(--text-main);
+      font-family: 'Outfit', sans-serif;
+      font-weight: 800;
+      font-size: 2.2rem;
+      letter-spacing: -0.02em;
+      transition: var(--transition-smooth);
+    }
+
+    header.scrolled .logo-container {
+      font-size: 1.6rem;
+    }
+
+    /* Letras que siempre se muestran: "A" y "\" (que visualmente forma AI) */
+    .logo-always {
+      display: inline-block;
+      color: var(--accent);
+      transition: var(--transition-smooth);
+    }
+
+    /* Contenedores de las letras que colapsan: "NTHROP" y "C" */
+    .logo-collapsible {
+      display: inline-block;
+      max-width: 250px; /* Tamaño máximo suficiente para albergar el texto */
+      opacity: 1;
+      overflow: hidden;
+      white-space: nowrap;
+      /* Transición ultra-suave usando cubic-bezier */
+      transition: max-width 0.6s cubic-bezier(0.25, 1, 0.5, 1), 
+                  opacity 0.4s ease, 
+                  transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+      transform: scaleX(1);
+      transform-origin: left center;
+    }
+
+    /* Estado colapsado cuando el header tiene la clase scrolled */
+    header.scrolled .logo-collapsible {
+      max-width: 0;
+      opacity: 0;
+      transform: scaleX(0);
+    }
+
+    /* Ajuste para el espaciado correcto de la barra inclinada en estado contraído */
+    .logo-slash {
+      margin-left: 2px;
+      margin-right: 2px;
+      transition: var(--transition-smooth);
+    }
+
+    header.scrolled .logo-slash {
+      margin-left: 0px;
+      margin-right: 0px;
+    }
+
+    /* --- Menú de Navegación --- */
+    nav ul {
+      display: flex;
+      list-style: none;
+      gap: 32px;
+      align-items: center;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: var(--text-muted);
+      font-weight: 500;
+      font-size: 0.95rem;
+      transition: var(--transition-smooth);
+    }
+
+    nav a:hover {
+      color: var(--accent);
+    }
+
+    .btn-cta {
+      background-color: var(--accent);
+      color: #0b0b0f;
+      padding: 10px 20px;
+      border-radius: 30px;
+      font-weight: 600;
+      border: 1px solid var(--accent);
+      box-shadow: 0 4px 12px rgba(224, 208, 192, 0.2);
+    }
+
+    .btn-cta:hover {
+      background-color: transparent;
+      color: var(--accent);
+      box-shadow: 0 4px 20px rgba(224, 208, 192, 0.4);
+    }
+
+    /* --- Contenido Principal --- */
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 180px 24px 0 24px;
+      position: relative;
+      z-index: 10;
+    }
+
+    /* Sección Hero */
+    .hero {
+      text-align: center;
+      margin-bottom: 80px;
+    }
+
+    h1 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 4rem;
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      margin-bottom: 24px;
+      background: linear-gradient(135deg, #ffffff 40%, #e0d0c0 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero p {
+      font-size: 1.25rem;
+      color: var(--text-muted);
+      max-width: 600px;
+      margin: 0 auto 40px auto;
+    }
+
+    /* Panel de Control Interactivo */
+    .control-panel {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 32px;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      margin-bottom: 60px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    .panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+    }
+
+    .panel-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: var(--accent);
+    }
+
+    .btn-toggle {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border);
+      color: var(--text-main);
+      padding: 10px 24px;
+      border-radius: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+      transition: var(--transition-smooth);
+    }
+
+    .btn-toggle:hover {
+      background: var(--accent);
+      color: #0b0b0f;
+      border-color: var(--accent);
+    }
+
+    /* Explicación Técnica y Código */
+    .tabs {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 12px;
+    }
+
+    .tab {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      padding: 8px 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition-smooth);
+      font-size: 0.9rem;
+    }
+
+    .tab.active {
+      color: var(--accent);
+      border-bottom: 2px solid var(--accent);
+    }
+
+    .code-content {
+      background: rgba(0, 0, 0, 0.4);
+      border-radius: 12px;
+      padding: 24px;
+      overflow-x: auto;
+      font-family: monospace;
+      font-size: 0.9rem;
+      color: #e2e8f0;
+      border: 1px solid rgba(255, 255, 255, 0.03);
+      display: none;
+    }
+
+    .code-content.active {
+      display: block;
+    }
+
+    /* Indicador visual de Scroll */
+    .scroll-indicator {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      margin-top: 40px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      animation: float 2s ease-in-out infinite;
+    }
+
+    .scroll-indicator svg {
+      width: 24px;
+      height: 24px;
+      fill: var(--accent);
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(10px); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="bg-gradient-glow"></div>
+
+  <!-- Encabezado con el Logo Colapsable -->
+  <header id="main-header">
+    <a href="#" class="logo-container">
+      <span class="logo-always">A</span>
+      <span class="logo-collapsible">NTHROP</span>
+      <span class="logo-always logo-slash">\</span>
+      <span class="logo-collapsible">C</span>
+    </a>
+    
+    <nav>
+      <ul>
+        <li><a href="#explicacion">Explicación</a></li>
+        <li><a href="#codigo">Código</a></li>
+        <li><a href="#" class="btn-cta">Demo Prototipo</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <div class="container">
+    
+    <!-- Hero -->
+    <section class="hero">
+      <h1>Efecto Colapsable de Logo Anthropic</h1>
+      <p>
+        Una recreación interactiva y de alta fidelidad del logotipo que se contrae suavemente de <strong>"ANTHROP\C"</strong> a <strong>"A\"</strong> al hacer scroll hacia abajo.
+      </p>
+      
+      <div class="scroll-indicator">
+        <span>Haz Scroll hacia abajo para ver el efecto</span>
+        <svg viewBox="0 0 24 24">
+          <path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" />
+        </svg>
+      </div>
+    </section>
+
+    <!-- Panel de Explicación y Código -->
+    <section class="control-panel" id="explicacion">
+      <div class="panel-header">
+        <span class="panel-title">Interactúa con el Efecto</span>
+        <button class="btn-toggle" onclick="toggleScrollState()">Simular Scroll / Toggle Manual</button>
+      </div>
+      
+      <p style="margin-bottom: 24px; color: var(--text-muted);">
+        El secreto del efecto de Anthropic reside en dividir el logo en partes estáticas (las que siempre son visibles) y partes colapsables. Al hacer scroll, la propiedad <code>max-width</code> de las letras colapsables se reduce a <code>0</code> y su opacidad cae a <code>0</code>. La transición se suaviza utilizando una curva de aceleración <code>cubic-bezier(0.25, 1, 0.5, 1)</code>.
+      </p>
+      
+      <div class="tabs" id="codigo">
+        <button class="tab active" onclick="switchTab('html')">HTML</button>
+        <button class="tab" onclick="switchTab('css')">CSS</button>
+        <button class="tab" onclick="switchTab('js')">JavaScript</button>
+      </div>
+
+      <!-- Pestaña HTML -->
+      <pre class="code-content active" id="code-html">
+&lt;!-- El logotipo se divide en caracteres fijos y grupos colapsables --&gt;
+&lt;a href="#" class="logo-container"&gt;
+  &lt;span class="logo-always"&gt;A&lt;/span&gt;
+  &lt;span class="logo-collapsible"&gt;NTHROP&lt;/span&gt;
+  &lt;span class="logo-always logo-slash"&gt;\&lt;/span&gt;
+  &lt;span class="logo-collapsible"&gt;C&lt;/span&gt;
+&lt;/a&gt;</pre>
+
+      <!-- Pestaña CSS -->
+      <pre class="code-content" id="code-css">
+/* --- Estilos del Logotipo --- */
+.logo-container {
+  display: inline-flex;
+  align-items: center;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 800;
+  font-size: 2.2rem;
+  text-decoration: none;
+  color: #ffffff;
+  transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* Letras estáticas (A y \) */
+.logo-always {
+  color: #e0d0c0; /* Color beige */
+  transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* Grupos de letras colapsables (NTHROP y C) */
+.logo-collapsible {
+  display: inline-block;
+  max-width: 250px; /* Ancho máximo suficiente para el texto */
+  opacity: 1;
+  overflow: hidden;
+  white-space: nowrap;
+  
+  /* Curva cubic-bezier para lograr una contracción "buttery-smooth" */
+  transition: max-width 0.6s cubic-bezier(0.25, 1, 0.5, 1), 
+              opacity 0.4s ease, 
+              transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+  transform: scaleX(1);
+  transform-origin: left center;
+}
+
+/* --- Estado Colapsado (Activado en scroll) --- */
+header.scrolled .logo-collapsible {
+  max-width: 0;
+  opacity: 0;
+  transform: scaleX(0); /* Contracción adicional en escala horizontal */
+}</pre>
+
+      <!-- Pestaña JS -->
+      <pre class="code-content" id="code-js">
+// Seleccionamos el header
+const header = document.getElementById('main-header');
+
+// Escuchamos el evento de scroll en la ventana
+window.addEventListener('scroll', () => {
+  // Si bajamos más de 50px, agregamos la clase .scrolled, si no la removemos
+  if (window.scrollY > 50) {
+    header.classList.add('scrolled');
+  } else {
+    header.classList.remove('scrolled');
+  }
+});</pre>
+
+    </section>
+
+  </div>
+
+  <script>
+    // Detector de scroll real
+    const header = document.getElementById('main-header');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 50) {
+        header.classList.add('scrolled');
+      } else {
+        header.classList.remove('scrolled');
+      }
+    });
+
+    // Simulación de scroll manual por botón
+    function toggleScrollState() {
+      header.classList.toggle('scrolled');
+    }
+
+    // Sistema de navegación por pestañas de código
+    function switchTab(tabId) {
+      // Remover clases activa de pestañas
+      document.querySelectorAll('.tab').forEach(tab => {
+        tab.classList.remove('active');
+      });
+      // Remover clase activa de códigos
+      document.querySelectorAll('.code-content').forEach(content => {
+        content.classList.remove('active');
+      });
+
+      // Activar la pestaña y el bloque de código seleccionados
+      event.target.classList.add('active');
+      document.getElementById(`code-${tabId}`).classList.add('active');
+    }
+  </script>
+</body>
+</html>
