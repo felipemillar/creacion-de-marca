@@ -14,3 +14,10 @@
 - `[x]` Redactar reseñas y explicaciones técnicas de Quantitative, Research y Trading
 - `[x]` Crear gráficos vectoriales minimalistas (SVGs) integrados en el fondo de las secciones
 - `[x]` Agregar dot navigator lateral de progreso y navegación rápida
+
+## Research Pilar Waves Update (demo_qrt_research_new.html)
+- `[x]` Crear una demo independiente con el gráfico de ondas de interferencia de Fibonacci
+- `[x]` Implementar 10 curvas con animación de trazado independiente a velocidades asincrónicas
+- `[x]` Colocar puntos de intersección y destello que aparecen coordinados con el recorrido de las ondas
+- `[x]` Commitear y subir la demo a GitHub
+
