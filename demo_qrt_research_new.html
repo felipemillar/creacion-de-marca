@@ -137,7 +137,7 @@
     /* Letras siempre visibles: q, r, t (siempre minúsculas) */
     .logo-always {
       color: var(--text-main);
-      font-weight: 500;
+      font-weight: 700;
       transition: var(--transition-smooth);
     }
 
@@ -159,7 +159,7 @@
       max-width: 0;
       opacity: 0;
       overflow: hidden;
-      font-weight: 500;
+      font-weight: 700;
       transform: scale(0.5);
       transition: max-width 1.8s cubic-bezier(0.8, 0, 0.9, 0.1),
                   opacity 1.5s ease-in,
@@ -184,7 +184,7 @@
       opacity: 0;
       overflow: hidden;
       white-space: nowrap;
-      font-weight: 500;
+      font-weight: 700;
       transform: scaleX(0);
       transform-origin: left center;
       transition: max-width 2.0s cubic-bezier(0.8, 0, 0.9, 0.1),
@@ -206,6 +206,11 @@
 
     header.scrolled .logo-space {
       width: 8px;
+    }
+
+    /* Separación sutil entre la r y la t cuando el logo está colapsado (escala con el tamaño de fuente) */
+    header:not(.scrolled) #word-t {
+      margin-left: 0.12em;
     }
 
     /* Wrapper de palabra para controlar opacidad en scrollytelling */
