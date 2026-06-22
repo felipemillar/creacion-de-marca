@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QRT: Typography Hero Sandbox (Comparador de Fuentes del Hero)</title>
+  
+  <!-- Importaciones de Fuentes de Google y Fontshare -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700&family=Sora:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&family=IBM+Plex+Sans:wght@300;400;500;600;700&family=Jost:wght@300;400;500;600;700&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://api.fontshare.com/v2/css?f[]=general-sans@300,400,500,600,700&f[]=cabinet-grotesk@300,400,500,600,700&display=swap" rel="stylesheet">
+
+  <style>
+    /* --- Sistema de Diseño Premium --- */
+    :root {
+      --bg-main: #ffffff;
+      --bg-card: #f8f9fa;
+      --text-main: #000000;
+      --text-muted: #6b7280;
+      --border: rgba(0, 0, 0, 0.08);
+      --accent: #00b4d8;
+      --transition-smooth: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    html.dark-theme {
+      --bg-main: #000000;
+      --bg-card: #09090b;
+      --text-main: #ffffff;
+      --text-muted: #9ca3af;
+      --border: rgba(255, 255, 255, 0.1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      font-family: 'Inter', sans-serif;
+      transition: background-color 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+                  color 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+      padding-bottom: 100px;
+    }
+
+    /* --- Control Panel (Sticky Header) --- */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background-color: var(--bg-main);
+      border-bottom: 1px solid var(--border);
+      padding: 32px 64px;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      transition: var(--transition-smooth);
+    }
+
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+    }
+
+    .header-title h1 {
+      font-size: 1.4rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+    }
+
+    .header-title p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    .theme-toggle-btn {
+      background: none;
+      border: 1px solid var(--text-main);
+      color: var(--text-main);
+      padding: 8px 18px;
+      font-weight: 600;
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: var(--transition-smooth);
+    }
+
+    .theme-toggle-btn:hover {
+      background-color: var(--text-main);
+      color: var(--bg-main);
+    }
+
+    /* Controles de Configuración */
+    .controls-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+      align-items: end;
+    }
+
+    .control-item {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .control-item label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+    }
+
+    .control-item input[type="text"] {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--text-main);
+      padding: 10px 16px;
+      font-family: inherit;
+      font-size: 0.9rem;
+      outline: none;
+      transition: var(--transition-smooth);
+    }
+
+    .control-item input[type="text"]:focus {
+      border-color: var(--text-main);
+    }
+
+    .slider-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .slider-group input[type="range"] {
+      flex: 1;
+      accent-color: var(--text-main);
+      cursor: pointer;
+    }
+
+    .slider-val {
+      font-size: 0.85rem;
+      font-family: monospace;
+      min-width: 40px;
+      text-align: right;
+    }
+
+    .weight-buttons {
+      display: flex;
+      gap: 4px;
+    }
+
+    .btn-weight {
+      flex: 1;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      padding: 8px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition-smooth);
+    }
+
+    .btn-weight.active, .btn-weight:hover {
+      border-color: var(--text-main);
+      color: var(--text-main);
+      background: var(--bg-main);
+    }
+
+    /* --- Sandbox Grid (Mockups) --- */
+    .sandbox-wrapper {
+      max-width: 1400px;
+      margin: 40px auto 0 auto;
+      padding: 0 64px;
+    }
+
+    .mockup-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 40px;
+    }
+
+    @media (max-width: 1024px) {
+      .mockup-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Mockup Container (Simulación de la Sección Hero) */
+    .mockup-card {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border);
+      padding: 48px;
+      position: relative;
+      overflow: hidden;
+      min-height: 420px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: var(--transition-smooth);
+    }
+
+    .mockup-card:hover {
+      border-color: var(--text-main);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.03);
+    }
+
+    /* Grilla de Fondo del Hero */
+    .mockup-bg-grid {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0.08;
+      background-size: 40px 40px;
+      background-image: 
+        linear-gradient(to right, var(--text-main) 1px, transparent 1px),
+        linear-gradient(to bottom, var(--text-main) 1px, transparent 1px);
+    }
+
+    .mockup-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 32px;
+      z-index: 2;
+    }
+
+    .font-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .font-title {
+      font-size: 1.15rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+
+    .font-cat-label {
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+    }
+
+    /* Recomendaciones */
+    .recommendation-badge {
+      background-color: var(--text-main);
+      color: var(--bg-main);
+      font-size: 0.65rem;
+      font-weight: 800;
+      padding: 6px 12px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .recommendation-badge.top1 {
+      background-color: #00b4d8; /* Cyan */
+      color: #ffffff;
+    }
+
+    /* Hero Text Preview (Mockup real de la web) */
+    .hero-mockup-body {
+      margin: auto 0;
+      z-index: 2;
+      position: relative;
+    }
+
+    .mockup-hero-title {
+      line-height: 1.15;
+      letter-spacing: -0.04em;
+      margin-bottom: 20px;
+      word-break: break-word;
+      transition: font-size 0.3s ease, font-weight 0.3s ease;
+    }
+
+    /* Resaltar la IA */
+    .mockup-hero-title .ia-span {
+      color: var(--accent);
+      font-weight: 800;
+    }
+
+    .mockup-hero-desc {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.95rem;
+      line-height: 1.6;
+      color: var(--text-muted);
+      max-width: 90%;
+      margin-bottom: 16px;
+    }
+
+    /* Detalles y por qué la recomendamos */
+    .mockup-footer {
+      border-top: 1px solid var(--border);
+      padding-top: 20px;
+      margin-top: 24px;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .rationale-title {
+      font-size: 0.7rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+    }
+
+    .rationale-text {
+      font-size: 0.8rem;
+      line-height: 1.5;
+      color: var(--text-muted);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Controles Interactivos -->
+  <header>
+    <div class="header-top">
+      <div class="header-title">
+        <h1>QRT: Typography Hero Sandbox</h1>
+        <p>Previsualiza el mensaje principal del Hero con 10 tipografías preseleccionadas y las 5 recomendaciones de marca.</p>
+      </div>
+      <button class="theme-toggle-btn" onclick="toggleTheme()" id="theme-btn">Modo Oscuro</button>
+    </div>
+
+    <div class="controls-grid">
+      <div class="control-item">
+        <label for="input-title">Texto del Título (Usa *ia* para colorear el cian)</label>
+        <input type="text" id="input-title" value="La ingenier*ia* detrás de las decisiones complejas." oninput="updateContent()">
+      </div>
+
+      <div class="control-item">
+        <label for="input-desc">Texto de la Descripción</label>
+        <input type="text" id="input-desc" value="Unimos el rigor del método científico con la precisión de la ingeniería matemática para encontrar soluciones a desafíos de alta complejidad." oninput="updateContent()">
+      </div>
+
+      <div class="control-item">
+        <label>Tamaño del Título</label>
+        <div class="slider-group">
+          <input type="range" min="1.8" max="4.0" step="0.1" value="2.6" id="slider-size" oninput="updateFontSize(this.value)">
+          <span class="slider-val" id="size-val">2.6rem</span>
+        </div>
+      </div>
+
+      <div class="control-item">
+        <label>Grosor (Weight) del Título</label>
+        <div class="weight-buttons">
+          <button class="btn-weight" onclick="updateWeight(500)" id="w-500">Regular (500)</button>
+          <button class="btn-weight active" onclick="updateWeight(700)" id="w-700">Bold (700)</button>
+          <button class="btn-weight" onclick="updateWeight(800)" id="w-800">Black (800)</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Sandbox Grid de Mockups -->
+  <div class="sandbox-wrapper">
+    <div class="mockup-grid" id="mockup-container">
+      <!-- Las tarjetas se generan dinámicamente -->
+    </div>
+  </div>
+
+  <script>
+    // Datos de las 10 tipografías y el análisis para QRT
+    const fontFamilies = [
+      {
+        name: "Geist Sans",
+        stack: "'Geist', sans-serif",
+        category: "Estilo Técnico / Vercel",
+        recommended: 1,
+        recommendationLabel: "Recomendada #1 (Top Choice)",
+        rationale: "Es la tipografía técnica de Vercel. Su geometría estricta y corte afilado la hacen ver sumamente precisa e ingenieril. Combina de forma increíble con los gráficos vectoriales matemáticos de la marca. Transmite rigor, inteligencia artificial y modernidad absoluta."
+      },
+      {
+        name: "Space Grotesk",
+        stack: "'Space Grotesk', sans-serif",
+        category: "Geométrica Afilada",
+        recommended: 2,
+        recommendationLabel: "Recomendada #2",
+        rationale: "Basada en Space Mono, adapta la rigidez de la terminal de programación a proporciones proporcionales perfectas. Aporta un look de 'vanguardia fintech' y analítica de datos sin perder legibilidad. Es limpia, técnica e impactante."
+      },
+      {
+        name: "Outfit",
+        stack: "'Outfit', sans-serif",
+        category: "Geometría Circular Premium",
+        recommended: 3,
+        recommendationLabel: "Recomendada #3",
+        rationale: "Su geometría se basa en círculos puros y vértices pronunciados. Es la tipografía de las startups tecnológicas de alta gama. Transmite elegancia, sofisticación y un diseño digital pulido que 'WOW' al cliente."
+      },
+      {
+        name: "Sora",
+        stack: "'Sora', sans-serif",
+        category: "Display Industrial",
+        recommended: 4,
+        recommendationLabel: "Recomendada #4",
+        rationale: "Diseñada específicamente para entornos fintech y de datos masivos. Sus uniones y terminaciones tienen un corte ligeramente cuadrado que le aporta un peso visual estructurado, simulando solidez computacional y confianza bancaria."
+      },
+      {
+        name: "Cabinet Grotesk",
+        stack: "'Cabinet Grotesk', sans-serif",
+        category: "Swiss Grotesque Moderna",
+        recommended: 5,
+        recommendationLabel: "Recomendada #5",
+        rationale: "Una grotesca moderna cuyos remates y terminales están cortados al ras de forma totalmente perpendicular y rígida. Es la máxima expresión del orden matemático y el racionalismo suizo para el proyecto."
+      },
+      {
+        name: "Inter",
+        stack: "'Inter', sans-serif",
+        category: "Rigor Suizo Tradicional",
+        recommended: 0,
+        rationale: "La tipografía neutral por excelencia del software de alta gama. Máxima legibilidad y balance tipográfico, aunque puede resultar un tanto genérica comparada con Geist o Space Grotesk."
+      },
+      {
+        name: "General Sans",
+        stack: "'General Sans', sans-serif",
+        category: "Grotesca Editorial",
+        recommended: 0,
+        rationale: "Una grotesca clásica y neutra con un balance editorial sofisticado. Transmite rigor académico y seriedad financiera institucional."
+      },
+      {
+        name: "IBM Plex Sans",
+        stack: "'IBM Plex Sans', sans-serif",
+        category: "Industrial / Tecnológica",
+        recommended: 0,
+        rationale: "Creada por IBM como tributo al balance entre la máquina y el ser humano. Posee ángulos rectos afilados mezclados con curvas suaves, lo cual transmite ingeniería corporativa."
+      },
+      {
+        name: "Jost",
+        stack: "'Jost', sans-serif",
+        category: "Bauhaus / Futura",
+        recommended: 0,
+        rationale: "Una versión digital libre de la histórica Futura de Paul Renner. Vértices ultra puntiagudos en letras como la 'N', 'A' y 'V'. Extremadamente geométrica."
+      },
+      {
+        name: "Syne",
+        stack: "'Syne', sans-serif",
+        category: "Display Vanguardista",
+        recommended: 0,
+        rationale: "Llamativa y extravagante, en pesos bold/black adopta un ancho expandido y rasgos geométricos inusuales. Aporta un carácter fuertemente artístico y tecnológico disruptivo."
+      }
+    ];
+
+    let currentSize = 2.6; // en rem
+    let currentWeight = 700; // bold
+
+    // Renderizar tarjetas
+    function renderMockups() {
+      const container = document.getElementById('mockup-container');
+      container.innerHTML = '';
+
+      const titleInput = document.getElementById('input-title').value;
+      const descInput = document.getElementById('input-desc').value;
+
+      // Procesar texto para colorear cian
+      const processedTitle = parseTitleMarkup(titleInput);
+
+      fontFamilies.forEach(font => {
+        const card = document.createElement('div');
+        card.className = 'mockup-card';
+
+        // Determinar badge de recomendación
+        let recBadge = '';
+        if (font.recommended > 0) {
+          const topClass = font.recommended === 1 ? 'top1' : '';
+          recBadge = `<span class="recommendation-badge ${topClass}">${font.recommendationLabel}</span>`;
+        }
+
+        card.innerHTML = `
+          <div class="mockup-bg-grid"></div>
+          
+          <div class="mockup-header">
+            <div class="font-meta">
+              <span class="font-title">${font.name}</span>
+              <span class="font-cat-label">${font.category}</span>
+            </div>
+            ${recBadge}
+          </div>
+
+          <div class="hero-mockup-body">
+            <h2 class="mockup-hero-title" style="font-family: ${font.stack}; font-size: ${currentSize}rem; font-weight: ${currentWeight};">
+              ${processedTitle}
+            </h2>
+            <p class="mockup-hero-desc">
+              ${descInput}
+            </p>
+          </div>
+
+          <div class="mockup-footer">
+            <span class="rationale-title">${font.recommended > 0 ? 'Por qué la recomendamos:' : 'Análisis para el proyecto:'}</span>
+            <p class="rationale-text">${font.rationale}</p>
+          </div>
+        `;
+
+        container.appendChild(card);
+      });
+    }
+
+    // Parsea el markup *texto* a span de cian
+    function parseTitleMarkup(text) {
+      // Reemplaza *texto* por <span class="ia-span">texto</span>
+      return text.replace(/\*(.*?)\*/g, '<span class="ia-span">$1</span>');
+    }
+
+    // Actualiza contenidos en tiempo real
+    function updateContent() {
+      renderMockups();
+    }
+
+    // Actualiza tamaño de letra
+    function updateFontSize(val) {
+      currentSize = val;
+      document.getElementById('size-val').innerText = `${val}rem`;
+      document.querySelectorAll('.mockup-hero-title').forEach(el => {
+        el.style.fontSize = `${val}rem`;
+      });
+    }
+
+    // Actualiza peso (grosor) de letra
+    function updateWeight(weight) {
+      currentWeight = weight;
+      
+      // Toggle botones activos
+      document.querySelectorAll('.btn-weight').forEach(btn => btn.classList.remove('active'));
+      document.getElementById(`w-${weight}`).classList.add('active');
+
+      document.querySelectorAll('.mockup-hero-title').forEach(el => {
+        el.style.fontWeight = weight;
+      });
+    }
+
+    // Alternar tema oscuro/claro
+    function toggleTheme() {
+      const isDark = document.documentElement.classList.toggle('dark-theme');
+      const btn = document.getElementById('theme-btn');
+      btn.innerText = isDark ? 'Modo Claro' : 'Modo Oscuro';
+    }
+
+    // Inicializar
+    window.onload = renderMockups;
+  </script>
+</body>
+</html>
