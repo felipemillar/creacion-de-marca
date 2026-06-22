@@ -497,24 +497,7 @@
       transform: translateY(0);
     }
 
-    .story-number {
-      font-family: 'Fira Code', monospace;
-      font-size: 1rem;
-      font-weight: 500;
-      color: var(--text-muted);
-      margin-bottom: 24px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
 
-    .story-number::before {
-      content: '';
-      display: inline-block;
-      width: 24px;
-      height: 1px;
-      background-color: var(--text-muted);
-    }
 
     .story-title {
       font-size: 3rem;
@@ -586,8 +569,6 @@
       transform: scale(1) translateX(0);
     }
 
-    /* Ocultar elementos para animación de escritura LLM */
-    .story-number,
     .story-subtitle,
     .story-quote,
     .story-desc {
@@ -991,7 +972,7 @@
     <section class="story-section" id="quantitative">
       <div class="story-grid">
         <div class="story-content">
-          <div class="story-number">01 / quantitative</div>
+
           <h2 class="story-title"><span class="title-letter">q</span><span class="blinking-cursor">_</span><span class="story-subtitle">— el enfoque numérico y lógico</span></h2>
           <div class="story-quote">La objetividad matemática como fundamento de la verdad operativa.</div>
           <p class="story-desc">
@@ -1022,7 +1003,7 @@
     <section class="story-section" id="research">
       <div class="story-grid">
         <div class="story-content">
-          <div class="story-number">02 / research</div>
+
           <h2 class="story-title"><span class="title-letter">r</span><span class="blinking-cursor">_</span><span class="story-subtitle">— la investigación y el método científico</span></h2>
           <div class="story-quote">Validación empírica constante en entornos dinámicos.</div>
           <p class="story-desc">
@@ -1059,7 +1040,7 @@
     <section class="story-section" id="trading">
       <div class="story-grid">
         <div class="story-content">
-          <div class="story-number">03 / trading</div>
+
           <h2 class="story-title"><span class="title-letter">t</span><span class="blinking-cursor">_</span><span class="story-subtitle">— la ejecución y los resultados</span></h2>
           <div class="story-quote">El trading institucional como nuestro motor de ingeniería y core operativo.</div>
           <p class="story-desc">
@@ -1180,10 +1161,8 @@
       // 2. Esperar una fracción de segundo (300ms)
       await new Promise(r => setTimeout(r, 300));
       
-      // 3. Mostrar número y subtítulo (fade-in rápido)
-      const numberEl = section.querySelector('.story-number');
+      // 3. Mostrar subtítulo (fade-in rápido)
       const subtitleEl = section.querySelector('.story-subtitle');
-      if (numberEl) numberEl.style.opacity = '1';
       if (subtitleEl) subtitleEl.style.opacity = '1';
       
       // 4. Escribir la cita (story-quote)
