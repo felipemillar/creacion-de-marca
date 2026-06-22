@@ -234,6 +234,85 @@
       color: var(--text-main);
     }
 
+    /* Submenú / Dropdown "filosofía" */
+    .dropdown {
+      position: relative;
+    }
+
+    .dropdown-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      cursor: pointer;
+    }
+
+    .dropdown-toggle::after {
+      content: '';
+      display: inline-block;
+      width: 4px;
+      height: 4px;
+      border-right: 1.2px solid currentColor;
+      border-bottom: 1.2px solid currentColor;
+      transform: rotate(45deg);
+      margin-left: 6px;
+      margin-top: -2px;
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .dropdown:hover .dropdown-toggle::after {
+      transform: rotate(-135deg) translateY(-1px);
+    }
+
+    .submenu {
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%) translateY(10px);
+      background-color: var(--bg-light);
+      border: 1px solid var(--border);
+      list-style: none;
+      padding: 16px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                  visibility 0.4s;
+      min-width: 160px;
+      z-index: 1000;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+    }
+
+    html.dark-theme .submenu {
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    }
+
+    .dropdown:hover .submenu {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(-50%) translateY(12px);
+    }
+
+    .submenu li {
+      margin: 0;
+      padding: 0;
+    }
+
+    .submenu a {
+      font-size: 0.85rem;
+      white-space: nowrap;
+      display: block;
+      color: var(--text-muted);
+      font-weight: 600;
+      transition: var(--transition-smooth);
+    }
+
+    .submenu a:hover, .submenu a.active {
+      color: var(--text-main);
+    }
+
     .theme-toggle {
       text-decoration: none;
       color: var(--text-muted);
@@ -817,9 +896,14 @@
     <nav>
       <ul>
         <li class="nav-item-hide"><a href="#hero" class="nav-link active" data-target="hero">inicio</a></li>
-        <li class="nav-item-hide"><a href="#quantitative" class="nav-link" data-target="quantitative">quantitative</a></li>
-        <li class="nav-item-hide"><a href="#research" class="nav-link" data-target="research">research</a></li>
-        <li class="nav-item-hide"><a href="#trading" class="nav-link" data-target="trading">trading</a></li>
+        <li class="nav-item-hide dropdown">
+          <a class="nav-link dropdown-toggle" id="dropdown-toggle">filosofía</a>
+          <ul class="submenu">
+            <li><a href="#quantitative" class="nav-link" data-target="quantitative">quantitative</a></li>
+            <li><a href="#research" class="nav-link" data-target="research">research</a></li>
+            <li><a href="#trading" class="nav-link" data-target="trading">trading</a></li>
+          </ul>
+        </li>
         <li class="nav-actions">
           <a href="#" class="btn-cta">login</a>
           <a href="#" id="theme-toggle" class="theme-toggle" aria-label="cambiar tema">
@@ -1071,13 +1155,27 @@
             }
           });
 
+          let parentActive = false;
           navLinks.forEach(link => {
-            if (link.getAttribute('data-target') === targetId) {
+            const target = link.getAttribute('data-target');
+            if (target === targetId) {
               link.classList.add('active');
-            } else {
+              if (['quantitative', 'research', 'trading'].includes(target)) {
+                parentActive = true;
+              }
+            } else if (link.id !== 'dropdown-toggle') {
               link.classList.remove('active');
             }
           });
+
+          const dropdownToggle = document.getElementById('dropdown-toggle');
+          if (dropdownToggle) {
+            if (parentActive) {
+              dropdownToggle.classList.add('active');
+            } else {
+              dropdownToggle.classList.remove('active');
+            }
+          }
 
           // Sincronizar el highlight del Logotipo Expandido
           if (targetId === 'hero') {
