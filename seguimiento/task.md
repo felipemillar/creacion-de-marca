@@ -15,9 +15,10 @@
 - `[x]` Crear gráficos vectoriales minimalistas (SVGs) integrados en el fondo de las secciones
 - `[x]` Agregar dot navigator lateral de progreso y navegación rápida
 
-## Research Pilar Waves Update (demo_qrt_research_new.html)
-- `[x]` Crear una demo independiente con el gráfico de ondas de interferencia de Fibonacci
-- `[x]` Implementar 10 curvas con animación de trazado independiente a velocidades asincrónicas
-- `[x]` Colocar puntos de intersección y destello que aparecen coordinados con el recorrido de las ondas
+## Research Pilar Neural Network Update (demo_qrt_research_new.html)
+- `[x]` Crear una demo independiente con el gráfico de red neuronal de conexiones y bifurcaciones
+- `[x]` Implementar conexiones curvas que se expanden (bifurcan) de izquierda a derecha y convergen a un punto final a la derecha
+- `[x]` Diseñar retardos secuenciales en CSS para que las conexiones se dibujen capa por capa
+- `[x]` Eliminar todos los puntos destellantes y sustituirlos por nodos estáticos que se revelan al llegar las señales
 - `[x]` Commitear y subir la demo a GitHub
 
