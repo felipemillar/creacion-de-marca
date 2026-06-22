@@ -526,6 +526,16 @@
       align-items: baseline;
     }
 
+    /* Cursor parpadeante estilo terminal/PC */
+    .blinking-cursor {
+      animation: cursor-blink 1s step-start infinite;
+      display: inline-block;
+    }
+
+    @keyframes cursor-blink {
+      50% { opacity: 0; }
+    }
+
     .story-subtitle {
       font-size: 1.25rem;
       font-weight: 400;
@@ -993,7 +1003,7 @@
       <div class="story-grid">
         <div class="story-content">
           <div class="story-number">01 / quantitative</div>
-          <h2 class="story-title">q_<span class="story-subtitle">— el enfoque numérico y lógico</span></h2>
+          <h2 class="story-title">q<span class="blinking-cursor">_</span><span class="story-subtitle">— el enfoque numérico y lógico</span></h2>
           <div class="story-quote">La objetividad matemática como fundamento de la verdad operativa.</div>
           <p class="story-desc">
             La lógica y la objetividad numérica guían cada una de nuestras decisiones. Diseñamos modelos cuantitativos rigurosos basados en grandes volúmenes de datos abstractos. Así eliminamos por completo los sesgos cognitivos e intuiciones personales del proceso.
@@ -1024,7 +1034,7 @@
       <div class="story-grid">
         <div class="story-content">
           <div class="story-number">02 / research</div>
-          <h2 class="story-title">r_<span class="story-subtitle">— la investigación y el método científico</span></h2>
+          <h2 class="story-title">r<span class="blinking-cursor">_</span><span class="story-subtitle">— la investigación y el método científico</span></h2>
           <div class="story-quote">Validación empírica constante en entornos dinámicos.</div>
           <p class="story-desc">
             El método científico es nuestra herramienta para descubrir valor sostenible. Formulamos hipótesis rigurosas a partir de observaciones detalladas del entorno. Luego, sometemos cada supuesto a pruebas empíricas sumamente estrictas.
@@ -1087,7 +1097,7 @@
       <div class="story-grid">
         <div class="story-content">
           <div class="story-number">03 / trading</div>
-          <h2 class="story-title">t_<span class="story-subtitle">— la ejecución y los resultados</span></h2>
+          <h2 class="story-title">t<span class="blinking-cursor">_</span><span class="story-subtitle">— la ejecución y los resultados</span></h2>
           <div class="story-quote">El trading institucional como nuestro motor de ingeniería y core operativo.</div>
           <p class="story-desc">
             El trading es el núcleo central y origen de nuestra tecnología. Aquí es donde toda la teoría matemática se traduce en ejecución real. Desplegamos nuestro propio capital mediante sistemas automatizados de alta precisión.
