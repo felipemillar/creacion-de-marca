@@ -397,24 +397,18 @@
 
     /* --- Hero Landing Section --- */
     .hero {
-      flex-direction: column;
-      justify-content: center;
-      text-align: center;
-      padding-top: 100px;
+      padding-top: 80px;
     }
 
-    .hero-badge {
-      display: inline-flex;
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.25fr 1fr;
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
       align-items: center;
-      border: 1px solid var(--text-main);
-      color: var(--text-main);
-      padding: 6px 16px;
-      border-radius: 2px;
-      font-size: 0.75rem;
-      font-weight: 700;
-      letter-spacing: 0.12em;
-      margin-bottom: 24px;
-      text-transform: uppercase;
+      gap: 80px;
+      z-index: 10;
     }
 
     .hero h1 {
@@ -422,8 +416,8 @@
       font-weight: 500;
       line-height: 1.15;
       letter-spacing: -0.03em;
-      margin-bottom: 24px;
-      max-width: 850px;
+      margin-bottom: 0;
+      text-align: left;
     }
 
     /* Resaltar el efecto IA */
@@ -440,8 +434,9 @@
     .hero p {
       font-size: 1.25rem;
       color: var(--text-muted);
-      max-width: 650px;
-      margin: 0 auto 48px auto;
+      line-height: 1.6;
+      text-align: left;
+      max-width: 480px;
     }
 
     .scroll-indicator {
@@ -835,14 +830,24 @@
         display: none; /* Ocultar el indicador lateral en celulares */
       }
 
+      .hero-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+        align-items: flex-start;
+      }
+
       .hero h1 {
         font-size: 2.2rem;
-        margin-bottom: 16px;
+        margin-bottom: 0;
+        text-align: left;
       }
 
       .hero p {
         font-size: 1.1rem;
         margin-bottom: 0;
+        text-align: left;
+        max-width: 100%;
       }
 
       .story-title {
@@ -936,10 +941,12 @@
     
     <!-- 0. Hero Section -->
     <section class="hero" id="hero">
-      <h1>La ingenier<span class="highlight-ia">IA</span> detrás de las decisiones complejas.</h1>
-      <p>
-        Unimos el rigor del método científico con la precisión de la ingeniería matemática para encontrar soluciones a desafíos de alta complejidad.
-      </p>
+      <div class="hero-grid">
+        <h1>La ingenier<span class="highlight-ia">IA</span> detrás de las decisiones complejas.</h1>
+        <p>
+          Unimos el rigor del método científico con la precisión de la ingeniería matemática para encontrar soluciones a desafíos de alta complejidad.
+        </p>
+      </div>
     </section>
 
     <!-- 1. q - quantitative Section -->
