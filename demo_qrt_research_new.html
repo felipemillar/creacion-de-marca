@@ -359,12 +359,7 @@
       transform: rotate(180deg);
     }
 
-    .nav-actions {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 8px;
-    }
+
 
     .btn-cta {
       border: 1px solid var(--text-main);
@@ -797,10 +792,7 @@
         font-size: 0.75rem;
       }
       
-      /* Espaciado más compacto en móvil para los botones de acción */
-      .nav-actions {
-        gap: 4px;
-      }
+
       
       /* Altura de pantalla completa en móvil para separar las vistas y evitar solapamientos iniciales */
       .hero, .story-section {
@@ -910,6 +902,14 @@
       
       <nav>
         <ul>
+          <li>
+            <a href="#" id="theme-toggle" class="theme-toggle" aria-label="cambiar tema">
+              <svg class="theme-icon" viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none" />
+                <path d="M 12,2 A 10,10 0 0 0 12,22 Z" fill="currentColor" />
+              </svg>
+            </a>
+          </li>
           <li class="nav-item-hide"><a href="#hero" class="nav-link active" data-target="hero">inicio</a></li>
           <li class="nav-item-hide dropdown">
             <a class="nav-link dropdown-toggle" id="dropdown-toggle">filosofía</a>
@@ -919,14 +919,8 @@
               <li><a href="#trading" class="nav-link" data-target="trading">trading</a></li>
             </ul>
           </li>
-          <li class="nav-actions">
+          <li>
             <a href="#" class="btn-cta">login</a>
-            <a href="#" id="theme-toggle" class="theme-toggle" aria-label="cambiar tema">
-              <svg class="theme-icon" viewBox="0 0 24 24">
-                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none" />
-                <path d="M 12,2 A 10,10 0 0 0 12,22 Z" fill="currentColor" />
-              </svg>
-            </a>
           </li>
         </ul>
       </nav>
