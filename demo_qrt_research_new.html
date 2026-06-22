@@ -532,78 +532,45 @@
     }
 
     #research .visual-svg .wave-path {
-      stroke-dasharray: 800;
-      stroke-dashoffset: 800;
-      transition: stroke-dashoffset 3.0s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+      stroke-dasharray: 200;
+      stroke-dashoffset: 200;
+      transition: stroke-dashoffset 1.0s cubic-bezier(0.25, 0.46, 0.45, 0.94),
                   stroke 0.8s cubic-bezier(0.16, 1, 0.3, 1);
     }
     #research.active .visual-svg .wave-path {
       stroke-dashoffset: 0;
     }
 
-    /* Velocidades individuales para cada curva */
-    #research .visual-svg .wave-1  { transition-duration: 3.2s; }
-    #research .visual-svg .wave-2  { transition-duration: 2.8s; }
-    #research .visual-svg .wave-3  { transition-duration: 3.5s; }
-    #research .visual-svg .wave-4  { transition-duration: 4.0s; }
-    #research .visual-svg .wave-5  { transition-duration: 3.0s; }
-    #research .visual-svg .wave-6  { transition-duration: 3.7s; }
-    #research .visual-svg .wave-7  { transition-duration: 2.5s; }
-    #research .visual-svg .wave-8  { transition-duration: 3.3s; }
-    #research .visual-svg .wave-9  { transition-duration: 4.2s; }
-    #research .visual-svg .wave-10 { transition-duration: 3.6s; }
+    /* Retardos secuenciales por capas para simular propagación de izquierda a derecha */
+    #research .visual-svg .conn-l0 { transition-delay: 0.2s; }
+    #research .visual-svg .conn-l1 { transition-delay: 1.2s; }
+    #research .visual-svg .conn-l2 { transition-delay: 2.2s; }
+    #research .visual-svg .conn-l3 { transition-delay: 3.2s; }
 
-    /* Puntos de intersección y destello */
-    .intersection-dot {
-      fill: #00b4d8; /* Cian de la marca */
+    /* Nodos Estáticos de la Red (Sin destello ni pulso) */
+    .network-node {
+      fill: var(--bg-light);
+      stroke: var(--text-main);
+      stroke-width: 1px;
       opacity: 0;
       transform: scale(0);
       transform-origin: center;
-      transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+                  fill 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+                  stroke 0.8s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    #research.active .intersection-dot {
+    #research.active .network-node {
       opacity: 1;
       transform: scale(1);
     }
 
-    /* Tiempos de retardo según posición horizontal (X) para coordinar con el frente de onda */
-    .dot-x30 { transition-delay: 0.1s; }
-    .dot-x80-y45, .dot-x80-y355, .dot-x110 { transition-delay: 0.8s; }
-    .dot-x140-y140, .dot-x140-y260, .dot-x170 { transition-delay: 1.5s; }
-    .dot-x190-y160, .dot-x190-y240, .dot-x210 { transition-delay: 2.2s; }
-    .dot-x240-y120, .dot-x240-y280, .dot-x250-y110, .dot-x250-y290, .dot-x270, .dot-x290 { transition-delay: 2.9s; }
-    .dot-x295-y110, .dot-x295-y290, .dot-x315, .dot-x340-y140, .dot-x340-y260, .dot-x350 { transition-delay: 3.5s; }
-    .dot-x380 { transition-delay: 4.1s; }
-
-    /* Animación de destello / pulso continuo con diferentes offsets para romper sincronía */
-    @keyframes pulse-glow {
-      0%, 100% {
-        r: 3px;
-        filter: drop-shadow(0 0 1px rgba(0, 180, 216, 0.5));
-      }
-      50% {
-        r: 5px;
-        filter: drop-shadow(0 0 6px rgba(0, 180, 216, 1));
-      }
-    }
-
-    #research.active .intersection-dot {
-      animation: pulse-glow 2s infinite ease-in-out;
-    }
-
-    .dot-x30 { animation-delay: 0.1s; }
-    .dot-x80-y45, .dot-x80-y355 { animation-delay: 0.3s; }
-    .dot-x110 { animation-delay: 0.5s; }
-    .dot-x140-y140, .dot-x140-y260 { animation-delay: 0.7s; }
-    .dot-x170 { animation-delay: 0.9s; }
-    .dot-x190-y160, .dot-x190-y240 { animation-delay: 1.1s; }
-    .dot-x210 { animation-delay: 1.3s; }
-    .dot-x240-y120, .dot-x240-y280, .dot-x250-y110, .dot-x250-y290 { animation-delay: 1.5s; }
-    .dot-x270, .dot-x290 { animation-delay: 1.7s; }
-    .dot-x295-y110, .dot-x295-y290, .dot-x315 { animation-delay: 1.9s; }
-    .dot-x340-y140, .dot-x340-y260, .dot-x350 { animation-delay: 2.1s; }
-    .dot-x380 { animation-delay: 2.3s; }
+    /* Retardos de nodos correspondientes a la llegada de las señales de su capa */
+    #research .visual-svg .node-l0 { transition-delay: 0.1s; }
+    #research .visual-svg .node-l1 { transition-delay: 1.2s; }
+    #research .visual-svg .node-l2 { transition-delay: 2.2s; }
+    #research .visual-svg .node-l3 { transition-delay: 3.2s; }
+    #research .visual-svg .node-l4 { transition-delay: 4.2s; }
 
     /* --- Indicador de Progreso en Scroll (Lateral - Ultra-Minimalista) --- */
     .progress-nav {
@@ -933,49 +900,75 @@
         
         <div class="story-visual">
           <div class="bg-letter">r</div>
-          <!-- SVG: Ondas de Frecuencia Proporcionales (Interfering Waves) -->
+          <!-- SVG: Red Neuronal de Conexiones y Bifurcaciones -->
           <svg class="visual-svg" viewBox="0 0 400 400">
             <!-- Axes (Sin viñetas, estilo minimalista del pilar) -->
             <line x1="30" y1="200" x2="380" y2="200" stroke="var(--text-main)" stroke-width="0.8" />
             <line x1="30" y1="30" x2="30" y2="370" stroke="var(--text-main)" stroke-width="0.8" />
 
-            <!-- Las 10 Curvas de Onda (Cada una con su clase y longitud aproximada) -->
-            <path class="wave-path wave-1" d="M 30,200 C 50,60 90,60 110,200 C 125,260 155,260 170,200 C 185,160 200,160 210,200 C 230,230 250,230 270,200 C 285,180 305,180 315,200 C 325,215 340,215 350,200 C 360,190 370,190 380,200" stroke="var(--text-main)" stroke-width="1.2" fill="none" />
-            <path class="wave-path wave-2" d="M 30,200 C 50,340 90,340 110,200 C 125,140 155,140 170,200 C 185,240 200,240 210,200 C 230,170 250,170 270,200 C 285,220 305,220 315,200 C 325,185 340,185 350,200 C 360,210 370,210 380,200" stroke="var(--text-main)" stroke-width="1.2" fill="none" />
-            <path class="wave-path wave-3" d="M 30,200 C 60,40 140,40 170,200 C 200,280 285,280 315,200 C 330,160 365,160 380,200" stroke="var(--text-main)" stroke-width="1.2" fill="none" opacity="0.75" />
-            <path class="wave-path wave-4" d="M 30,200 C 60,360 140,360 170,200 C 200,120 285,120 315,200 C 330,240 365,240 380,200" stroke="var(--text-main)" stroke-width="1.2" fill="none" opacity="0.75" />
-            <path class="wave-path wave-5" d="M 30,200 C 70,30 170,30 210,200 C 250,290 340,290 380,200" stroke="var(--text-main)" stroke-width="1.2" fill="none" opacity="0.5" />
-            <path class="wave-path wave-6" d="M 30,200 C 70,370 170,370 210,200 C 250,110 340,110 380,200" stroke="var(--text-main)" stroke-width="1.2" fill="none" opacity="0.5" />
-            <path class="wave-path wave-7" d="M 30,200 C 50,160 90,160 110,200 C 125,240 155,240 170,200 C 185,175 200,175 210,200 C 225,225 255,225 270,200 C 285,185 305,185 315,200 C 325,215 340,215 350,200 C 360,185 370,185 380,200" stroke="var(--text-main)" stroke-width="0.8" fill="none" opacity="0.4" />
-            <path class="wave-path wave-8" d="M 30,200 C 50,240 90,240 110,200 C 125,160 155,160 170,200 C 185,225 200,225 210,200 C 225,175 255,175 270,200 C 285,215 305,215 315,200 C 325,185 340,185 350,200 C 360,215 370,215 380,200" stroke="var(--text-main)" stroke-width="0.8" fill="none" opacity="0.4" />
-            <path class="wave-path wave-9" d="M 30,350 C 60,230 90,230 110,230 C 150,230 170,320 210,200 C 230,110 270,110 290,200 C 310,290 350,350 380,350" stroke="var(--text-main)" stroke-width="1.2" fill="none" />
-            <path class="wave-path wave-10" d="M 30,350 C 60,180 90,180 110,180 C 150,180 170,340 210,200 C 230,140 270,140 290,200 C 310,260 350,350 380,350" stroke="var(--text-main)" stroke-width="1.2" fill="none" />
+            <!-- Capa 0 a Capa 1 (Conexiones de Entrada: 1 a 3 bifurcaciones) -->
+            <path class="wave-path conn-l0" d="M 30,200 C 60,200 80,120 110,120" stroke="var(--text-main)" stroke-width="1.2" fill="none" />
+            <path class="wave-path conn-l0" d="M 30,200 C 60,200 80,200 110,200" stroke="var(--text-main)" stroke-width="1.2" fill="none" />
+            <path class="wave-path conn-l0" d="M 30,200 C 60,200 80,280 110,280" stroke="var(--text-main)" stroke-width="1.2" fill="none" />
 
-            <!-- Puntos de Intersección y Cruce (Con destellos/pulsos en hover y active) -->
-            <circle class="intersection-dot dot-x30" cx="30" cy="200" r="3" />
-            <circle class="intersection-dot dot-x110" cx="110" cy="200" r="3" />
-            <circle class="intersection-dot dot-x170" cx="170" cy="200" r="3" />
-            <circle class="intersection-dot dot-x210" cx="210" cy="200" r="3" />
-            <circle class="intersection-dot dot-x270" cx="270" cy="200" r="3" />
-            <circle class="intersection-dot dot-x290" cx="290" cy="200" r="3" />
-            <circle class="intersection-dot dot-x315" cx="315" cy="200" r="3" />
-            <circle class="intersection-dot dot-x350" cx="350" cy="200" r="3" />
-            <circle class="intersection-dot dot-x380" cx="380" cy="200" r="3" />
+            <!-- Capa 1 a Capa 2 (Conexiones Internas: 3 a 5 bifurcaciones) -->
+            <path class="wave-path conn-l1" d="M 110,120 C 140,120 160,80 190,80" stroke="var(--text-main)" stroke-width="1.2" fill="none" opacity="0.85" />
+            <path class="wave-path conn-l1" d="M 110,120 C 140,120 160,140 190,140" stroke="var(--text-main)" stroke-width="1.2" fill="none" opacity="0.85" />
+            <path class="wave-path conn-l1" d="M 110,120 C 140,120 160,200 190,200" stroke="var(--text-main)" stroke-width="1.2" fill="none" opacity="0.85" />
+            <path class="wave-path conn-l1" d="M 110,200 C 140,200 160,140 190,140" stroke="var(--text-main)" stroke-width="1.2" fill="none" opacity="0.85" />
+            <path class="wave-path conn-l1" d="M 110,200 C 140,200 160,200 190,200" stroke="var(--text-main)" stroke-width="1.2" fill="none" opacity="0.85" />
+            <path class="wave-path conn-l1" d="M 110,200 C 140,200 160,260 190,260" stroke="var(--text-main)" stroke-width="1.2" fill="none" opacity="0.85" />
+            <path class="wave-path conn-l1" d="M 110,280 C 140,280 160,200 190,200" stroke="var(--text-main)" stroke-width="1.2" fill="none" opacity="0.85" />
+            <path class="wave-path conn-l1" d="M 110,280 C 140,280 160,260 190,260" stroke="var(--text-main)" stroke-width="1.2" fill="none" opacity="0.85" />
+            <path class="wave-path conn-l1" d="M 110,280 C 140,280 160,320 190,320" stroke="var(--text-main)" stroke-width="1.2" fill="none" opacity="0.85" />
 
-            <circle class="intersection-dot dot-x80-y45" cx="80" cy="45" r="3" />
-            <circle class="intersection-dot dot-x80-y355" cx="80" cy="355" r="3" />
-            <circle class="intersection-dot dot-x140-y140" cx="140" cy="140" r="3" />
-            <circle class="intersection-dot dot-x140-y260" cx="140" cy="260" r="3" />
-            <circle class="intersection-dot dot-x190-y160" cx="190" cy="160" r="3" />
-            <circle class="intersection-dot dot-x190-y240" cx="190" cy="240" r="3" />
-            <circle class="intersection-dot dot-x240-y120" cx="240" cy="120" r="3" />
-            <circle class="intersection-dot dot-x240-y280" cx="240" cy="280" r="3" />
-            <circle class="intersection-dot dot-x250-y110" cx="250" cy="110" r="3" />
-            <circle class="intersection-dot dot-x250-y290" cx="250" cy="290" r="3" />
-            <circle class="intersection-dot dot-x295-y110" cx="295" cy="110" r="3" />
-            <circle class="intersection-dot dot-x295-y290" cx="295" cy="290" r="3" />
-            <circle class="intersection-dot dot-x340-y140" cx="340" cy="140" r="3" />
-            <circle class="intersection-dot dot-x340-y260" cx="340" cy="260" r="3" />
+            <!-- Capa 2 a Capa 3 (Conexiones Internas: 5 a 7 bifurcaciones) -->
+            <path class="wave-path conn-l2" d="M 190,80 C 220,80 240,60 270,60" stroke="var(--text-main)" stroke-width="1.2" fill="none" opacity="0.7" />
+            <path class="wave-path conn-l2" d="M 190,80 C 220,80 240,110 270,110" stroke="var(--text-main)" stroke-width="1.2" fill="none" opacity="0.7" />
+            <path class="wave-path conn-l2" d="M 190,140 C 220,140 240,110 270,110" stroke="var(--text-main)" stroke-width="1.2" fill="none" opacity="0.7" />
+            <path class="wave-path conn-l2" d="M 190,140 C 220,140 240,160 270,160" stroke="var(--text-main)" stroke-width="1.2" fill="none" opacity="0.7" />
+            <path class="wave-path conn-l2" d="M 190,140 C 220,140 240,200 270,200" stroke="var(--text-main)" stroke-width="1.2" fill="none" opacity="0.7" />
+            <path class="wave-path conn-l2" d="M 190,200 C 220,200 240,160 270,160" stroke="var(--text-main)" stroke-width="1.2" fill="none" opacity="0.7" />
+            <path class="wave-path conn-l2" d="M 190,200 C 220,200 240,200 270,200" stroke="var(--text-main)" stroke-width="1.2" fill="none" opacity="0.7" />
+            <path class="wave-path conn-l2" d="M 190,200 C 220,200 240,240 270,240" stroke="var(--text-main)" stroke-width="1.2" fill="none" opacity="0.7" />
+            <path class="wave-path conn-l2" d="M 190,260 C 220,260 240,200 270,200" stroke="var(--text-main)" stroke-width="1.2" fill="none" opacity="0.7" />
+            <path class="wave-path conn-l2" d="M 190,260 C 220,260 240,240 270,240" stroke="var(--text-main)" stroke-width="1.2" fill="none" opacity="0.7" />
+            <path class="wave-path conn-l2" d="M 190,260 C 220,260 240,290 270,290" stroke="var(--text-main)" stroke-width="1.2" fill="none" opacity="0.7" />
+            <path class="wave-path conn-l2" d="M 190,320 C 220,320 240,290 270,290" stroke="var(--text-main)" stroke-width="1.2" fill="none" opacity="0.7" />
+            <path class="wave-path conn-l2" d="M 190,320 C 220,320 240,340 270,340" stroke="var(--text-main)" stroke-width="1.2" fill="none" opacity="0.7" />
+
+            <!-- Capa 3 a Capa 4 (Conexiones de Salida: 7 a 1 convergencia final) -->
+            <path class="wave-path conn-l3" d="M 270,60 C 310,60 350,200 380,200" stroke="var(--text-main)" stroke-width="1.2" fill="none" opacity="0.85" />
+            <path class="wave-path conn-l3" d="M 270,110 C 310,110 350,200 380,200" stroke="var(--text-main)" stroke-width="1.2" fill="none" opacity="0.85" />
+            <path class="wave-path conn-l3" d="M 270,160 C 310,160 350,200 380,200" stroke="var(--text-main)" stroke-width="1.2" fill="none" opacity="0.85" />
+            <path class="wave-path conn-l3" d="M 270,200 C 310,200 350,200 380,200" stroke="var(--text-main)" stroke-width="1.2" fill="none" opacity="0.85" />
+            <path class="wave-path conn-l3" d="M 270,240 C 310,240 350,200 380,200" stroke="var(--text-main)" stroke-width="1.2" fill="none" opacity="0.85" />
+            <path class="wave-path conn-l3" d="M 270,290 C 310,290 350,200 380,200" stroke="var(--text-main)" stroke-width="1.2" fill="none" opacity="0.85" />
+            <path class="wave-path conn-l3" d="M 270,340 C 310,340 350,200 380,200" stroke="var(--text-main)" stroke-width="1.2" fill="none" opacity="0.85" />
+
+            <!-- Nodos Estáticos (Fade-in sin destello ni pulso) -->
+            <!-- Capa 0 -->
+            <circle class="network-node node-l0" cx="30" cy="200" r="4" />
+            <!-- Capa 1 -->
+            <circle class="network-node node-l1" cx="110" cy="120" r="3.5" />
+            <circle class="network-node node-l1" cx="110" cy="200" r="3.5" />
+            <circle class="network-node node-l1" cx="110" cy="280" r="3.5" />
+            <!-- Capa 2 -->
+            <circle class="network-node node-l2" cx="190" cy="80" r="3.5" />
+            <circle class="network-node node-l2" cx="190" cy="140" r="3.5" />
+            <circle class="network-node node-l2" cx="190" cy="200" r="3.5" />
+            <circle class="network-node node-l2" cx="190" cy="260" r="3.5" />
+            <circle class="network-node node-l2" cx="190" cy="320" r="3.5" />
+            <!-- Capa 3 -->
+            <circle class="network-node node-l3" cx="270" cy="60" r="3.5" />
+            <circle class="network-node node-l3" cx="270" cy="110" r="3.5" />
+            <circle class="network-node node-l3" cx="270" cy="160" r="3.5" />
+            <circle class="network-node node-l3" cx="270" cy="200" r="3.5" />
+            <circle class="network-node node-l3" cx="270" cy="240" r="3.5" />
+            <circle class="network-node node-l3" cx="270" cy="290" r="3.5" />
+            <circle class="network-node node-l3" cx="270" cy="340" r="3.5" />
+            <!-- Capa 4 -->
+            <circle class="network-node node-l4" cx="380" cy="200" r="4.5" />
           </svg>
         </div>
       </div>
