@@ -581,9 +581,18 @@
       transition: var(--transition-slow);
     }
 
-    .story-section.active .story-visual {
+    .story-section.typing-finished .story-visual {
       opacity: 1;
       transform: scale(1) translateX(0);
+    }
+
+    /* Ocultar elementos para animación de escritura LLM */
+    .story-number,
+    .story-subtitle,
+    .story-quote,
+    .story-desc {
+      opacity: 0;
+      transition: opacity 0.5s ease;
     }
 
     /* Gran letra de fondo en minúscula */
@@ -625,7 +634,7 @@
       transition: stroke-dashoffset 3.0s cubic-bezier(0.25, 0.46, 0.45, 0.94),
                   stroke 0.8s cubic-bezier(0.16, 1, 0.3, 1);
     }
-    #quantitative.active .visual-svg path {
+    #quantitative.typing-finished .visual-svg path {
       stroke-dashoffset: 0;
     }
 
@@ -635,7 +644,7 @@
       transition: stroke-dashoffset 3.75s cubic-bezier(0.25, 0.46, 0.45, 0.94),
                   stroke 0.8s cubic-bezier(0.16, 1, 0.3, 1);
     }
-    #trading.active .visual-svg path {
+    #trading.typing-finished .visual-svg path {
       stroke-dashoffset: 0;
     }
 
@@ -645,7 +654,7 @@
       transition: stroke-dashoffset 3.75s cubic-bezier(0.25, 0.46, 0.45, 0.94),
                   stroke 0.8s cubic-bezier(0.16, 1, 0.3, 1);
     }
-    #research.active .visual-svg path {
+    #research.typing-finished .visual-svg path {
       stroke-dashoffset: 0;
     }
 
@@ -658,7 +667,7 @@
                   stroke 0.8s cubic-bezier(0.16, 1, 0.3, 1);
       transition-delay: 0.75s;
     }
-    #research.active .visual-svg rect {
+    #research.typing-finished .visual-svg rect {
       opacity: 0.15;
       transform: scale(1);
     }
@@ -983,7 +992,7 @@
       <div class="story-grid">
         <div class="story-content">
           <div class="story-number">01 / quantitative</div>
-          <h2 class="story-title">q<span class="blinking-cursor">_</span><span class="story-subtitle">— el enfoque numérico y lógico</span></h2>
+          <h2 class="story-title"><span class="title-letter">q</span><span class="blinking-cursor">_</span><span class="story-subtitle">— el enfoque numérico y lógico</span></h2>
           <div class="story-quote">La objetividad matemática como fundamento de la verdad operativa.</div>
           <p class="story-desc">
             La lógica y la objetividad numérica guían cada una de nuestras decisiones. Diseñamos modelos cuantitativos rigurosos basados en grandes volúmenes de datos abstractos. Así eliminamos por completo los sesgos cognitivos e intuiciones personales del proceso.
@@ -1014,7 +1023,7 @@
       <div class="story-grid">
         <div class="story-content">
           <div class="story-number">02 / research</div>
-          <h2 class="story-title">r<span class="blinking-cursor">_</span><span class="story-subtitle">— la investigación y el método científico</span></h2>
+          <h2 class="story-title"><span class="title-letter">r</span><span class="blinking-cursor">_</span><span class="story-subtitle">— la investigación y el método científico</span></h2>
           <div class="story-quote">Validación empírica constante en entornos dinámicos.</div>
           <p class="story-desc">
             El método científico es nuestra herramienta para descubrir valor sostenible. Formulamos hipótesis rigurosas a partir de observaciones detalladas del entorno. Luego, sometemos cada supuesto a pruebas empíricas sumamente estrictas.
@@ -1051,7 +1060,7 @@
       <div class="story-grid">
         <div class="story-content">
           <div class="story-number">03 / trading</div>
-          <h2 class="story-title">t<span class="blinking-cursor">_</span><span class="story-subtitle">— la ejecución y los resultados</span></h2>
+          <h2 class="story-title"><span class="title-letter">t</span><span class="blinking-cursor">_</span><span class="story-subtitle">— la ejecución y los resultados</span></h2>
           <div class="story-quote">El trading institucional como nuestro motor de ingeniería y core operativo.</div>
           <p class="story-desc">
             El trading es el núcleo central y origen de nuestra tecnología. Aquí es donde toda la teoría matemática se traduce en ejecución real. Desplegamos nuestro propio capital mediante sistemas automatizados de alta precisión.
@@ -1093,6 +1102,103 @@
     const navLinks = document.querySelectorAll('nav a.nav-link');
     const themeToggle = document.getElementById('theme-toggle');
 
+    // --- Motor de Escritura Secuencial LLM (Typewriter Effect) ---
+    const typingData = {};
+
+    // Recopilar textos originales y preparar DOM (Preserva SEO en el fuente estático)
+    document.querySelectorAll('.story-section').forEach(section => {
+      const id = section.id;
+      const quoteEl = section.querySelector('.story-quote');
+      const descEls = section.querySelectorAll('.story-desc');
+      const titleLetterEl = section.querySelector('.title-letter');
+      
+      if (!quoteEl || descEls.length === 0 || !titleLetterEl) return;
+      
+      // Guardar textos originales
+      typingData[id] = {
+        letter: titleLetterEl.textContent.trim(),
+        quote: quoteEl.textContent.trim(),
+        paragraphs: Array.from(descEls).map(el => el.textContent.trim()),
+        quoteEl: quoteEl,
+        descEls: Array.from(descEls),
+        titleLetterEl: titleLetterEl,
+        sectionEl: section,
+        hasTyped: false
+      };
+      
+      // Limpiar elementos para la animación de escritura
+      titleLetterEl.textContent = '';
+      quoteEl.textContent = '';
+      descEls.forEach(el => el.textContent = '');
+    });
+
+    // Función para escribir texto palabra por palabra (estilo streaming de tokens LLM)
+    function streamText(element, text, speed = 40) {
+      return new Promise(resolve => {
+        element.style.opacity = '1';
+        const words = text.split(/\s+/);
+        let index = 0;
+        
+        // Cursor temporal al final del bloque que se está escribiendo
+        const cursor = document.createElement('span');
+        cursor.className = 'blinking-cursor';
+        cursor.textContent = '_';
+        element.appendChild(cursor);
+        
+        function typeNextWord() {
+          if (index < words.length) {
+            if (element.contains(cursor)) {
+              element.removeChild(cursor);
+            }
+            element.appendChild(document.createTextNode((index === 0 ? '' : ' ') + words[index]));
+            element.appendChild(cursor);
+            index++;
+            setTimeout(typeNextWord, speed + Math.random() * 30); // Toque orgánico en el timing
+          } else {
+            if (element.contains(cursor)) {
+              element.removeChild(cursor);
+            }
+            resolve();
+          }
+        }
+        typeNextWord();
+      });
+    }
+
+    // Ejecutar secuencia secuencial al entrar a la sección
+    async function triggerTypingSequence(id) {
+      const data = typingData[id];
+      if (!data || data.hasTyped) return;
+      data.hasTyped = true; // Ejecutar solo una vez para evitar parpadeos al re-scrollar
+      
+      const section = data.sectionEl;
+      
+      // 1. Digitar la letra en el título (espera inicial de 200ms)
+      await new Promise(r => setTimeout(r, 200));
+      data.titleLetterEl.textContent = data.letter;
+      
+      // 2. Esperar una fracción de segundo (300ms)
+      await new Promise(r => setTimeout(r, 300));
+      
+      // 3. Mostrar número y subtítulo (fade-in rápido)
+      const numberEl = section.querySelector('.story-number');
+      const subtitleEl = section.querySelector('.story-subtitle');
+      if (numberEl) numberEl.style.opacity = '1';
+      if (subtitleEl) subtitleEl.style.opacity = '1';
+      
+      // 4. Escribir la cita (story-quote)
+      await streamText(data.quoteEl, data.quote, 40);
+      
+      // 5. Escribir los párrafos de descripción secuencialmente
+      for (const descEl of data.descEls) {
+        const originalText = data.paragraphs[data.descEls.indexOf(descEl)];
+        await streamText(descEl, originalText, 25); // Velocidad ligeramente mayor para párrafos
+      }
+      
+      // 6. Al terminar la escritura, activar la clase que dibuja y revela el SVG
+      section.classList.add('typing-finished');
+    }
+
     // --- Control de Dark Mode ---
     const savedTheme = localStorage.getItem('theme');
     const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
@@ -1115,7 +1221,6 @@
         header.classList.add('scrolled');
       } else {
         header.classList.remove('scrolled');
-        // Quitar todos los highlights del logo si volvemos arriba del todo
         logo.classList.remove('highlighting');
         Object.values(logoWords).forEach(w => w.classList.remove('active'));
       }
@@ -1129,7 +1234,6 @@
       }
     }
 
-    // Registrar clicks en puntos de navegación lateral
     dotWrappers.forEach(dot => {
       dot.addEventListener('click', () => {
         const targetId = dot.getAttribute('data-target');
@@ -1137,7 +1241,6 @@
       });
     });
 
-    // Registrar clicks en links de navegación superior
     navLinks.forEach(link => {
       link.addEventListener('click', (e) => {
         const targetId = link.getAttribute('data-target');
@@ -1151,7 +1254,7 @@
     // --- Intersection Observer para el Scrollytelling ---
     const observerOptions = {
       root: null,
-      rootMargin: '-30% 0px -30% 0px', // Se activa cuando la sección cruza el área central
+      rootMargin: '-30% 0px -30% 0px',
       threshold: 0.15
     };
 
@@ -1160,10 +1263,13 @@
         const targetId = entry.target.id;
         
         if (entry.isIntersecting) {
-          // Activar la sección visualmente
           entry.target.classList.add('active');
           
-          // Actualizar el Dot Navigator y Menú Superior
+          // Disparar secuencia de tipeo si es una sección de filosofía
+          if (['quantitative', 'research', 'trading'].includes(targetId)) {
+            triggerTypingSequence(targetId);
+          }
+          
           dotWrappers.forEach(dot => {
             if (dot.getAttribute('data-target') === targetId) {
               dot.classList.add('active');
@@ -1194,7 +1300,6 @@
             }
           }
 
-          // Sincronizar el highlight del Logotipo Expandido
           if (targetId === 'hero') {
             logo.classList.remove('highlighting');
             Object.values(logoWords).forEach(w => w.classList.remove('active'));
@@ -1212,7 +1317,6 @@
       });
     }, observerOptions);
 
-    // Observar todas las secciones
     sections.forEach(section => observer.observe(section));
   </script>
 </body>
