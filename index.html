@@ -87,20 +87,30 @@
       left: 0;
       width: 100%;
       z-index: 100;
-      padding: 48px 64px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
       background-color: transparent;
       transition: var(--transition-smooth);
     }
 
     header.scrolled {
-      padding: 24px 64px;
       background-color: var(--header-bg);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border);
+    }
+
+    .header-inner {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 48px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: var(--transition-smooth);
+    }
+
+    header.scrolled .header-inner {
+      padding: 24px 24px;
     }
 
     /* Logotipo: "qrt^" -> "(quantitative research trading)^" */
@@ -706,9 +716,15 @@
       }
 
       header {
-        padding: 20px 24px;
+        padding: 0;
       }
       header.scrolled {
+        padding: 0;
+      }
+      .header-inner {
+        padding: 20px 24px;
+      }
+      header.scrolled .header-inner {
         padding: 12px 24px;
       }
 
@@ -856,45 +872,47 @@
 
   <!-- Cabecera Flexible (El logotipo se expande de qrt^ a (quantitative research trading)^) -->
   <header id="main-header">
-    <a href="#" class="logo-container" id="logo">
-      <span class="logo-parenthesis p-start">(</span>
-      <span class="logo-word" id="word-q">
-        <span class="logo-always">q</span><span class="logo-collapsible">uantitative</span>
-      </span>
-      <span class="logo-space"></span>
-      <span class="logo-word" id="word-r">
-        <span class="logo-always">r</span><span class="logo-collapsible">esearch</span>
-      </span>
-      <span class="logo-space"></span>
-      <span class="logo-word" id="word-t">
-        <span class="logo-always">t</span><span class="logo-collapsible">rading</span>
-      </span>
-      <span class="logo-parenthesis p-end">)</span>
-      <span class="logo-always logo-exponent">^</span>
-    </a>
-    
-    <nav>
-      <ul>
-        <li class="nav-item-hide"><a href="#hero" class="nav-link active" data-target="hero">inicio</a></li>
-        <li class="nav-item-hide dropdown">
-          <a class="nav-link dropdown-toggle" id="dropdown-toggle">filosofía</a>
-          <ul class="submenu">
-            <li><a href="#quantitative" class="nav-link" data-target="quantitative">quantitative</a></li>
-            <li><a href="#research" class="nav-link" data-target="research">research</a></li>
-            <li><a href="#trading" class="nav-link" data-target="trading">trading</a></li>
-          </ul>
-        </li>
-        <li class="nav-actions">
-          <a href="#" class="btn-cta">login</a>
-          <a href="#" id="theme-toggle" class="theme-toggle" aria-label="cambiar tema">
-            <svg class="theme-icon" viewBox="0 0 24 24">
-              <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none" />
-              <path d="M 12,2 A 10,10 0 0 0 12,22 Z" fill="currentColor" />
-            </svg>
-          </a>
-        </li>
-      </ul>
-    </nav>
+    <div class="header-inner">
+      <a href="#" class="logo-container" id="logo">
+        <span class="logo-parenthesis p-start">(</span>
+        <span class="logo-word" id="word-q">
+          <span class="logo-always">q</span><span class="logo-collapsible">uantitative</span>
+        </span>
+        <span class="logo-space"></span>
+        <span class="logo-word" id="word-r">
+          <span class="logo-always">r</span><span class="logo-collapsible">esearch</span>
+        </span>
+        <span class="logo-space"></span>
+        <span class="logo-word" id="word-t">
+          <span class="logo-always">t</span><span class="logo-collapsible">rading</span>
+        </span>
+        <span class="logo-parenthesis p-end">)</span>
+        <span class="logo-always logo-exponent">^</span>
+      </a>
+      
+      <nav>
+        <ul>
+          <li class="nav-item-hide"><a href="#hero" class="nav-link active" data-target="hero">inicio</a></li>
+          <li class="nav-item-hide dropdown">
+            <a class="nav-link dropdown-toggle" id="dropdown-toggle">filosofía</a>
+            <ul class="submenu">
+              <li><a href="#quantitative" class="nav-link" data-target="quantitative">quantitative</a></li>
+              <li><a href="#research" class="nav-link" data-target="research">research</a></li>
+              <li><a href="#trading" class="nav-link" data-target="trading">trading</a></li>
+            </ul>
+          </li>
+          <li class="nav-actions">
+            <a href="#" class="btn-cta">login</a>
+            <a href="#" id="theme-toggle" class="theme-toggle" aria-label="cambiar tema">
+              <svg class="theme-icon" viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none" />
+                <path d="M 12,2 A 10,10 0 0 0 12,22 Z" fill="currentColor" />
+              </svg>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
   </header>
 
   <!-- Indicador Lateral de Progreso (Ultra-Minimalista) -->
