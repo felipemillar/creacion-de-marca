@@ -122,9 +122,9 @@
       font-weight: 500;
       font-size: 3.6rem;
       letter-spacing: -0.04em;
-      /* Retardo de 1.0s (50% de la compresión de 2.0s) al volver a agrandar el logo en scroll-up */
+      /* Retardo de 0.8s al volver a agrandar el logo en scroll-up para esperar a que colapse */
       transition: color 0.6s cubic-bezier(0.16, 1, 0.3, 1),
-                  font-size 0.6s cubic-bezier(0.16, 1, 0.3, 1) 1.0s;
+                  font-size 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.8s;
     }
 
     header.scrolled .logo-container {
@@ -161,15 +161,20 @@
       overflow: hidden;
       font-weight: 700;
       transform: scale(0.5);
-      transition: max-width 1.8s cubic-bezier(0.8, 0, 0.9, 0.1),
-                  opacity 1.5s ease-in,
-                  transform 1.8s cubic-bezier(0.8, 0, 0.9, 0.1);
+      /* Contracción rápida y fluida al colapsar */
+      transition: max-width 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+                  opacity 0.6s ease,
+                  transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     header.scrolled .logo-parenthesis {
       max-width: 30px;
       opacity: 1;
       transform: scale(1);
+      /* Despliegue progresivo lento y controlado al expandirse */
+      transition: max-width 1.8s cubic-bezier(0.8, 0, 0.9, 0.1),
+                  opacity 1.5s ease-in,
+                  transform 1.8s cubic-bezier(0.8, 0, 0.9, 0.1);
     }
 
     .p-start { transform-origin: right center; margin-right: 0; }
@@ -187,25 +192,33 @@
       font-weight: 700;
       transform: scaleX(0);
       transform-origin: left center;
-      transition: max-width 2.0s cubic-bezier(0.8, 0, 0.9, 0.1),
-                  opacity 1.5s ease-in,
-                  transform 2.0s cubic-bezier(0.8, 0, 0.9, 0.1);
+      /* Contracción rápida y fluida al colapsar */
+      transition: max-width 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+                  opacity 0.6s ease,
+                  transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     header.scrolled .logo-collapsible {
       max-width: 400px;
       opacity: 1;
       transform: scaleX(1);
+      /* Despliegue progresivo lento y controlado al expandirse */
+      transition: max-width 2.0s cubic-bezier(0.8, 0, 0.9, 0.1),
+                  opacity 1.5s ease-in,
+                  transform 2.0s cubic-bezier(0.8, 0, 0.9, 0.1);
     }
 
     .logo-space {
       display: inline-block;
       width: 0;
-      transition: all 2.0s cubic-bezier(0.8, 0, 0.9, 0.1);
+      /* Contracción rápida al colapsar */
+      transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     header.scrolled .logo-space {
       width: 8px;
+      /* Despliegue progresivo al expandirse */
+      transition: all 2.0s cubic-bezier(0.8, 0, 0.9, 0.1);
     }
 
     /* Separación sutil entre la r y la t cuando el logo está colapsado (escala con el tamaño de fuente) */
