@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mockups: IA Copywriting</title>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --text-main: #0D0D0D;
+            --bg-main: #FFFFFF;
+            --text-muted: #6E6E73;
+            --tab-bg: #F5F5F7;
+            --tab-active: #0D0D0D;
+        }
+        body {
+            font-family: 'Sora', sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            margin: 0;
+            padding: 60px 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        h1 {
+            font-size: 24px;
+            font-weight: 500;
+            margin-bottom: 40px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-align: center;
+        }
+        
+        /* Sistema de Pestañas */
+        .tabs-container {
+            display: flex;
+            background: var(--tab-bg);
+            padding: 4px;
+            border-radius: 8px;
+            margin-bottom: 60px;
+            width: 100%;
+            max-width: 500px;
+        }
+        .tab-btn {
+            flex: 1;
+            padding: 12px 24px;
+            border: none;
+            background: transparent;
+            font-family: 'Sora', sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-muted);
+            cursor: pointer;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+        .tab-btn.active {
+            background: var(--tab-active);
+            color: var(--bg-main);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        /* Contenido de Pestañas */
+        .tab-content {
+            display: none;
+            width: 100%;
+            max-width: 900px;
+            animation: fadeIn 0.4s ease forwards;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .intro-text {
+            text-align: center;
+            margin-bottom: 60px;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+        
+        /* Contenedores de Mockup */
+        .mockup-container {
+            margin-bottom: 80px;
+            padding-bottom: 60px;
+            border-bottom: 1px solid #EAEAEA;
+        }
+        .mockup-container:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+        .mockup-title {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-weight: 700;
+        }
+        .mockup-desc {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-bottom: 30px;
+            line-height: 1.5;
+            max-width: 700px;
+        }
+        .mockup-text {
+            font-size: 64px;
+            font-weight: 500;
+            line-height: 1.15;
+            letter-spacing: -0.04em;
+            margin-bottom: 50px;
+        }
+        .mockup-text:last-child {
+            margin-bottom: 0;
+        }
+        
+        /* Utilidades Visuales IA */
+        .opt-1 { font-weight: 300; }
+        .ia-bold { font-weight: 700; }
+        .ia-mono { font-family: 'JetBrains Mono', monospace; font-weight: 700; letter-spacing: -0.05em; }
+        
+        .blinking-cursor {
+            font-family: 'JetBrains Mono', monospace; 
+            font-weight: 400;
+            animation: blink 1s step-end infinite;
+            color: var(--text-muted);
+        }
+        @keyframes blink { 50% { opacity: 0; } }
+        
+        .brackets { font-weight: 300; color: var(--text-muted); }
+        
+        .ia-invert {
+            background-color: var(--text-main);
+            color: var(--bg-main);
+            padding: 0px 8px;
+            border-radius: 4px;
+            font-weight: 700;
+            display: inline-block;
+            line-height: 1;
+            transform: translateY(-4px);
+        }
+        
+        .ia-underline {
+            font-weight: 700;
+            border-bottom: 4px solid var(--text-main);
+            padding-bottom: 2px;
+        }
+        
+        .opt-outline { font-weight: 700; }
+        .ia-outline {
+            color: transparent;
+            -webkit-text-stroke: 2px var(--text-main);
+        }
+        
+        .exponent {
+            font-size: 36px;
+            vertical-align: super;
+            font-weight: 500;
+            margin-left: 2px;
+            color: var(--text-muted);
+        }
+
+        /* --- Estilos Especiales para "A = ^" --- */
+        
+        /* Raw Exponent: Se deja como un exponente real volando alto */
+        .a-raw-exponent {
+            font-weight: 500;
+            letter-spacing: -0.05em;
+        }
+
+        /* Baseline Caret: Modificado para reemplazar literalmente la A en tamaño y posición */
+        .a-baseline {
+            display: inline-block;
+            font-weight: 700;
+            transform: translateY(0.2em) scale(1.3);
+            margin: 0 0.05em;
+            color: var(--text-main);
+        }
+
+    </style>
+</head>
+<body>
+
+    <h1>Exploración de Copywriting (Monocromático)</h1>
+
+    <!-- Pestañas -->
+    <div class="tabs-container">
+        <button class="tab-btn" onclick="switchTab('tab-es', this)">ESPAÑOL</button>
+        <button class="tab-btn active" onclick="switchTab('tab-en', this)">ENGLISH</button>
+        <button class="tab-btn" onclick="switchTab('tab-caret', this)">JUEGO: A = ^</button>
+    </div>
+
+    <!-- ==========================================
+         PESTAÑA ESPAÑOL
+    =========================================== -->
+    <div id="tab-es" class="tab-content">
+        <div class="intro-text">
+            Variaciones visuales para aprovechar el juego ortográfico natural de "ingenierIA", enfocándonos en peso, estructura y sintaxis, sin depender del color.
+        </div>
+
+        <div class="mockup-container">
+            <div class="mockup-title">1. Contraste de Peso (Sutil & Elegante)</div>
+            <div class="mockup-desc">Usamos un grosor ligero para la palabra base y un peso muy fuerte para la terminación.</div>
+            <div class="mockup-text opt-1">
+                La ingenier<span class="ia-bold">IA</span> detrás<br>de las decisiones complejas.
+            </div>
+        </div>
+
+        <div class="mockup-container">
+            <div class="mockup-title">2. Estilo Terminal / Código (Recomendado)</div>
+            <div class="mockup-desc">Tipografía monoespaciada para la IA, combinada con el cursor de la marca.</div>
+            <div class="mockup-text opt-1">
+                La ingenier<span class="ia-mono">IA</span><span class="blinking-cursor">_</span> detrás<br>de las decisiones complejas.
+            </div>
+        </div>
+
+        <div class="mockup-container">
+            <div class="mockup-title">3. Paréntesis Matemático (ADN QRT)</div>
+            <div class="mockup-desc">Rescate directo del estilo visual del logo expandido `(quantitative...)`.</div>
+            <div class="mockup-text opt-1">
+                La ingenier<span class="brackets">(</span><span class="ia-bold">IA</span><span class="brackets">)</span> detrás<br>de las decisiones complejas.
+            </div>
+        </div>
+
+        <div class="mockup-container">
+            <div class="mockup-title">4. Bloque Invertido (Highlight)</div>
+            <div class="mockup-desc">Fuerte y digital. Imita el texto seleccionado o un token de código resaltado.</div>
+            <div class="mockup-text opt-1">
+                La ingenier<span class="ia-invert">IA</span> detrás<br>de las decisiones complejas.
+            </div>
+        </div>
+
+        <div class="mockup-container">
+            <div class="mockup-title">5. Subrayado Técnico</div>
+            <div class="mockup-text opt-1">
+                La ingenier<span class="ia-underline">IA</span> detrás<br>de las decisiones complejas.
+            </div>
+        </div>
+
+        <div class="mockup-container">
+            <div class="mockup-title">6. Tipografía Contorneada (Wireframe)</div>
+            <div class="mockup-text opt-outline">
+                La ingenier<span class="ia-outline">IA</span> detrás<br>de las decisiones complejas.
+            </div>
+        </div>
+
+        <div class="mockup-container">
+            <div class="mockup-title">7. El Exponente (Identidad qrt^)</div>
+            <div class="mockup-text opt-1">
+                La ingenier<span class="ia-bold">IA</span><span class="exponent">^</span> detrás<br>de las decisiones complejas.
+            </div>
+        </div>
+    </div>
+
+    <!-- ==========================================
+         PESTAÑA INGLÉS
+    =========================================== -->
+    <div id="tab-en" class="tab-content active">
+        <div class="intro-text">
+            Al perder el juego lingüístico directo ("engineering"), usamos sintaxis algorítmica o buscamos vocabulario cuántico en inglés que contenga las letras "AI".
+        </div>
+
+        <div class="mockup-container">
+            <div class="mockup-title">Ruta 1: Inyección de Código (Sintaxis Técnica)</div>
+            <div class="mockup-desc">Tratamos a la Inteligencia Artificial como un parámetro, variable o exponente dentro de la ingeniería, manteniendo la identidad rigurosa de QRT.</div>
+            
+            <div class="mockup-text opt-1">
+                The engineering<span class="brackets">(</span><span class="ia-bold">AI</span><span class="brackets">)</span><br>behind complex decisions.
+            </div>
+
+            <div class="mockup-text opt-1">
+                The engineering<span class="ia-mono">_AI</span><span class="blinking-cursor">_</span><br>behind complex decisions.
+            </div>
+
+            <div class="mockup-text opt-1">
+                The engineering<span class="ia-invert">AI</span><br>behind complex decisions.
+            </div>
+            
+            <div class="mockup-text opt-1">
+                The engineering<span class="ia-bold">AI</span><span class="exponent">^</span><br>behind complex decisions.
+            </div>
+        </div>
+
+        <div class="mockup-container">
+            <div class="mockup-title">Ruta 2: Palabras con "AI" (Juego Ortográfico)</div>
+            <div class="mockup-desc">Replicamos la técnica del español (esconder "AI" en otra palabra), usando terminología de modelos y finanzas en inglés.</div>
+            
+            <div class="mockup-text opt-1">
+                The cert<span class="ia-bold">AI</span>nty behind<br>complex decisions.
+            </div>
+
+            <div class="mockup-text opt-1">
+                The det<span class="ia-mono">AI</span>l<span class="blinking-cursor">_</span> behind<br>complex decisions.
+            </div>
+
+            <div class="mockup-text opt-1">
+                The tr<span class="ia-invert">AI</span>ning behind<br>complex models.
+            </div>
+
+            <div class="mockup-text opt-1">
+                The br<span class="brackets">(</span><span class="ia-bold">AI</span><span class="brackets">)</span>n behind<br>complex decisions.
+            </div>
+        </div>
+
+        <div class="mockup-container">
+            <div class="mockup-title">Ruta 3: El Neologismo (Atrévete)</div>
+            <div class="mockup-desc">Fusionamos "AI" y "Engineering" en una sola palabra sonora. Se pronuncia algo como "A-I-ngineering".</div>
+            
+            <div class="mockup-text opt-1">
+                The <span class="ia-bold">AI</span>ngineering behind<br>complex decisions.
+            </div>
+        </div>
+    </div>
+
+    <!-- ==========================================
+         PESTAÑA JUEGO: A = ^
+    =========================================== -->
+    <div id="tab-caret" class="tab-content">
+        <div class="intro-text">
+            <strong>¡Idea Brillante!</strong> Dado que la forma geométrica de la "A" mayúscula es idéntica a la del exponente "caret" (^), podemos usar el símbolo central de `qrt^` para reemplazar la letra. Es un Easter Egg perfecto: los matemáticos y programadores lo leerán como exponente, pero el cerebro humano lo decodificará como la letra "A".
+        </div>
+
+        <div class="mockup-container">
+            <div class="mockup-title">1. Exponente Crudo (Crudo y Técnico)</div>
+            <div class="mockup-desc">Dejamos el símbolo en su posición natural de exponente (volando alto). Crea una pausa mental interesante porque la letra "falta", pero el exponente completa la forma.</div>
+            
+            <div class="mockup-text opt-1">
+                La ingenierI<span class="a-raw-exponent">^</span> detrás<br>de las decisiones complejas.
+            </div>
+        </div>
+
+        <div class="mockup-container">
+            <div class="mockup-title">2. Alineada a la Base (Reemplazo Perfecto)</div>
+            <div class="mockup-desc">Por CSS bajamos y agrandamos el símbolo ^ para que repose en la misma línea base que el resto de las letras. Funciona como una "A" mayúscula a la que le borraron la barra transversal. Se ve extremadamente moderno.</div>
+            
+            <div class="mockup-text opt-1">
+                La ingenierI<span class="a-baseline">^</span> detrás<br>de las decisiones complejas.
+            </div>
+            
+            <div class="mockup-text opt-1">
+                La ingenier<span class="ia-bold">I<span class="a-baseline">^</span></span> detrás<br>de las decisiones complejas.
+            </div>
+        </div>
+
+        <div class="mockup-container" style="border-bottom: none;">
+            <div class="mockup-title">3. Adaptación al Inglés usando el Símbolo ^</div>
+            <div class="mockup-desc">Este truco salva la adaptación al inglés maravillosamente. Podemos reemplazar cualquier "A" en el copy inglés con el exponente de la marca.</div>
+            
+            <div class="mockup-text opt-1">
+                The certI<span class="a-baseline">^</span>nty behind<br>complex decisions.
+            </div>
+
+            <div class="mockup-text opt-1">
+                The brI<span class="a-baseline">^</span>n behind<br>complex decisions.
+            </div>
+
+            <div class="mockup-text opt-1">
+                The I<span class="a-baseline">^</span>ngineering behind<br>complex decisions.
+            </div>
+            
+            <div class="mockup-text opt-1">
+                The engineering<span class="brackets">(</span><span class="ia-bold">I<span class="a-baseline">^</span></span><span class="brackets">)</span><br>behind complex decisions.
+            </div>
+        </div>
+    </div>
+
+    <!-- Script de Pestañas -->
+    <script>
+        function switchTab(tabId, btn) {
+            // Quitar clase active de todos los botones y contenidos
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            
+            // Añadir clase active al botón y contenido clickeado
+            btn.classList.add('active');
+            document.getElementById(tabId).classList.add('active');
+        }
+    </script>
+</body>
+</html>

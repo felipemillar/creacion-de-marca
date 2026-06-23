@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flujo de Trabajo — Branding con Bucle de Calidad</title>
+    <meta name="description" content="Diagrama de flujo minimalista para el proceso de branding híbrido y agéntica.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --white: #ffffff;
+            --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-300: #d1d5db;
+            --gray-400: #9ca3af;
+            --gray-500: #6b7280;
+            --gray-600: #4b5563;
+            --gray-700: #374151;
+            --gray-800: #1f2937;
+            --gray-900: #111827;
+            --indigo-50: #eef2ff;
+            --indigo-100: #e0e7ff;
+            --indigo-600: #4f46e5;
+            --indigo-700: #4338ca;
+            --purple-50: #faf5ff;
+            --purple-600: #9333ea;
+            --green-50: #f0fdf4;
+            --green-600: #16a34a;
+            --green-700: #15803d;
+            --amber-50: #fffbeb;
+            --amber-100: #fef3c7;
+            --amber-600: #d97706;
+            --amber-700: #b45309;
+            --red-50: #fef2f2;
+            --red-500: #ef4444;
+            --red-600: #dc2626;
+            --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: var(--font);
+            background: var(--white);
+            color: var(--gray-800);
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ── Header ── */
+        .page-header {
+            max-width: 820px;
+            margin: 0 auto;
+            padding: 3rem 2rem 1.5rem;
+            text-align: center;
+        }
+        .page-header h1 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--gray-900);
+            letter-spacing: -0.02em;
+        }
+        .page-header p {
+            font-size: 0.8rem;
+            color: var(--gray-400);
+            margin-top: 0.35rem;
+        }
+
+        /* ── Main Layout ── */
+        .layout {
+            max-width: 820px;
+            margin: 0 auto;
+            padding: 1rem 2rem 6rem;
+            display: flex;
+            gap: 3rem;
+            align-items: flex-start;
+        }
+
+        /* ── Spine (left: main flow) ── */
+        .spine {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 0;
+        }
+
+        /* ── Sidebar (right: knowledge sources) ── */
+        .sidebar {
+            width: 260px;
+            flex-shrink: 0;
+            position: sticky;
+            top: 2rem;
+        }
+
+        /* ── Phase Separator ── */
+        .phase {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin: 1.5rem 0 0.75rem;
+        }
+        .phase::before, .phase::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--gray-200);
+        }
+        .phase span {
+            font-size: 0.65rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--gray-400);
+            white-space: nowrap;
+        }
+
+        /* ── Connector line between nodes ── */
+        .connector {
+            width: 1px;
+            height: 24px;
+            background: var(--gray-300);
+            position: relative;
+        }
+        .connector::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: -2.5px;
+            width: 0; height: 0;
+            border-left: 3px solid transparent;
+            border-right: 3px solid transparent;
+            border-top: 4px solid var(--gray-300);
+        }
+        .connector.short { height: 16px; }
+
+        /* ── Node Base ── */
+        .node {
+            width: 100%;
+            max-width: 340px;
+            border: 1px solid var(--gray-200);
+            border-radius: 6px;
+            padding: 0.6rem 1rem;
+            text-align: center;
+            font-size: 0.78rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: box-shadow 0.15s ease, border-color 0.15s ease;
+            background: var(--white);
+            color: var(--gray-700);
+        }
+        .node:hover {
+            border-color: var(--gray-300);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+
+        /* Types */
+        .node.input {
+            background: var(--gray-50);
+            border-color: var(--gray-300);
+            color: var(--gray-700);
+        }
+        .node.agent {
+            background: var(--indigo-50);
+            border-color: var(--indigo-100);
+            color: var(--indigo-700);
+            font-weight: 600;
+        }
+        .node.output {
+            background: var(--green-50);
+            border-color: #bbf7d0;
+            color: var(--green-700);
+            font-weight: 600;
+        }
+
+        /* File capsule */
+        .file-tag {
+            display: inline-block;
+            font-size: 0.68rem;
+            font-weight: 400;
+            color: var(--gray-500);
+            background: var(--gray-50);
+            border: 1px solid var(--gray-200);
+            border-radius: 4px;
+            padding: 0.2rem 0.6rem;
+        }
+        .file-tag::before {
+            content: '📄 ';
+        }
+
+        /* ── Decision Diamond ── */
+        .diamond-wrap {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+        .diamond {
+            width: 96px;
+            height: 96px;
+            transform: rotate(45deg);
+            border: 1.5px solid #ddd6fe;
+            background: var(--purple-50);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: border-color 0.15s ease;
+        }
+        .diamond:hover { border-color: var(--purple-600); }
+        .diamond-label {
+            transform: rotate(-45deg);
+            font-size: 0.68rem;
+            font-weight: 600;
+            color: var(--purple-600);
+            text-align: center;
+            line-height: 1.3;
+        }
+
+        /* Branch labels beside diamond */
+        .branch-row {
+            width: 100%;
+            max-width: 420px;
+            display: flex;
+            justify-content: space-between;
+            margin-top: 0.5rem;
+        }
+        .branch-label {
+            font-size: 0.62rem;
+            font-weight: 600;
+            padding: 0.15rem 0.5rem;
+            border-radius: 3px;
+        }
+        .branch-label.yes {
+            color: var(--green-600);
+            background: var(--green-50);
+        }
+        .branch-label.no {
+            color: var(--red-600);
+            background: var(--red-50);
+        }
+
+        /* ── Loopback Arrow (pure CSS) ── */
+        .loopback {
+            width: 100%;
+            max-width: 380px;
+            display: flex;
+            align-items: center;
+            gap: 0;
+            margin: 0.3rem 0 0;
+        }
+        .loopback .loop-line {
+            flex: 1;
+            height: 1px;
+            border-top: 1.5px dashed var(--red-500);
+        }
+        .loopback .loop-text {
+            font-size: 0.6rem;
+            font-weight: 600;
+            color: var(--red-600);
+            white-space: nowrap;
+            padding: 0.1rem 0.4rem;
+            background: var(--red-50);
+            border-radius: 3px;
+        }
+        .loopback .loop-arrow {
+            font-size: 0.7rem;
+            color: var(--red-500);
+        }
+
+        /* ── Knowledge Sidebar ── */
+        .sources-box {
+            background: var(--amber-50);
+            border: 1px solid var(--amber-100);
+            border-radius: 8px;
+            padding: 1rem;
+        }
+        .sources-title {
+            font-size: 0.68rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--amber-700);
+            margin-bottom: 0.6rem;
+        }
+        .source-item {
+            font-size: 0.7rem;
+            color: var(--gray-600);
+            padding: 0.4rem 0.5rem;
+            border: 1px solid var(--gray-200);
+            border-radius: 4px;
+            background: var(--white);
+            margin-bottom: 0.35rem;
+            cursor: pointer;
+            transition: border-color 0.15s ease;
+        }
+        .source-item:last-child { margin-bottom: 0; }
+        .source-item:hover { border-color: var(--amber-600); }
+        .source-item strong { color: var(--gray-800); }
+
+        /* ── Drawer ── */
+        .drawer-overlay {
+            position: fixed; inset: 0;
+            background: rgba(0,0,0,0.06);
+            backdrop-filter: blur(2px);
+            z-index: 1000;
+            opacity: 0; visibility: hidden;
+            transition: all 0.2s ease;
+        }
+        .drawer-overlay.open { opacity: 1; visibility: visible; }
+        .drawer {
+            position: fixed;
+            top: 0; right: 0;
+            width: 100%; max-width: 460px;
+            height: 100vh;
+            background: var(--white);
+            border-left: 1px solid var(--gray-200);
+            z-index: 1001;
+            transform: translateX(100%);
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            display: flex;
+            flex-direction: column;
+        }
+        .drawer-overlay.open ~ .drawer { transform: translateX(0); }
+        .drawer-head {
+            padding: 1.25rem 1.5rem;
+            border-bottom: 1px solid var(--gray-100);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .drawer-head h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--gray-900);
+        }
+        .drawer-close {
+            background: none; border: none;
+            font-size: 1.3rem; color: var(--gray-400);
+            cursor: pointer; line-height: 1;
+            width: 28px; height: 28px;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .drawer-close:hover { background: var(--gray-100); color: var(--gray-600); }
+        .drawer-body {
+            padding: 1.5rem;
+            overflow-y: auto;
+            flex: 1;
+        }
+        .drawer-section-title {
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            font-weight: 700;
+            color: var(--gray-800);
+            margin-bottom: 0.4rem;
+            padding-left: 0.5rem;
+            border-left: 2px solid var(--indigo-600);
+        }
+        .drawer-section-title + .drawer-section-title,
+        .drawer-text + .drawer-section-title,
+        .drawer-list + .drawer-section-title { margin-top: 1.2rem; }
+        .drawer-text {
+            font-size: 0.82rem;
+            color: var(--gray-600);
+            line-height: 1.6;
+        }
+        .drawer-list {
+            margin-left: 1.2rem;
+            font-size: 0.82rem;
+            color: var(--gray-600);
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+        }
+
+        /* ── Responsive ── */
+        @media (max-width: 740px) {
+            .layout { flex-direction: column; padding: 1rem; }
+            .sidebar { width: 100%; position: static; order: -1; }
+            .node { max-width: 100%; }
+            .branch-row { max-width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+<header class="page-header">
+    <h1>Flujo de Trabajo de Branding</h1>
+    <p>Proceso secuencial con bucles de calidad · Haz clic en cualquier nodo para ver detalles</p>
+</header>
+
+<div class="layout">
+
+    <!-- ════════ MAIN FLOW (SPINE) ════════ -->
+    <div class="spine">
+
+        <!-- Fase 0 ────────────────────── -->
+        <div class="phase"><span>Fase 0 · Ingesta</span></div>
+
+        <div class="node input" onclick="openDrawer('input-feedback')">
+            Briefing Inicial + Directrices de Marca del Cliente
+        </div>
+        <div class="connector"></div>
+
+        <div class="node agent" onclick="openDrawer('agent-auditor-dir')">
+            Agente Auditor de Directrices
+        </div>
+        <div class="connector short"></div>
+        <div class="file-tag">reporte_alineacion_directrices.md</div>
+
+        <!-- Fase 1 ────────────────────── -->
+        <div class="phase"><span>Fase 1 · Investigación y ADN</span></div>
+
+        <div class="node agent" onclick="openDrawer('agent-investigador')">
+            Agente Investigador (AIP)
+        </div>
+        <div class="connector short"></div>
+        <div class="file-tag">reporte_hechos_crudos.md</div>
+        <div class="connector"></div>
+
+        <div class="node agent" onclick="openDrawer('agent-disenador')">
+            Agente Diseñador de ADN (EBI)
+        </div>
+        <div class="connector short"></div>
+        <div class="file-tag">diseno_adn_esencia.md</div>
+        <div class="connector"></div>
+
+        <!-- Gate 1: Aprobación ADN -->
+        <div class="diamond-wrap">
+            <div class="diamond" onclick="openDrawer('aprobacion-usuario')">
+                <div class="diamond-label">Aprobación<br>Usuario</div>
+            </div>
+            <div class="branch-row">
+                <span class="branch-label no">✕ Rechazado → Investigador</span>
+                <span class="branch-label yes">✓ Aprobado ↓</span>
+            </div>
+        </div>
+
+        <!-- Fase 2 ────────────────────── -->
+        <div class="phase"><span>Fase 2 · Redacción y Edición</span></div>
+
+        <div class="node agent" onclick="openDrawer('agent-redactor')">
+            Agente Redactor de Copy (ENC)
+        </div>
+        <div class="connector short"></div>
+        <div class="file-tag">borrador_mensajes_s1.md</div>
+        <div class="connector"></div>
+
+        <div class="node agent" onclick="openDrawer('agent-editor')">
+            Agente Editor / Copywriter
+        </div>
+        <div class="connector short"></div>
+        <div class="file-tag">propuesta_valor_manifiesto.md</div>
+
+        <!-- Fase 3 ────────────────────── -->
+        <div class="phase"><span>Fase 3 · Auditoría Neuro-UX</span></div>
+
+        <div class="node agent" onclick="openDrawer('agent-experto')">
+            Agente Experto en UX (EDV)
+        </div>
+        <div class="connector"></div>
+
+        <!-- Gate 2: Puntaje ≥ 95 -->
+        <div class="diamond-wrap">
+            <div class="diamond" onclick="openDrawer('aprobacion-score')">
+                <div class="diamond-label">¿Puntaje<br>≥ 95?</div>
+            </div>
+            <div class="branch-row">
+                <span class="branch-label no">✕ &lt; 95 → Reporte KPIs</span>
+                <span class="branch-label yes">✓ Aprobado ↓</span>
+            </div>
+        </div>
+
+        <div class="loopback">
+            <span class="loop-arrow">↩</span>
+            <span class="loop-line"></span>
+            <span class="loop-text">Bucle de Corrección → Redactor</span>
+            <span class="loop-line"></span>
+        </div>
+
+        <div class="connector"></div>
+
+        <div class="node agent" onclick="openDrawer('agent-gatekeeper')">
+            Agente Auditor de Despliegue (AIA)
+        </div>
+
+        <!-- Fase 4 ────────────────────── -->
+        <div class="phase"><span>Fase 4 · Aprobación y Lanzamiento</span></div>
+
+        <!-- Gate 3: Aprobación Final -->
+        <div class="diamond-wrap">
+            <div class="diamond" onclick="openDrawer('aprobacion-final')">
+                <div class="diamond-label">Aprobación<br>Final</div>
+            </div>
+            <div class="branch-row">
+                <span class="branch-label no">✕ Rechazado → Redactor</span>
+                <span class="branch-label yes">✓ Aprobado ↓</span>
+            </div>
+        </div>
+
+        <div class="connector"></div>
+
+        <div class="node agent" onclick="openDrawer('agent-word')">
+            Agente Experto en Lanzamiento (AIA)
+        </div>
+        <div class="connector short"></div>
+        <div class="file-tag">publicacion_produccion.html</div>
+        <div class="connector"></div>
+
+        <div class="node output" onclick="openDrawer('publicacion-fin')">
+            ✓ Lanzamiento de Marca
+        </div>
+
+    </div><!-- /spine -->
+
+    <!-- ════════ SIDEBAR: KNOWLEDGE SOURCES ════════ -->
+    <aside class="sidebar">
+        <div class="sources-box">
+            <div class="sources-title">📚 Fuentes de Conocimiento</div>
+            <div class="source-item" onclick="openDrawer('source-dna')">🧬 <strong>ADN & Esencia</strong> — Keller + Holt + Arquetipos</div>
+            <div class="source-item" onclick="openDrawer('source-bench')">🔍 <strong>Investigación</strong> — Auditoría + Competencia</div>
+            <div class="source-item" onclick="openDrawer('source-neuro')">🧠 <strong>Neurobranding</strong> — Damasio + Kahneman</div>
+            <div class="source-item" onclick="openDrawer('source-naming')">🏷️ <strong>Naming</strong> — Fonosemántica + Legal</div>
+            <div class="source-item" onclick="openDrawer('source-verbal')">✍️ <strong>Voz y Tono</strong> — HeyHuman + Gobé</div>
+            <div class="source-item" onclick="openDrawer('source-sensory')">🎨 <strong>Neuro-Estética</strong> — Prägnanz + 60-30-10</div>
+            <div class="source-item" onclick="openDrawer('source-sonic')">🔊 <strong>Branding Sensorial</strong> — Lindstrom</div>
+            <div class="source-item" onclick="openDrawer('source-ux')">💻 <strong>Leyes de UX</strong> — Hick + Jakob + Fitts</div>
+            <div class="source-item" onclick="openDrawer('source-boa')">🤖 <strong>BOA & GEO</strong> — Schema + llms.txt</div>
+            <div class="source-item" onclick="openDrawer('source-activation')">🚀 <strong>Activación CX</strong> — Zero-Friction</div>
+            <div class="source-item" onclick="openDrawer('source-biometrics')">🔬 <strong>Biométrica</strong> — EEG + ET + GSR</div>
+            <div class="source-item" onclick="openDrawer('source-legal')">⚖️ <strong>Neuroderechos</strong> — Fallo Emotiv</div>
+        </div>
+    </aside>
+
+</div><!-- /layout -->
+
+<!-- ════════ DRAWER ════════ -->
+<div class="drawer-overlay" id="overlay" onclick="closeDrawer()"></div>
+<div class="drawer" id="drawer">
+    <div class="drawer-head">
+        <h3 id="drawer-title">—</h3>
+        <button class="drawer-close" onclick="closeDrawer()">&times;</button>
+    </div>
+    <div class="drawer-body" id="drawer-body"></div>
+</div>
+
+<script>
+const db = {
+    'input-feedback': {
+        title: 'Briefing Inicial y Directrices del Cliente',
+        content: `<div class="drawer-section-title">Insumos Iniciales de Marca</div>
+            <div class="drawer-text">Constituye el punto de partida del flujo. Reúne el briefing estratégico enviado por el cliente, los valores corporativos declarados, las pautas de negocio, y cualquier directriz o restricción previa en formato Excel u otros documentos de ingesta.</div>`
+    },
+    'agent-auditor-dir': {
+        title: 'Agente Auditor de Directrices',
+        content: `<div class="drawer-section-title">Rol en el Sistema</div>
+            <div class="drawer-text">Analiza las especificaciones técnicas iniciales y las directrices corporativas del cliente. Realiza una auditoría automatizada y una verificación de consistencia metodológica para asegurar la coherencia de los insumos y establecer la línea base de alineación de marca.</div>
+            <div class="drawer-section-title">Resultados</div>
+            <ul class="drawer-list"><li><strong>Genera:</strong> <code>reporte_alineacion_directrices.md</code></li></ul>`
+    },
+    'source-dna': {
+        title: 'ADN Marcario y Propósito Existencial',
+        content: `<div class="drawer-section-title">Marco de Identidad</div>
+            <div class="drawer-text"><strong>Branding Cultural (Douglas Holt):</strong> Define el rol de la marca como un "mito identitario" capaz de mitigar contradicciones y ansiedades culturales agudas de la sociedad actual.<br><br>
+            <strong>Modelo CBBE (Kevin Lane Keller):</strong> Estructuración piramidal del valor de marca basado en el consumidor: Prominencia → Significado → Respuestas → Resonancia.<br><br>
+            <strong>Ejes de Motivación y Arquetipos (Mark & Pearson):</strong> Selección y posicionamiento de los arquetipos de marca dentro de las tensiones dialécticas: Estabilidad/Control, Cambio/Dominio, Exploración/Realización y Conexión/Pertenencia.</div>`
+    },
+    'source-bench': {
+        title: 'Investigación, Entorno y Benchmarking',
+        content: `<div class="drawer-section-title">Análisis Competitivo y del Consumidor</div>
+            <div class="drawer-text">Mapea y audita el territorio competitivo. Determina el posicionamiento de los competidores directos e indirectos, sus personalidades arquetípicas declaradas y su lenguaje visual/verbal para identificar áreas de divergencia.<br><br>
+            <strong>Señalización de Identidad (Jonah Berger):</strong> Analiza cómo la audiencia usa la marca como distintivo social de estatus y valores. Optimiza la marca para lograr la <em>asimilación</em> (conexión grupal) y la <em>diferenciación</em> (expresión individual).</div>`
+    },
+    'source-neuro': {
+        title: 'Teoría de Neurobranding y Cognición',
+        content: `<div class="drawer-section-title">Bases Clínicas y Cognitivas</div>
+            <div class="drawer-text"><strong>Hipótesis del Marcador Somático (Antonio Damasio):</strong> La toma de decisiones está determinada por respuestas viscerales y emocionales preconscientes (CPFvm y amígdala). El branding debe pre-programar marcadores somáticos positivos.<br><br>
+            <strong>Sistemas 1 y 2 (Daniel Kahneman):</strong> El Sistema 1 (rápido, emocional) decide el 95% de las compras. El Sistema 2 (lento, analítico) solo justifica la decisión post-compra.<br><br>
+            <strong>Carga y Fluidez Cognitiva:</strong> Minimizar el esfuerzo de la memoria de trabajo. La información simple es percibida como segura, veraz y de alta calidad.</div>`
+    },
+    'source-naming': {
+        title: 'Naming Cognitivo y Viabilidad Legal',
+        content: `<div class="drawer-section-title">Estrategia Lingüística y Legal</div>
+            <div class="drawer-text"><strong>Fonosemántica:</strong> Diseño acústico de nombres comerciales basados en el simbolismo del sonido (vocales abiertas = amplitud/calidez; consonantes oclusivas = precisión y fuerza).<br><br>
+            <strong>Fluidez Cognitiva en Naming:</strong> Máximo 2 a 3 sílabas, pronunciación y deletreo intuitivo.<br><br>
+            <strong>Viabilidad Legal:</strong> Filtro obligatorio de disponibilidad y registro de propiedad intelectual (INAPI / USPTO) y dominios web.</div>`
+    },
+    'source-verbal': {
+        title: 'Voz, Tono y Directrices Verbales',
+        content: `<div class="drawer-section-title">Directrices Verbales</div>
+            <div class="drawer-text"><strong>Reglas HeyHuman:</strong> Oraciones &lt; 15 palabras. Párrafos &lt; 3 líneas. Voz activa obligatoria. Erradicación de jerga corporativa.<br><br>
+            <strong>Branding Emocional (Marc Gobé):</strong> 10 mandamientos: del producto a la experiencia, de la honestidad a la confianza, de la comunicación al diálogo.</div>`
+    },
+    'source-sensory': {
+        title: 'Neuro-Estética y Diseño Visual',
+        content: `<div class="drawer-section-title">Composición Visual</div>
+            <div class="drawer-text"><strong>Ley de Prägnanz (Gestalt):</strong> El cerebro organiza imágenes en las formas geométricas más simples posibles.<br><br>
+            <strong>Geometría:</strong> Espirales de Fibonacci y Proporción Áurea para composiciones equilibradas.<br><br>
+            <strong>Regla Cromática 60-30-10:</strong> 60% dominante (atmósfera), 30% soporte (estructura), 10% acento (CTAs exclusivamente).</div>`
+    },
+    'source-sonic': {
+        title: 'Branding Sensorial e Intermodal',
+        content: `<div class="drawer-section-title">Experiencia Multisensorial</div>
+            <div class="drawer-text"><strong>Sinergia Intermodal (Lindstrom):</strong> La recordación se multiplica cuando múltiples canales sensoriales se estimulan con congruencia semántica.<br><br>
+            <strong>Sonic Branding:</strong> Firmas sonoras de 3-5 segundos.<br><br>
+            <strong>Háptica:</strong> Peso, texturas y ergonomía que alteran la percepción de calidad.<br><br>
+            <strong>Olfato (Vector Límbico):</strong> Los estímulos olfativos viajan directamente al sistema límbico (sin filtro del tálamo). Memoria emocional 10,000x más duradera.</div>`
+    },
+    'source-ux': {
+        title: 'Leyes de UX y Usabilidad',
+        content: `<div class="drawer-section-title">Principios de Usabilidad</div>
+            <div class="drawer-text"><strong>Ley de Hick:</strong> Menos opciones = decisión más rápida.<br><br>
+            <strong>Ley de Jakob:</strong> Los usuarios prefieren interfaces familiares.<br><br>
+            <strong>Ley de Fitts:</strong> CTAs grandes, contrastantes y de fácil alcance.<br><br>
+            <strong>WCAG 2.1 AA:</strong> Contraste mínimo de 4.5:1 para textos normales.</div>`
+    },
+    'source-boa': {
+        title: 'BOA (Brand Optimization for Agents) & GEO',
+        content: `<div class="drawer-section-title">Indexabilidad para IA</div>
+            <div class="drawer-text"><strong>Schema Stacking:</strong> JSON-LD de tipo Organization y Product enlazado a Wikidata para recomendadores LLM.<br><br>
+            <strong>SSR:</strong> Renderizado estático obligatorio contra timeouts de 1-5s de bots de indexación.<br><br>
+            <strong>llms.txt y WebMCP:</strong> Archivo factual estandarizado y endpoint MCP para exposición directa a agentes de IA.</div>`
+    },
+    'source-activation': {
+        title: 'Activación y Experiencia de Marca (CX/BX)',
+        content: `<div class="drawer-section-title">Despliegue y Puntos de Contacto</div>
+            <div class="drawer-text"><strong>Customer Journey de Fricción Cero:</strong> Mapeo del embudo (Awareness → Consideration → Purchase → Onboarding → Loyalty) erradicando la sobrecarga visual.<br><br>
+            <strong>Brandbook Operacional:</strong> Guía técnica de implementación que garantiza coherencia en todos los canales.</div>`
+    },
+    'source-biometrics': {
+        title: 'Protocolos de Validación Biométrica',
+        content: `<div class="drawer-section-title">Instrumentación Científica</div>
+            <div class="drawer-text"><strong>EEG Frontal (Fp1):</strong> Valence (agrado > 5.0) y Cognitive Load (< 5.0). Wavelet Daubechies "db7".<br><br>
+            <strong>Eye Tracking:</strong> TTFF < 0.5s para packshots. TFD > 1.0s para copys clave.<br><br>
+            <strong>GSR:</strong> Conductancia galvánica y picos de SCRs (arousal) bajo modelo Mehrabian-Russell.<br><br>
+            <strong>Casos de Referencia:</strong> Campbell's Soup (triangulación 1,500 sujetos), Frito-Lay (mate vs brillante), Hyundai Neuro-Design (EEG portátil).</div>`
+    },
+    'source-legal': {
+        title: 'Neuroderechos y Privacidad Mental',
+        content: `<div class="drawer-section-title">Privacidad Mental</div>
+            <div class="drawer-text"><strong>Marco de Neuroderechos (Yuste):</strong> Actividad cerebral y privacidad mental como derechos fundamentales inalienables (Art. 19 N° 1, Constitución Chilena).<br><br>
+            <strong>Fallo Girardi vs Emotiv (CS Chile, 2023):</strong> Prohíbe la captura sin restricciones de datos de diademas EEG comerciales.<br><br>
+            <strong>Protocolo:</strong> Consentimiento de grado clínico, almacenamiento local cifrado, anonimización irreversible.</div>`
+    },
+    'agent-investigador': {
+        title: 'Agente Investigador (AIP)',
+        content: `<div class="drawer-section-title">Rol en el Sistema</div>
+            <div class="drawer-text">Consulta y triangula información de las directrices iniciales y las 12 Fuentes de Conocimiento especializadas (NotebookLM, archivos locales de neurociencia y UX, búsquedas en internet y bases de datos clínicas).</div>
+            <div class="drawer-section-title">Resultados</div>
+            <ul class="drawer-list"><li><strong>Genera:</strong> <code>reporte_hechos_crudos.md</code></li></ul>`
+    },
+    'agent-disenador': {
+        title: 'Agente Diseñador de ADN (EBI)',
+        content: `<div class="drawer-section-title">Modelado del ADN</div>
+            <div class="drawer-text">Estructura la base teórica y estratégica de la marca: propósito existencial que alivia la ansiedad cultural (Holt) y valores operativos activos (pirámide CBBE).</div>
+            <div class="drawer-section-title">Resultados</div>
+            <ul class="drawer-list"><li><strong>Genera:</strong> <code>diseno_adn_esencia.md</code></li></ul>`
+    },
+    'aprobacion-usuario': {
+        title: 'Aprobación Usuario (ADN)',
+        content: `<div class="drawer-section-title">Decisión de ADN y Esencia</div>
+            <div class="drawer-text">El usuario valida y aprueba el ADN sugerido por la IA:</div>
+            <ul class="drawer-list" style="margin-top: 0.5rem;">
+                <li><strong>Aprobado:</strong> Avanza a la redacción del contenido y copys verbales.</li>
+                <li><strong>Rechazado/Ajustes:</strong> Bucle de retorno al <strong>Agente Investigador</strong> para replantear las bases teóricas.</li>
+            </ul>`
+    },
+    'agent-redactor': {
+        title: 'Agente Redactor de Copy (ENC)',
+        content: `<div class="drawer-section-title">Redacción de Copys Sistema 1</div>
+            <div class="drawer-text">Redacta el borrador del contenido bajo las directrices físicas de lectura de HeyHuman.</div>
+            <div class="drawer-section-title">Resultados</div>
+            <ul class="drawer-list"><li><strong>Genera:</strong> <code>borrador_mensajes_s1.md</code></li></ul>`
+    },
+    'agent-editor': {
+        title: 'Agente Editor / Copywriter',
+        content: `<div class="drawer-section-title">Edición de Voz y Tono</div>
+            <div class="drawer-text">Aplica los 10 Mandamientos de Marc Gobé y realiza la edición de estilo final para fluidez de procesamiento e impacto emocional.</div>
+            <div class="drawer-section-title">Resultados</div>
+            <ul class="drawer-list"><li><strong>Genera:</strong> <code>propuesta_valor_manifiesto.md</code></li></ul>`
+    },
+    'agent-experto': {
+        title: 'Agente Experto en UX (EDV)',
+        content: `<div class="drawer-section-title">Neuro-Estética y Usabilidad</div>
+            <div class="drawer-text">Verifica logotipo, paleta cromática 60-30-10, tipografía fluida y composición aplicando Fibonacci, Leyes de UX (Hick, Jakob, Fitts) y contraste WCAG 2.1 AA (4.5:1).</div>
+            <div class="drawer-section-title">Resultados</div>
+            <ul class="drawer-list"><li>Puntúa la propuesta en escala 1 a 100 basada en KPIs atencionales y de carga cognitiva.</li></ul>`
+    },
+    'aprobacion-score': {
+        title: '¿Puntaje ≥ 95?',
+        content: `<div class="drawer-section-title">Filtro de Calidad de Neurobranding</div>
+            <ul class="drawer-list">
+                <li><strong>Sí (≥ 95):</strong> Se transfiere al Agente Auditor de Despliegue.</li>
+                <li><strong>No (< 95):</strong> Genera Reporte de KPIs y desvía retroalimentación al Agente Redactor.</li>
+            </ul>`
+    },
+    'agent-gatekeeper': {
+        title: 'Agente Auditor de Despliegue (AIA)',
+        content: `<div class="drawer-section-title">Auditor de Indexabilidad (BOA)</div>
+            <div class="drawer-text">Validación cruzada automática entre los activos terminados y el reporte original de directrices. Verifica Schema Stacking, /llms.txt, SSR y WebMCP.</div>`
+    },
+    'aprobacion-final': {
+        title: 'Aprobación Final Usuario',
+        content: `<div class="drawer-section-title">Decisión Final del Usuario</div>
+            <ul class="drawer-list">
+                <li><strong>Aprobado:</strong> Avanza a publicación y despliegue técnico.</li>
+                <li><strong>Rechazado:</strong> Bucle de retorno largo al <strong>Agente Redactor</strong> para corregir la propuesta.</li>
+            </ul>`
+    },
+    'agent-word': {
+        title: 'Agente Experto en Lanzamiento (AIA)',
+        content: `<div class="drawer-section-title">Despliegue y Activación</div>
+            <div class="drawer-text">Compila los activos digitales terminados del branding (manuales, landing page, metadatos, llms.txt, esquemas JSON-LD) al entorno de producción.</div>
+            <div class="drawer-section-title">Resultados</div>
+            <ul class="drawer-list"><li><strong>Genera:</strong> <code>publicacion_produccion.html</code></li></ul>`
+    },
+    'publicacion-fin': {
+        title: 'Lanzamiento de Marca',
+        content: `<div class="drawer-section-title">Fin del Flujo</div>
+            <div class="drawer-text">La marca y sus activos digitales han sido desplegados exitosamente al público y recomendadores de IA.</div>`
+    }
+};
+
+function openDrawer(id) {
+    const d = db[id];
+    if (!d) return;
+    document.getElementById('drawer-title').textContent = d.title;
+    document.getElementById('drawer-body').innerHTML = d.content;
+    document.getElementById('overlay').classList.add('open');
+}
+function closeDrawer() {
+    document.getElementById('overlay').classList.remove('open');
+}
+</script>
+</body>
+</html>

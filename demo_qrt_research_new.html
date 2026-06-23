@@ -378,6 +378,39 @@
       color: var(--bg-light);
     }
 
+    /* Botón de Menú Móvil (Viñeta) */
+    .mobile-menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+      width: 24px;
+      height: 24px;
+      position: relative;
+      z-index: 1010;
+      flex-direction: column;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .mobile-menu-toggle .bar {
+      display: block;
+      width: 20px;
+      height: 1.5px;
+      background-color: var(--text-main);
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+                  opacity 0.3s ease;
+    }
+
+    .mobile-menu-toggle.active .bar:nth-child(1) {
+      transform: translateY(3.75px) rotate(45deg);
+    }
+
+    .mobile-menu-toggle.active .bar:nth-child(2) {
+      transform: translateY(-3.75px) rotate(-45deg);
+    }
+
     /* --- Contenedor de Historia --- */
     .story-container {
       position: relative;
@@ -781,15 +814,88 @@
 
 
 
-      /* Ocultar links de secciones secundarias del menú para evitar colapso horizontal, mostrando solo "login" y el selector de tema */
-      .nav-item-hide {
+      /* Ocultar menú normal en móvil por defecto y mostrar el botón de alternancia */
+      .mobile-menu-toggle {
+        display: flex;
+      }
+
+      nav ul {
         display: none;
       }
-      
-      /* Achicar el botón de login en móvil para ahorrar espacio lateral */
-      .btn-cta {
-        padding: 4px 10px;
-        font-size: 0.75rem;
+
+      header.menu-open nav ul {
+        display: flex;
+        flex-direction: column;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: var(--bg-main);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        justify-content: center;
+        align-items: center;
+        gap: 36px;
+        z-index: 1000;
+        margin: 0;
+        padding: 0;
+        animation: mobileMenuFadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      }
+
+      @keyframes mobileMenuFadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(-10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      header.menu-open .nav-item-hide {
+        display: block;
+      }
+
+      header.menu-open nav a {
+        font-size: 1.5rem;
+        font-weight: 500;
+      }
+
+      header.menu-open .submenu {
+        position: static;
+        opacity: 1;
+        visibility: visible;
+        transform: none;
+        box-shadow: none;
+        background: none;
+        border: none;
+        padding: 12px 0 0 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 16px;
+        min-width: auto;
+      }
+
+      header.menu-open .submenu a {
+        font-size: 1.15rem;
+        color: var(--text-muted);
+      }
+
+      header.menu-open .dropdown-toggle::after {
+        display: none;
+      }
+
+      header.menu-open .theme-icon {
+        width: 24px;
+        height: 24px;
+      }
+
+      header.menu-open .btn-cta {
+        font-size: 1.2rem;
+        padding: 10px 24px;
       }
       
 
@@ -924,6 +1030,12 @@
           </li>
         </ul>
       </nav>
+      
+      <!-- Botón de Menú Móvil (Viñeta) -->
+      <button id="mobile-menu-toggle" class="mobile-menu-toggle" aria-label="abrir menú">
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </button>
     </div>
   </header>
 
@@ -1153,7 +1265,7 @@
             element.appendChild(document.createTextNode((index === 0 ? '' : ' ') + words[index]));
             element.appendChild(cursor);
             index++;
-            setTimeout(typeNextWord, speed + Math.random() * 30); // Toque orgánico en el timing
+            setTimeout(typeNextWord, speed + Math.random() * 5); // Toque orgánico rápido en el timing
           } else {
             if (element.contains(cursor)) {
               element.removeChild(cursor);
@@ -1173,24 +1285,23 @@
       
       const section = data.sectionEl;
       
-      // 1. Digitar la letra en el título (espera inicial de 200ms)
-      await new Promise(r => setTimeout(r, 200));
+      // 1. Mostrar la letra inmediatamente al entrar a la sección
       data.titleLetterEl.textContent = data.letter;
       
-      // 2. Esperar una fracción de segundo (300ms)
-      await new Promise(r => setTimeout(r, 300));
+      // 2. Esperar exactamente 0.8s (800ms)
+      await new Promise(r => setTimeout(r, 800));
       
       // 3. Mostrar subtítulo (fade-in rápido)
       const subtitleEl = section.querySelector('.story-subtitle');
       if (subtitleEl) subtitleEl.style.opacity = '1';
       
-      // 4. Escribir la cita (story-quote)
-      await streamText(data.quoteEl, data.quote, 40);
+      // 4. Escribir la cita (story-quote) a velocidad extremadamente rápida (Flash)
+      await streamText(data.quoteEl, data.quote, 8);
       
-      // 5. Escribir los párrafos de descripción secuencialmente
+      // 5. Escribir los párrafos de descripción secuencialmente a velocidad extremadamente rápida (Flash)
       for (const descEl of data.descEls) {
         const originalText = data.paragraphs[data.descEls.indexOf(descEl)];
-        await streamText(descEl, originalText, 25); // Velocidad ligeramente mayor para párrafos
+        await streamText(descEl, originalText, 6);
       }
       
       // 6. Al terminar la escritura, activar la clase que dibuja y revela el SVG
@@ -1212,6 +1323,27 @@
       const isDark = document.documentElement.classList.toggle('dark-theme');
       localStorage.setItem('theme', isDark ? 'dark' : 'light');
     });
+
+    // --- Control de Menú Móvil ---
+    const mobileToggle = document.getElementById('mobile-menu-toggle');
+    if (mobileToggle) {
+      mobileToggle.addEventListener('click', () => {
+        const isOpen = header.classList.toggle('menu-open');
+        mobileToggle.classList.toggle('active', isOpen);
+        document.body.style.overflow = isOpen ? 'hidden' : '';
+      });
+
+      // Cerrar menú móvil al hacer clic en enlaces interactivos de navegación
+      const navInteractive = document.querySelectorAll('nav a, nav button');
+      navInteractive.forEach(elem => {
+        elem.addEventListener('click', () => {
+          if (elem.id === 'dropdown-toggle') return; // No cerrar al tocar filosofía
+          header.classList.remove('menu-open');
+          mobileToggle.classList.remove('active');
+          document.body.style.overflow = '';
+        });
+      });
+    }
 
     // --- Control de Scroll & Clases de Sticky Header ---
     window.addEventListener('scroll', () => {

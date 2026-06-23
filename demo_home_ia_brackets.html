@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo: Home (IA Brackets)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --text-main: #0D0D0D;
+            --bg-main: #FFFFFF;
+            --text-muted: #6E6E73;
+        }
+        [data-theme="dark"] {
+            --text-main: #FFFFFF;
+            --bg-main: #0D0D0D;
+            --text-muted: #8E8E93;
+        }
+        body {
+            font-family: 'Sora', sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        /* Header & Logo */
+        header {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            padding: 40px 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+        }
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: -0.04em;
+            text-decoration: none;
+            color: var(--text-main);
+            display: flex;
+            align-items: baseline;
+        }
+        .logo-exponent {
+            font-size: 22px;
+            font-weight: 500;
+            margin-left: 2px;
+        }
+        
+        /* Controles (Theme + Lang) */
+        .header-controls {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+        }
+
+        .theme-btn {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: color 0.3s;
+        }
+        .theme-btn:hover {
+            color: var(--text-main);
+        }
+
+        /* Toggle de Idioma */
+        .lang-toggle {
+            display: flex;
+            gap: 24px;
+        }
+        .lang-btn {
+            background: none;
+            border: none;
+            font-family: 'Sora', sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-muted);
+            cursor: pointer;
+            padding: 0;
+            transition: color 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .lang-btn.active {
+            color: var(--text-main);
+            font-weight: 700;
+        }
+        .lang-btn:hover {
+            color: var(--text-main);
+        }
+
+        /* Hero Section */
+        .hero {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 60px;
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .hero-content {
+            width: 100%;
+        }
+
+        .hero-title {
+            font-size: 6rem;
+            line-height: 1.1;
+            letter-spacing: -0.03em;
+            font-weight: 300; /* Regular/Light base para el contraste */
+            margin: 0 0 32px 0;
+            max-width: 1000px;
+            transition: opacity 0.4s ease;
+        }
+
+        .hero-subtitle {
+            font-size: 1.6rem;
+            color: var(--text-muted);
+            font-weight: 400;
+            line-height: 1.5;
+            max-width: 650px;
+            margin: 0;
+            transition: opacity 0.4s ease;
+            letter-spacing: -0.01em;
+        }
+
+        /* --- Tipografía del Juego IA / AI (Brackets) --- */
+        .brackets {
+            font-weight: 300;
+            color: var(--text-muted); /* Gris técnico */
+            opacity: 0.5; /* Engaño de contraste visual */
+            margin: 0 -0.04em; /* Ajuste de kerning técnico */
+        }
+        .ia-highlight {
+            font-weight: 500; /* Medium */
+            color: var(--text-main);
+        }
+
+        .blinking-cursor {
+            font-weight: 300;
+            animation: blink 1s step-end infinite;
+            color: var(--text-muted);
+        }
+        @keyframes blink { 50% { opacity: 0; } }
+
+        /* Animación Fade In/Out para el cambio de idioma */
+        .fade-out {
+            opacity: 0;
+        }
+        .fade-in {
+            opacity: 1;
+        }
+
+        /* Responsive */
+        @media (max-width: 991px) {
+            .hero-title { font-size: 4.5rem; }
+        }
+        @media (max-width: 768px) {
+            header { padding: 30px; }
+            .hero { padding: 0 30px; }
+            .hero-title { font-size: 3rem; }
+            .hero-subtitle { font-size: 1.2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="#" class="logo">qrt<span class="logo-exponent">^</span></a>
+        <div class="header-controls">
+            <!-- Theme Toggle -->
+            <button class="theme-btn" id="theme-btn" onclick="toggleTheme()" aria-label="Toggle Theme">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" id="theme-icon">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                </svg>
+            </button>
+            
+            <!-- Lang Toggle -->
+            <div class="lang-toggle">
+                <button class="lang-btn active" id="btn-es" onclick="setLang('es')">ES</button>
+                <button class="lang-btn" id="btn-en" onclick="setLang('en')">EN</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title" id="main-title">
+                La ingenier<span class="brackets">(</span><span class="ia-highlight">ia</span><span class="brackets">)</span><span class="blinking-cursor">_</span> detrás<br>de las decisiones complejas.
+            </h1>
+            <p class="hero-subtitle" id="main-subtitle">
+                Algoritmos cuantitativos para operar en mercados globales y construir ventajas sistémicas y escalables.
+            </p>
+        </div>
+    </main>
+
+    <script>
+        const data = {
+            es: {
+                prefix: '<span style="white-space: nowrap;">La ',
+                suffix: ' detrás</span><br><span style="white-space: nowrap;">de las decisiones complejas.</span>',
+                words: ['ingenier(ia)', 'tecnolog(ia)', 'estrateg(ia)', 'cienc(ia)'],
+                subtitle: 'Algoritmos cuantitativos para operar en mercados globales y construir ventajas sistémicas y escalables.'
+            },
+            en: {
+                prefix: '<span style="white-space: nowrap;">The ',
+                suffix: ' behind</span><br><span style="white-space: nowrap;">complex decisions.</span>',
+                words: ['br(ai)n', 'cert(ai)nty', 'det(ai)l', 'tr(ai)ning'],
+                subtitle: 'Quantitative algorithms to operate in global markets and build systemic, scalable edges.'
+            }
+        };
+
+        let currentLang = 'es';
+        let wordIndex = 0;
+        let isDeleting = false;
+        let currentText = data['es'].words[0]; // Iniciar con la palabra completa para no hacer un salto visual al cargar
+        let typingTimeout;
+
+        // Formatea la cadena inyectando los spans de brackets y el highlight carácter por carácter
+        function formatWord(str) {
+            let out = "";
+            let inBrackets = false;
+            for (let i = 0; i < str.length; i++) {
+                let char = str[i];
+                if (char === '(') {
+                    inBrackets = true;
+                    out += '<span class="brackets">(</span><span class="ia-highlight">';
+                } else if (char === ')') {
+                    inBrackets = false;
+                    out += '</span><span class="brackets">)</span>';
+                } else {
+                    out += char;
+                }
+            }
+            if (inBrackets) {
+                out += '</span>'; // Cierra el span si está escribiendo dentro de los paréntesis
+            }
+            return out;
+        }
+
+        function typeLoop() {
+            const currentData = data[currentLang];
+            const words = currentData.words;
+            const fullWord = words[wordIndex % words.length];
+
+            if (isDeleting) {
+                currentText = fullWord.substring(0, currentText.length - 1);
+            } else {
+                currentText = fullWord.substring(0, currentText.length + 1);
+            }
+
+            const formattedWord = formatWord(currentText);
+            
+            document.getElementById('main-title').innerHTML = 
+                currentData.prefix + 
+                formattedWord + 
+                '<span class="blinking-cursor">_</span>' + 
+                currentData.suffix;
+
+            let typeSpeed = 100 - Math.random() * 40;
+
+            if (isDeleting) {
+                typeSpeed /= 2; // Borrar es el doble de rápido
+            }
+
+            if (!isDeleting && currentText === fullWord) {
+                typeSpeed = 2500; // Pausa cuando la palabra está completa
+                isDeleting = true;
+            } else if (isDeleting && currentText === '') {
+                isDeleting = false;
+                wordIndex++;
+                typeSpeed = 400; // Pausa antes de empezar a escribir la siguiente palabra
+            }
+
+            typingTimeout = setTimeout(typeLoop, typeSpeed);
+        }
+
+        function setLang(lang) {
+            if (lang === currentLang) return;
+            
+            currentLang = lang;
+            document.getElementById('btn-es').classList.toggle('active', lang === 'es');
+            document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+            
+            const subEl = document.getElementById('main-subtitle');
+            subEl.classList.add('fade-out');
+            
+            setTimeout(() => {
+                subEl.innerHTML = data[lang].subtitle;
+                subEl.classList.remove('fade-out');
+            }, 300);
+
+            // Reiniciar efecto de máquina de escribir para el nuevo idioma
+            clearTimeout(typingTimeout);
+            isDeleting = false;
+            wordIndex = 0;
+            currentText = data[lang].words[0];
+            
+            const titleEl = document.getElementById('main-title');
+            titleEl.classList.add('fade-out');
+            
+            setTimeout(() => {
+                // Inyectamos inmediatamente la primera palabra completa y luego iniciamos el loop
+                const formattedWord = formatWord(currentText);
+                titleEl.innerHTML = data[lang].prefix + formattedWord + '<span class="blinking-cursor">_</span>' + data[lang].suffix;
+                titleEl.classList.remove('fade-out');
+                
+                typingTimeout = setTimeout(() => {
+                    isDeleting = true;
+                    typeLoop();
+                }, 2500); // Pausa inicial antes de empezar a borrar
+                
+            }, 300);
+        }
+
+        function toggleTheme() {
+            const body = document.body;
+            const icon = document.getElementById('theme-icon');
+            
+            if (body.dataset.theme === 'dark') {
+                body.dataset.theme = 'light';
+                icon.innerHTML = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>';
+            } else {
+                body.dataset.theme = 'dark';
+                icon.innerHTML = '<circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>';
+            }
+        }
+
+        // Iniciar primer ciclo
+        window.onload = () => {
+            typingTimeout = setTimeout(() => {
+                isDeleting = true;
+                typeLoop();
+            }, 2500); // La palabra estática espera 2.5s antes de empezar a borrarse por primera vez
+        };
+    </script>
+</body>
+</html>
