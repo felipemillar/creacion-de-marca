@@ -1,7 +1,38 @@
+# Sistema Operativo
 .DS_Store
+Thumbs.db
+
+# Python & Entornos
 *.pyc
 __pycache__/
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.venv/
+ENV/
+
+# Dependencias Node
 node_modules/
+package-lock.json
+
+# IDEs y Editores
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Asistentes de IA & Configuraciones Locales
+.claude/
+.gemini/
 .tempmediaStorage/
 browser_recordings/
 html_artifacts/
+
+# Variables de entorno y credenciales
+.env
+.env.local
+.env.*.local
+*.pem
+*.key

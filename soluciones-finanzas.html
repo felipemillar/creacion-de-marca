@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>finanzas — qrt^ | quantitative research and trading solutions</title>
+  <meta name="description" content="Infraestructura de mercado, modelos de trading, riesgo y asesoría patrimonial automatizada para instituciones financieras. El método que probamos con capital propio.">
+
+  <!-- TODO: confirmar el dominio de producción antes de publicar. Inferido de qrtsolutions.com -->
+  <link rel="canonical" href="https://qrtsolutions.com/soluciones-finanzas.html">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="finanzas — qrt^">
+  <meta property="og:description" content="Infraestructura de mercado, modelos de trading, riesgo y asesoría patrimonial automatizada para instituciones financieras.">
+  <meta property="og:url" content="https://qrtsolutions.com/soluciones-finanzas.html">
+  <meta property="og:locale" content="es_CL">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&family=Sora:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/qrt.css">
+
+  <!-- Tema aplicado antes del pintado para evitar el destello de fondo claro -->
+  <script>
+    (function () {
+      try {
+        var saved = localStorage.getItem('theme');
+        var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if (saved === 'dark' || (!saved && prefersDark)) {
+          document.documentElement.classList.add('dark-theme');
+        }
+      } catch (e) { /* sin localStorage: se usa el tema claro */ }
+    })();
+  </script>
+
+  <!--
+    Schema stacking según la Fase 4 del playbook.
+    Solo se declaran hechos verificables. Faltan por completar: dirección,
+    teléfono, sameAs (LinkedIn / Wikidata) y foundingDate.
+  -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://qrtsolutions.com/#organization",
+        "name": "QRT Solutions",
+        "alternateName": "qrt^",
+        "url": "https://qrtsolutions.com/",
+        "description": "Quantitative research and trading solutions. Convertimos decisiones que dependen del criterio de una persona en sistemas que se pueden medir, auditar y repetir.",
+        "knowsAbout": [
+          "Quantitative research",
+          "Algorithmic trading",
+          "Market infrastructure",
+          "Risk modelling",
+          "Predictive maintenance"
+        ]
+      },
+      {
+        "@type": "Service",
+        "@id": "https://qrtsolutions.com/soluciones-finanzas.html#service",
+        "name": "Soluciones cuantitativas para instituciones financieras",
+        "provider": { "@id": "https://qrtsolutions.com/#organization" },
+        "serviceType": "Quantitative finance engineering",
+        "description": "Modelos y señales de trading, infraestructura de mercado, riesgo y cumplimiento, y asesoría patrimonial automatizada.",
+        "hasOfferCatalog": {
+          "@type": "OfferCatalog",
+          "name": "Capacidades en finanzas",
+          "itemListElement": [
+            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Modelos y señales de trading" } },
+            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Infraestructura de mercado" } },
+            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Riesgo y cumplimiento" } },
+            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Asesoría patrimonial automatizada" } }
+          ]
+        }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "inicio", "item": "https://qrtsolutions.com/" },
+          { "@type": "ListItem", "position": 2, "name": "soluciones", "item": "https://qrtsolutions.com/soluciones.html" },
+          { "@type": "ListItem", "position": 3, "name": "finanzas" }
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+
+  <div class="bg-grid"></div>
+
+  <header id="main-header">
+    <div class="header-inner">
+      <a href="index.html" class="logo-container" id="logo">
+        <span class="logo-parenthesis p-start">(</span>
+        <span class="logo-word" id="word-q">
+          <span class="logo-always">q</span><span class="logo-collapsible">uantitative</span>
+        </span>
+        <span class="logo-space"></span>
+        <span class="logo-word" id="word-r">
+          <span class="logo-always">r</span><span class="logo-collapsible">esearch</span>
+        </span>
+        <span class="logo-space"></span>
+        <span class="logo-word" id="word-t">
+          <span class="logo-always">t</span><span class="logo-collapsible">rading</span>
+        </span>
+        <span class="logo-parenthesis p-end">)</span>
+        <span class="logo-always logo-exponent">^</span>
+      </a>
+
+      <nav>
+        <ul>
+          <li>
+            <a href="#" id="theme-toggle" class="theme-toggle" aria-label="cambiar tema">
+              <svg class="theme-icon" viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none" />
+                <path d="M 12,2 A 10,10 0 0 0 12,22 Z" fill="currentColor" />
+              </svg>
+            </a>
+          </li>
+          <li class="nav-item-hide"><a href="index.html">inicio</a></li>
+          <li class="nav-item-hide dropdown">
+            <a class="dropdown-toggle">filosofía</a>
+            <ul class="submenu">
+              <li><a href="index.html#quantitative">quantitative</a></li>
+              <li><a href="index.html#research">research</a></li>
+              <li><a href="index.html#trading">trading</a></li>
+            </ul>
+          </li>
+          <li class="nav-item-hide dropdown">
+            <a class="dropdown-toggle active">soluciones</a>
+            <ul class="submenu">
+              <li><a href="soluciones-mineria.html">minería</a></li>
+              <li><a href="soluciones-retail.html">retail</a></li>
+              <li><a href="soluciones-finanzas.html" class="active">finanzas</a></li>
+              <li class="submenu-divider"></li>
+              <li><a href="neurociencia.html">neurociencia</a></li>
+            </ul>
+          </li>
+          <li class="lang-switch">
+            <a href="soluciones-finanzas.html" class="active">ES</a>
+            <span class="sep">|</span>
+            <!-- TODO: crear solutions-finance.html y activar hreflang -->
+            <a href="en.html">EN</a>
+          </li>
+          <li><a href="#" class="btn-cta">login</a></li>
+        </ul>
+      </nav>
+
+      <button id="mobile-menu-toggle" class="mobile-menu-toggle" aria-label="abrir menú" aria-expanded="false">
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </button>
+    </div>
+  </header>
+
+  <main class="page-main">
+
+    <!-- ══════════ Hero de página ══════════ -->
+    <section class="page-hero">
+      <div class="wrap">
+        <span class="eyebrow">soluciones<span class="sep">/</span>finanzas</span>
+        <h1>el mercado no perdona el criterio.</h1>
+        <p class="page-lead">
+          Las finanzas son el entorno donde el error se paga al instante.
+          Aquí aprendimos el método. Aquí lo seguimos probando con capital propio.
+        </p>
+      </div>
+    </section>
+
+    <!-- ══════════ 1. El problema de decisión ══════════ -->
+    <section class="block">
+      <div class="wrap block-grid">
+        <div>
+          <h2 class="block-title">
+            el problema<span class="blinking-cursor">_</span>
+            <span class="block-subtitle">— decidir rápido con información incompleta</span>
+          </h2>
+          <div class="block-quote">Un comité no puede reaccionar a la velocidad de un mercado.</div>
+          <p class="block-desc">
+            Las instituciones financieras acumulan más datos que nunca. Las decisiones
+            críticas siguen pasando por planillas, comités y criterio experto.
+          </p>
+          <p class="block-desc">
+            Ese modelo aguanta hasta que sube el volumen. Ahí la latencia humana se vuelve
+            el cuello de botella y el riesgo deja de ser medible.
+          </p>
+          <p class="block-desc">
+            El problema no es la falta de talento. Es que el talento no se clona, no se
+            audita y no se pone de turno a las tres de la mañana.
+          </p>
+        </div>
+
+        <div class="block-visual">
+          <div class="bg-letter">f</div>
+          <!-- SVG: profundidad de libro de órdenes (bids a la izquierda, asks a la derecha) -->
+          <svg class="visual-svg" viewBox="0 0 400 400" aria-hidden="true">
+            <!-- Ejes -->
+            <line x1="30" y1="350" x2="380" y2="350" stroke="var(--text-main)" stroke-width="0.8" />
+            <line x1="30" y1="30" x2="30" y2="350" stroke="var(--text-main)" stroke-width="0.8" />
+
+            <!-- Retícula -->
+            <line x1="30" y1="270" x2="380" y2="270" stroke="var(--text-main)" stroke-width="0.4" opacity="0.15" />
+            <line x1="30" y1="190" x2="380" y2="190" stroke="var(--text-main)" stroke-width="0.4" opacity="0.15" />
+            <line x1="30" y1="110" x2="380" y2="110" stroke="var(--text-main)" stroke-width="0.4" opacity="0.15" />
+
+            <!-- Precio medio -->
+            <line x1="200" y1="36" x2="200" y2="350" stroke="var(--text-main)" stroke-width="0.6"
+                  stroke-dasharray="3 4" opacity="0.45" />
+
+            <!-- Demanda acumulada (bids) -->
+            <path d="M 200,348 L 186,348 L 186,332 L 172,332 L 172,314 L 158,314 L 158,292 L 144,292 L 144,266 L 130,266 L 130,236 L 116,236 L 116,204 L 102,204 L 102,170 L 88,170 L 88,132 L 74,132 L 74,96 L 60,96 L 60,64 L 46,64 L 46,44 L 32,44"
+                  stroke="var(--text-main)" stroke-width="1.4" fill="none" />
+
+            <!-- Oferta acumulada (asks) -->
+            <path d="M 200,348 L 214,348 L 214,330 L 228,330 L 228,310 L 242,310 L 242,286 L 256,286 L 256,258 L 270,258 L 270,226 L 284,226 L 284,192 L 298,192 L 298,156 L 312,156 L 312,120 L 326,120 L 326,86 L 340,86 L 340,58 L 354,58 L 354,42 L 368,42 L 368,36 L 380,36"
+                  stroke="var(--text-main)" stroke-width="1.4" fill="none" opacity="0.75" />
+          </svg>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════ 2. Qué cambia con un sistema ══════════ -->
+    <section class="block">
+      <div class="wrap block-grid">
+        <div>
+          <h2 class="block-title">
+            el cambio<span class="blinking-cursor">_</span>
+            <span class="block-subtitle">— de la decisión artesanal al sistema</span>
+          </h2>
+          <div class="block-quote">Un sistema decide igual el lunes que el viernes a las cinco.</div>
+          <p class="block-desc">
+            Un sistema no se cansa ni cambia de opinión según el ánimo del día.
+            Ejecuta la política que ustedes definieron, siempre igual.
+          </p>
+          <p class="block-desc">
+            Y deja rastro. Cada decisión queda registrada junto a los datos que la
+            produjeron. Eso es lo que un directorio y un regulador necesitan ver.
+          </p>
+          <p class="block-desc">
+            No prometemos acertar más. Prometemos que van a saber por qué se decidió
+            lo que se decidió.
+          </p>
+        </div>
+
+        <div class="block-visual">
+          <!-- SVG: dispersión de decisiones humanas vs. banda estable de un sistema -->
+          <svg class="visual-svg" viewBox="0 0 400 400" aria-hidden="true">
+            <line x1="30" y1="350" x2="380" y2="350" stroke="var(--text-main)" stroke-width="0.8" />
+            <line x1="30" y1="30" x2="30" y2="350" stroke="var(--text-main)" stroke-width="0.8" />
+
+            <!-- Banda de tolerancia del sistema -->
+            <rect x="30" y="168" width="350" height="44" stroke="var(--text-main)" stroke-width="0.5"
+                  fill="var(--text-main)" fill-opacity="0.04" opacity="0.5" />
+            <line x1="30" y1="190" x2="380" y2="190" stroke="var(--text-main)" stroke-width="1.4" />
+
+            <!-- Decisión humana: errática alrededor de la misma media -->
+            <path d="M 30,120 L 65,258 L 100,96 L 135,232 L 170,148 L 205,296 L 240,84 L 275,244 L 310,132 L 345,272 L 380,110"
+                  stroke="var(--text-main)" stroke-width="1" fill="none" opacity="0.35" />
+
+            <circle cx="65" cy="258" r="2" fill="var(--text-main)" stroke="none" opacity="0.45" />
+            <circle cx="135" cy="232" r="2" fill="var(--text-main)" stroke="none" opacity="0.45" />
+            <circle cx="205" cy="296" r="2" fill="var(--text-main)" stroke="none" opacity="0.45" />
+            <circle cx="275" cy="244" r="2" fill="var(--text-main)" stroke="none" opacity="0.45" />
+            <circle cx="345" cy="272" r="2" fill="var(--text-main)" stroke="none" opacity="0.45" />
+          </svg>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════ 3. Cómo lo hacemos aquí ══════════ -->
+    <section class="capabilities">
+      <div class="wrap">
+        <div class="section-head">
+          <h2 class="block-title">qué hacemos aquí<span class="blinking-cursor">_</span></h2>
+          <p>
+            Cuatro frentes. Se pueden contratar por separado o como un sistema completo,
+            desde el modelo hasta la infraestructura que lo ejecuta.
+          </p>
+        </div>
+
+        <div class="cap-grid">
+          <article class="cap-card">
+            <span class="cap-index">01</span>
+            <h3>modelos y señales de trading</h3>
+            <p>
+              Diseñamos estrategias, ejecución algorítmica y marcos de backtesting.
+              Es el traspaso directo de lo que corremos con capital propio.
+            </p>
+          </article>
+
+          <article class="cap-card">
+            <span class="cap-index">02</span>
+            <h3>infraestructura de mercado</h3>
+            <p>
+              Conectividad, feeds de datos, ruteo de órdenes y latencia. El sistema que
+              sostiene la operación cuando sube el volumen.
+            </p>
+          </article>
+
+          <article class="cap-card">
+            <span class="cap-index">03</span>
+            <h3>riesgo y cumplimiento</h3>
+            <p>
+              Modelos de riesgo, monitoreo de exposición y reportería regulatoria.
+              Con los supuestos y los límites siempre a la vista.
+            </p>
+          </article>
+
+          <article class="cap-card">
+            <span class="cap-index">04</span>
+            <h3>asesoría patrimonial automatizada</h3>
+            <p>
+              Perfilamiento, recomendación y rebalanceo de portafolios. La misma calidad
+              de consejo para el primer cliente y para el número diez mil.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════ 4. La prueba ══════════ -->
+    <section class="proof">
+      <div class="wrap">
+        <div class="section-head">
+          <h2 class="block-title">la prueba<span class="blinking-cursor">_</span></h2>
+          <p>
+            Trabajamos con la bolsa de valores, con brokers internacionales y con
+            plataformas de asesoría patrimonial. Tres problemas distintos, un mismo método.
+          </p>
+        </div>
+
+        <!--
+          Banda de clientes. Para activar los logos: dejar los archivos en
+          assets/logos/ y reemplazar el <span class="client-name"> por
+          <img src="assets/logos/nombre.svg" alt="Nombre del cliente">
+          El CSS ya los pasa a escala de grises e invierte en modo oscuro.
+
+          PENDIENTE: confirmar el permiso de uso de marca de cada cliente
+          y verificar el descriptor de Mercados G.
+        -->
+        <div class="client-band">
+          <div class="client-cell">
+            <span class="client-name">Bolsa Electrónica de Chile</span>
+            <span class="client-kind">bolsa de valores</span>
+          </div>
+          <div class="client-cell">
+            <span class="client-name">Pepperstone</span>
+            <span class="client-kind">broker internacional</span>
+          </div>
+          <div class="client-cell">
+            <span class="client-name">Mercados G</span>
+            <span class="client-kind">mercado de capitales</span>
+          </div>
+          <div class="client-cell">
+            <span class="client-name">Patrimore</span>
+            <span class="client-kind">asesoría patrimonial</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════ 5. Puente al método ══════════ -->
+    <section class="bridge">
+      <div class="wrap">
+        <h2>el método es el mismo. cambia de dónde vienen los datos.</h2>
+        <p>
+          Lo que funciona frente a un mercado funciona frente a una faena o a una sala
+          de ventas. La disciplina no cambia: hipótesis, medición, validación y ejecución.
+        </p>
+        <div class="link-row">
+          <a href="index.html#quantitative" class="btn-line">ver el método</a>
+          <a href="soluciones-mineria.html" class="btn-line ghost">minería</a>
+          <a href="soluciones-retail.html" class="btn-line ghost">retail</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ══════════ Pie de página ══════════ -->
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <span class="logo-static">qrt<sup>^</sup></span>
+          <p>
+            quantitative research and trading solutions.
+            Reemplazamos la intuición por modelos que se pueden medir, auditar y repetir.
+          </p>
+        </div>
+
+        <div class="footer-col">
+          <h4>soluciones</h4>
+          <ul>
+            <li><a href="soluciones-mineria.html">minería</a></li>
+            <li><a href="soluciones-retail.html">retail</a></li>
+            <li><a href="soluciones-finanzas.html">finanzas</a></li>
+            <li><a href="neurociencia.html">neurociencia</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>filosofía</h4>
+          <ul>
+            <li><a href="index.html#quantitative">quantitative</a></li>
+            <li><a href="index.html#research">research</a></li>
+            <li><a href="index.html#trading">trading</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-base">
+        <span>© 2026 qrt solutions</span>
+        <!-- TODO: confirmar ciudad y país de la casa matriz antes de publicar -->
+        <span></span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/qrt.js"></script>
+</body>
+</html>

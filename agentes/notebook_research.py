@@ -1,15 +1,23 @@
 import os
 import sys
 import time
+from pathlib import Path
 
-# Asegurar que importamos del path correcto de anaconda3
-sys.path.insert(0, "/opt/anaconda3/lib/python3.12/site-packages")
+# Paths relativos al proyecto
+BASE_DIR = Path(__file__).resolve().parent.parent
+DOCS_DIR = BASE_DIR / "investigacion" / "fuentes_maestras"
+OUTPUT_DIR = BASE_DIR / "investigacion"
+
+# Soporte opcional para virtualenvs locales si no se ejecuta directamente en el entorno uv/venv
+uv_packages = Path.home() / ".local/share/uv/tools/notebooklm-mcp-server/lib/python3.12/site-packages"
+if uv_packages.exists():
+    sys.path.insert(0, str(uv_packages))
 
 try:
     from notebooklm_mcp.auth import load_cached_tokens
     from notebooklm_mcp.api_client import NotebookLMClient
-except ImportError as e:
-    print(f"Error importando notebooklm_mcp: {e}")
+except ImportError as err:
+    print(f"Error importando notebooklm_mcp: {type(err).__name__} (detalles omitidos por seguridad)")
     sys.exit(1)
 
 def main():
@@ -53,35 +61,35 @@ def main():
     
     # Cargar documento 1
     doc1_title = "Neurociencia y Creación de Marca - Investigación Profunda"
-    doc1_path = "/Users/fmillar/Proyectos_Desarrollo/Creacion de marca/Neurociencia y Creación de Marca_ Investigación Profunda.md"
+    doc1_path = DOCS_DIR / "Neurociencia y Creación de Marca_ Investigación Profunda.md"
     if doc1_title in existing_titles:
         print(f"La fuente '{doc1_title}' ya existe en el cuaderno.")
     else:
         print(f"Leyendo e importando '{doc1_title}'...")
-        if os.path.exists(doc1_path):
+        if doc1_path.exists():
             with open(doc1_path, "r", encoding="utf-8") as f:
                 text = f.read()
             res = client.add_text_source(target_nb.id, text=text, title=doc1_title)
             print(f"Fuente agregada: {res}")
             time.sleep(2)  # Pausa de seguridad
         else:
-            print(f"Error: No se encontró el archivo en {doc1_path}")
+            print(f"Advertencia: No se encontró el archivo en {doc1_path.name}")
             
     # Cargar documento 2
     doc2_title = "Técnicas Modernas de Creación de Marca - Teoría"
-    doc2_path = "/Users/fmillar/Proyectos_Desarrollo/Creacion de marca/Técnicas Modernas de Creación de Marca_ Teoría.md"
+    doc2_path = DOCS_DIR / "Técnicas Modernas de Creación de Marca_ Teoría.md"
     if doc2_title in existing_titles:
         print(f"La fuente '{doc2_title}' ya existe en el cuaderno.")
     else:
         print(f"Leyendo e importando '{doc2_title}'...")
-        if os.path.exists(doc2_path):
+        if doc2_path.exists():
             with open(doc2_path, "r", encoding="utf-8") as f:
                 text = f.read()
             res = client.add_text_source(target_nb.id, text=text, title=doc2_title)
             print(f"Fuente agregada: {res}")
             time.sleep(2)  # Pausa de seguridad
         else:
-            print(f"Error: No se encontró el archivo en {doc2_path}")
+            print(f"Advertencia: No se encontró el archivo en {doc2_path.name}")
 
     # Consultar para extraer información valiosa
     print("\n--- Ejecutando consultas de investigación teórica ---")
@@ -93,27 +101,29 @@ def main():
         "resumen_arquetipos_y_activacion": "Resume los Arquetipos de Marca de Mark & Pearson alineados con los cuatro vectores de motivación humana (Exploración, Cambio, Conexión, Estructura). Explica también la optimización de marcas para agentes de IA (indexabilidad semántica conversacional) y las consideraciones éticas de Neuroderechos (Rafael Yuste)."
     }
     
-    scratch_dir = "/Users/fmillar/.gemini/antigravity-ide/brain/11be0cf2-22c5-4aee-afdc-f19c56155c20/scratch"
-    os.makedirs(scratch_dir, exist_ok=True)
+    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     
     for key, query_text in queries.items():
-        out_file = os.path.join(scratch_dir, f"{key}.md")
-        if os.path.exists(out_file) and os.path.getsize(out_file) > 1000:
+        out_file = OUTPUT_DIR / f"{key}.md"
+        if out_file.exists() and out_file.stat().st_size > 1000:
             print(f"La consulta '{key}' ya ha sido guardada anteriormente.")
             continue
             
         print(f"Consultando NotebookLM sobre '{key}'...")
-        res = client.query(target_nb.id, query_text=query_text, timeout=180)
-        if res and isinstance(res, dict) and "answer" in res:
-            answer = res["answer"]
-            with open(out_file, "w", encoding="utf-8") as out_f:
-                out_f.write(f"# Consulta: {key}\n\n{answer}\n")
-            print(f"Resultado guardado en {out_file}")
-            time.sleep(3)  # Pausa de seguridad
-        else:
-            print(f"Error consultando '{key}': {res}")
+        try:
+            res = client.query(target_nb.id, query_text=query_text, timeout=180)
+            if res and isinstance(res, dict) and "answer" in res:
+                answer = res["answer"]
+                with open(out_file, "w", encoding="utf-8") as out_f:
+                    out_f.write(f"# Consulta: {key}\n\n{answer}\n")
+                print(f"Resultado guardado en {out_file.name}")
+                time.sleep(3)  # Pausa de seguridad
+            else:
+                print(f"Respuesta inesperada al consultar '{key}'")
+        except Exception as err:
+            print(f"Error consultando '{key}': {type(err).__name__} (detalles omitidos por seguridad)")
 
-    print("\n¡Proceso de investigación autónoma de NotebookLM completado con éxito!")
+    print("\n¡Proceso de investigación de NotebookLM completado con éxito!")
 
 if __name__ == "__main__":
     main()

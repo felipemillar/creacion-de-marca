@@ -1,14 +1,22 @@
 import os
 import sys
 import time
+from pathlib import Path
 
+# Paths relativos al proyecto
+BASE_DIR = Path(__file__).resolve().parent.parent
+OUTPUT_DIR = BASE_DIR / "investigacion"
 
+# Soporte opcional para virtualenvs locales
+uv_packages = Path.home() / ".local/share/uv/tools/notebooklm-mcp-server/lib/python3.12/site-packages"
+if uv_packages.exists():
+    sys.path.insert(0, str(uv_packages))
 
 try:
     from notebooklm_mcp.auth import load_cached_tokens
     from notebooklm_mcp.api_client import NotebookLMClient
-except ImportError as e:
-    print(f"Error importando la librería notebooklm_mcp: {e}")
+except ImportError as err:
+    print(f"Error importando notebooklm_mcp: {type(err).__name__} (detalles omitidos por seguridad)")
     sys.exit(1)
 
 def run_research_flow(client, title, query):
@@ -117,17 +125,18 @@ def main():
             res = run_research_flow(client, res_info["title"], res_info["query"])
             if res:
                 resultados.append(res)
-        except Exception as e:
-            print(f"Error procesando '{res_info['title']}': {e}")
+        except Exception as err:
+            print(f"Error procesando '{res_info['title']}': {type(err).__name__} (detalles omitidos por seguridad)")
             resultados.append({
                 "title": res_info["title"],
                 "status": "error",
-                "error": str(e)
+                "error": f"Error: {type(err).__name__}"
             })
             
     # Generar bitácora en Markdown
-    bitacora_path = "/Users/fmillar/.gemini/antigravity-ide/brain/11be0cf2-22c5-4aee-afdc-f19c56155c20/scratch/registro_nuevos_cuadernos.md"
-    print(f"\nEscribiendo bitácora de resultados en: {bitacora_path}...")
+    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+    bitacora_path = OUTPUT_DIR / "registro_nuevos_cuadernos.md"
+    print(f"\nEscribiendo bitácora de resultados en: {bitacora_path.name}...")
     
     with open(bitacora_path, "w", encoding="utf-8") as f:
         f.write("# Bitácora: Nuevos Cuadernos de Investigación Creados\n\n")

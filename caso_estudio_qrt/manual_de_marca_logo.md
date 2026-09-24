@@ -79,7 +79,7 @@ La zona de protección mínima alrededor del logotipo se define a partir de la a
 Para la máxima fidelidad y velocidad en plataformas web, se proporcionan los siguientes archivos vectoriales optimizados en el espacio de trabajo:
 
 ### Versión Logo Positivo (Negro Corporativo)
-Archivo: [logo_black.svg](file:///Users/fmillar/Proyectos_Desarrollo/Creacion%20de%20marca/logo_black.svg)
+Archivo: [logo_black.svg](../assets/logos/logo_black.svg)
 ```xml
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 60" width="180" height="60" fill="none">
   <defs>
@@ -111,7 +111,7 @@ Archivo: [logo_black.svg](file:///Users/fmillar/Proyectos_Desarrollo/Creacion%20
 ```
 
 ### Versión Logo Negativo (Blanco Puro)
-Archivo: [logo_white.svg](file:///Users/fmillar/Proyectos_Desarrollo/Creacion%20de%20marca/logo_white.svg)
+Archivo: [logo_white.svg](../assets/logos/logo_white.svg)
 ```xml
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 60" width="180" height="60" fill="none">
   <defs>

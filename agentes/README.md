@@ -9,9 +9,13 @@ Esta carpeta contiene los scripts ("agentes") de Python que automatizan la conex
 Los scripts están diseñados para ejecutarse de forma nativa utilizando el entorno de Python aislado de la herramienta `notebooklm-mcp-server` de tu sistema. Esto evita conflictos de librerías y garantiza que `notebooklm_mcp` esté disponible.
 
 ### 1. Entorno de Python
-Para ejecutar cualquier script, utiliza la siguiente ruta absoluta de Python:
+Para ejecutar cualquier script, utiliza el entorno virtual donde esté instalado `notebooklm_mcp` (por ejemplo con `uv` o el venv del proyecto):
 ```bash
-/Users/fmillar/.local/share/uv/tools/notebooklm-mcp-server/bin/python [nombre_del_script.py]
+# Con uv (entorno aislado del MCP server):
+uv run --with notebooklm-mcp python agentes/[nombre_del_script.py]
+
+# O directamente con python en tu entorno activo:
+python agentes/[nombre_del_script.py]
 ```
 
 ### 2. Autenticación y Credenciales
@@ -31,14 +35,14 @@ Este script inicializa el cuaderno principal de la metodología en NotebookLM y 
 *   **Propósito:** Crear el cuaderno de trabajo y cargar los archivos fuente iniciales para consultarlos.
 *   **Acciones:**
     1.  Verifica si existe el cuaderno `"Metodología y Método para la Creación de Marca"`; si no existe, lo crea.
-    2.  Lee los archivos teóricos locales:
+    2.  Lee los archivos teóricos locales desde `investigacion/fuentes_maestras/`:
         *   `Neurociencia y Creación de Marca_ Investigación Profunda.md`
         *   `Técnicas Modernas de Creación de Marca_ Teoría.md`
     3.  Los carga automáticamente en el cuaderno como fuentes de texto (`add_text_source`).
     4.  Ejecuta 4 consultas teóricas base y guarda las respuestas estructuradas en la carpeta `investigacion/` (archivos `resumen_*.md`).
 *   **Comando de Ejecución:**
     ```bash
-    /Users/fmillar/.local/share/uv/tools/notebooklm-mcp-server/bin/python agentes/notebook_research.py
+    python agentes/notebook_research.py
     ```
 
 ---
@@ -56,7 +60,7 @@ Este agente expande de forma autónoma la base teórica de la marca realizando b
     5.  Registra un historial en la bitácora [registro_nuevos_cuadernos.md](file:///Users/fmillar/Proyectos_Desarrollo/Creacion%20de%20marca/investigacion/registro_nuevos_cuadernos.md).
 *   **Comando de Ejecución:**
     ```bash
-    /Users/fmillar/.local/share/uv/tools/notebooklm-mcp-server/bin/python agentes/notebook_research_expand.py
+    python agentes/notebook_research_expand.py
     ```
 
 ---
@@ -70,7 +74,7 @@ Este script se encarga de interrogar a los nuevos cuadernos creados por el agent
     3.  Guarda los resultados estructurados en formato Markdown en la carpeta `investigacion/` (archivos [insights_neurobranding.md](file:///Users/fmillar/Proyectos_Desarrollo/Creacion%20de%20marca/investigacion/insights_neurobranding.md) e [insights_boa.md](file:///Users/fmillar/Proyectos_Desarrollo/Creacion%20de%20marca/investigacion/insights_boa.md)).
 *   **Comando de Ejecución:**
     ```bash
-    /Users/fmillar/.local/share/uv/tools/notebooklm-mcp-server/bin/python agentes/query_new_notebooks.py
+    python agentes/query_new_notebooks.py
     ```
 
 ---

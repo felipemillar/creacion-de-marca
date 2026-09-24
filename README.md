@@ -1,51 +1,105 @@
-# Playbook de Metodología y Método para Creación de Marca
+# 🧠 Playbook de Creación de Marca & Neurobranding
 
-¡Bienvenido al Playbook de Creación de Marca! Este repositorio de documentos constituye una **metodología híbrida** que fusiona las bases del branding tradicional con la **neurociencia aplicada (neurobranding)**, las **Leyes de UX** para la experiencia digital y la **inteligencia artificial generativa** como motor de co-creación y aceleración.
-
----
-
-## 🧠 Filosofía Metodológica
-
-El objetivo de este playbook es estructurar un flujo reproducible y riguroso para la conceptualización, diseño y lanzamiento de marcas comerciais. La metodología está optimizada bajo tres premisas fundamentales:
-1. **Apelar al Sistema 1:** Reducir la carga cognitiva para que el consumidor procese y recuerde la marca de forma intuitiva, rápida y con una carga emocional positiva.
-2. **Jerarquía Atencional:** Diseñar los puntos de contacto orientando científicamente la mirada y la atención de la audiencia hacia los elementos clave del branding.
-3. **Eficiencia Asistida por IA:** Usar la inteligencia artificial de forma estratégica, mediante prompts independientes y agnósticos de la plataforma, para agilizar procesos creativos y técnicos.
+> **Metodología híbrida para la conceptualización, diseño y lanzamiento de marcas de alta fidelidad, fusionando neurociencia aplicada, leyes cognitivas de UX, optimización para agentes de IA (BOA/GEO) y un caso de estudio real en producción.**
 
 ---
 
-## 📂 Estructura del Proyecto
+## 🧭 Visión y Filosofía
 
-El proyecto está organizado de manera modular e incluye los documentos de la metodología, los agentes de automatización y las bitácoras de investigación:
+Este repositorio constituye un marco de trabajo riguroso y reproducible para construir marcas modernas. La metodología responde a tres premisas científicas fundamentales:
 
-### 📖 Playbook Metodológico
-*   **[00_fundamentos.md](file:///Users/fmillar/Proyectos_Desarrollo/Creacion%20de%20marca/00_fundamentos.md):** Fundamentos teóricos ampliados (Neurocomunicación, biometría, sinergia cross-modal, y posicionamiento semántico en la Era Agéntica).
-*   **[01_adn_y_esencia.md](file:///Users/fmillar/Proyectos_Desarrollo/Creacion%20de%20marca/01_adn_y_esencia.md):** Fase 1 - ADN & Esencia de Marca. Propósito, misión, visión y arquetipos de marca.
-*   **[02_neuro_estrategia.md](file:///Users/fmillar/Proyectos_Desarrollo/Creacion%20de%20marca/02_neuro_estrategia.md):** Fase 2 - Neuro-posicionamiento y Mensajes. Copys, voz de marca y apelación emocional al Sistema 1.
-*   **[03_identidad_visual_y_verbal.md](file:///Users/fmillar/Proyectos_Desarrollo/Creacion%20de%20marca/03_identidad_visual_y_verbal.md):** Fase 3 - Neuro-estética y Diseño Visual. Naming, paletas cromáticas cognitivas, tipografía y leyes de UX visuales.
-*   **[04_activacion_y_experiencia.md](file:///Users/fmillar/Proyectos_Desarrollo/Creacion%20de%20marca/04_activacion_y_experiencia.md):** Fase 4 - Activación y Experiencia. Puntos de contacto, optimización agéntica (JSON-LD Schema Stacking, WebMCP), checklist GEO y métricas de IA (SoM).
-
-### 🤖 Agentes y Automatización (`agentes/`)
-*   **[notebook_research.py](file:///Users/fmillar/Proyectos_Desarrollo/Creacion%20de%20marca/agentes/notebook_research.py):** Script de carga e interrogación base. Definido en: [agente_investigador_principal.md](file:///Users/fmillar/Proyectos_Desarrollo/Creacion%20de%20marca/agentes/agente_investigador_principal.md).
-*   **[notebook_research_expand.py](file:///Users/fmillar/Proyectos_Desarrollo/Creacion%20de%20marca/agentes/notebook_research_expand.py):** Agente de expansión autónoma y búsquedas web. Definido en: [agente_buscador_expansion.md](file:///Users/fmillar/Proyectos_Desarrollo/Creacion%20de%20marca/agentes/agente_buscador_expansion.md).
-*   **[query_new_notebooks.py](file:///Users/fmillar/Proyectos_Desarrollo/Creacion%20de%20marca/agentes/query_new_notebooks.py):** Script de consulta simultánea para insights. Definido en: [agente_extractor_insights.md](file:///Users/fmillar/Proyectos_Desarrollo/Creacion%20de%20marca/agentes/agente_extractor_insights.md).
-*   **[README.md (Carpeta Agentes)](file:///Users/fmillar/Proyectos_Desarrollo/Creacion%20de%20marca/agentes/README.md):** Manual general de ejecución, prerrequisitos y autenticación de la suite de agentes.
-
-### 🔬 Investigación e Insights (`investigacion/`)
-*   **[registro_nuevos_cuadernos.md](file:///Users/fmillar/Proyectos_Desarrollo/Creacion%20de%20marca/investigacion/registro_nuevos_cuadernos.md):** Bitácora autónoma de creación de cuadernos y fuentes web importadas.
-*   **[insights_neurobranding.md](file:///Users/fmillar/Proyectos_Desarrollo/Creacion%20de%20marca/investigacion/insights_neurobranding.md):** Síntesis de neurociencia aplicada, procesamiento de EEG y métricas atencionales.
-*   **[insights_boa.md](file:///Users/fmillar/Proyectos_Desarrollo/Creacion%20de%20marca/investigacion/insights_boa.md):** Pautas técnicas avanzadas de indexación para recomendadores IA, SEO semántico y GEO.
-*   **Resúmenes Temáticos:** Documentos de consulta rápida ([resumen_neurociencia.md](file:///Users/fmillar/Proyectos_Desarrollo/Creacion%20de%20marca/investigacion/resumen_neurociencia.md), [resumen_marcas_teoria.md](file:///Users/fmillar/Proyectos_Desarrollo/Creacion%20de%20marca/investigacion/resumen_marcas_teoria.md), [resumen_estetica_y_ux.md](file:///Users/fmillar/Proyectos_Desarrollo/Creacion%20de%20marca/investigacion/resumen_estetica_y_ux.md), [resumen_arquetipos_y_activacion.md](file:///Users/fmillar/Proyectos_Desarrollo/Creacion%20de%20marca/investigacion/resumen_arquetipos_y_activacion.md)).
-
-### 📈 Seguimiento y Control (`seguimiento/`)
-*   **[task.md](file:///Users/fmillar/Proyectos_Desarrollo/Creacion%20de%20marca/seguimiento/task.md):** Planificador y tareas pendientes del proyecto.
-*   **[implementation_plan.md](file:///Users/fmillar/Proyectos_Desarrollo/Creacion%20de%20marca/seguimiento/implementation_plan.md):** Diseño técnico y cambios propuestos de la iteración.
-*   **[walkthrough.md](file:///Users/fmillar/Proyectos_Desarrollo/Creacion%20de%20marca/seguimiento/walkthrough.md):** Bitácora histórica de entregables y validaciones realizadas.
+1. **Apelar al Sistema 1:** Reducir la fricción cognitiva para que el consumidor procese, reconozca y recuerde la marca de forma intuitiva, veloz y con una carga afectiva positiva (hipótesis del marcador somático).
+2. **Jerarquía Atencional y Neuro-Estética:** Diseñar los puntos de contacto orientando científicamente la atención visual (Leyes de UX, sinergia intermodal y proporciones matemáticas armónicas).
+3. **Optimización para la Era Agéntica (BOA & GEO):** Estructurar la identidad y el código de la marca para que los modelos de lenguaje (LLMs) y agentes autónomos indexen, citen y recomienden la marca sin alucinaciones.
 
 ---
 
-## 🛠️ Cómo Utilizar este Playbook
+## 📂 Arquitectura del Repositorio
 
-1.  **Establece las Bases Teóricas:** Antes de iniciar cualquier proyecto, revisa [00_fundamentos.md](file:///Users/fmillar/Proyectos_Desarrollo/Creacion%20de%20marca/00_fundamentos.md) para comprender la justificación científica detrás de cada paso.
-2.  **Sigue el Orden Secuencial:** Avanza de la Fase 1 a la Fase 4 de manera ordenada. Aunque los prompts son independientes, el ADN (Fase 1) es el insumo necesario para alimentar los campos de la Neuro-estrategia (Fase 2) y el Diseño Visual (Fase 3).
-3.  **Ejecuta los Prompts en Inglés:** Copia los prompts contenidos en los bloques de código y sustituye los placeholders indicados en corchetes `[like_this]` con la información específica de tu proyecto. Se presentan en inglés para garantizar el mejor rendimiento en cualquier LLM o generador de imágenes.
-4.  **Completa los Checklists:** Al final de cada fase, somete las propuestas a los checklists de verificación cualitativa y cuantitativa (Neuro/UX Checkpoints).
+El proyecto está organizado de forma modular, separando la metodología universal, la investigación teórica, los agentes de automatización y el caso de estudio real:
+
+```
+creacion-de-marca/
+├── 📖 Playbook Metodológico (Fases 0 a 4)
+│   ├── 00_fundamentos.md              # Bases científicas: Neurocomunicación, biometría y BOA/GEO
+│   ├── 01_adn_y_esencia.md            # Fase 1: Propósito, arquetipos de marca y valores activos
+│   ├── 02_neuro_estrategia.md         # Fase 2: Posicionamiento, mensajes Sistema 1 y tono de voz
+│   ├── 03_identidad_visual_y_verbal.md# Fase 3: Neuro-estética, paletas cromáticas y leyes de UX
+│   ├── 04_activacion_y_experiencia.md # Fase 4: Puntos de contacto, JSON-LD Schemas y métricas IA
+│   └── diagrama_branding.html         # Diagrama interactivo del flujo de trabajo metodológico
+│
+├── 🔬 investigacion/                  # Base de conocimiento y monografías académicas
+│   ├── fuentes_maestras/              # Investigaciones profundas de base (papers y monografías)
+│   │   ├── Neurociencia y Creación de Marca_ Investigación Profunda.md
+│   │   └── Técnicas Modernas de Creación de Marca_ Teoría.md
+│   ├── insights_neurobranding.md      # Biometría (EEG, eye-tracking), casos de estudio y neuroderechos
+│   ├── insights_boa.md                # Brand Optimization for Agents y Generative Engine Optimization
+│   └── resúmenes temáticos...         # Síntesis rápida de neurociencia, UX, arquetipos y CBBE
+│
+├── 🤖 agentes/                        # Automatización de investigación asistida por IA
+│   ├── README.md                      # Guía de ejecución y requisitos de entorno
+│   ├── notebook_research.py           # Creación y carga de fuentes maestras en NotebookLM
+│   ├── notebook_research_expand.py    # Agente de búsqueda web autónoma e importación de fuentes
+│   └── query_new_notebooks.py         # Extracción estructurada de insights mediante consultas
+│
+├── 💼 caso_estudio_qrt/               # Aplicación real del playbook a la marca "qrt^"
+│   ├── README.md                      # Resumen del caso de estudio corporativo
+│   ├── qrt_adn_y_mensajes.md          # Fuente de verdad de copywriting y posicionamiento
+│   ├── qrt_arquitectura_del_sitio.md  # Arquitectura de información, páginas y navegación
+│   ├── qrt_nexo_filosofia_industrias.md # Conexión narrativa entre finanzas, minería y retail
+│   └── manual_de_marca_logo.md        # Manual técnico de diseño del logotipo qrt^
+│
+├── 🎨 demos/                          # Laboratorio interactivo de prototipos visuales
+│   ├── README.md                      # Catálogo y descripción de las 9 demos
+│   ├── demo_qrt_research_new.html     # Red neuronal interactiva para el pilar Research
+│   ├── demo_qrt_fonts.html            # Typography sandbox con 50 familias tipográficas
+│   ├── demo_qrt_fonts_hero.html       # Comparador tipográfico para el Hero
+│   ├── demo_qrt_logos.html            # Exploración de pesos y proporciones del logotipo
+│   ├── demo_qrt_fibonacci.html        # Variantes de la espiral áurea de Fibonacci en SVG
+│   ├── demo_qrt_artistic_ai.html      # Exploración estética matemática + IA
+│   ├── demo_anthropic_scroll.html     # Exploración de expansión de logo en scroll
+│   ├── demo_home_ia_brackets.html     # Prototipo visual con corchetes y cursor terminal
+│   └── mockups_ingenieria.html        # Opciones para destacar "IA" en copywriting
+│
+└── 🌐 Sitio Web en Producción (Frontend)
+    ├── index.html                     # Landing page principal (Español) con scrollytelling
+    ├── en.html                        # Versión internacional (Inglés)
+    ├── soluciones-finanzas.html       # Vertical de soluciones para instituciones financieras
+    └── assets/                        # Estilos CSS, lógica JS y logotipos vectoriales
+        ├── qrt.css
+        ├── qrt.js
+        └── logos/ (QRT-LOGO.png, logo_black.svg, logo_white.svg)
+```
+
+---
+
+## 🛠️ Cómo Utilizar este Repositorio
+
+### 1. Para Estudiar o Aplicar la Metodología
+Avanza de forma secuencial a través de los documentos numerados:
+1. **[00_fundamentos.md](00_fundamentos.md):** Comprende el sustento biológico, cognitivo y digital.
+2. **[01_adn_y_esencia.md](01_adn_y_esencia.md):** Define el núcleo, propósito y arquetipo.
+3. **[02_neuro_estrategia.md](02_neuro_estrategia.md):** Redacta mensajes para el Sistema 1 con el framework de fluidez cognitiva.
+4. **[03_identidad_visual_y_verbal.md](03_identidad_visual_y_verbal.md):** Selecciona tipografías, paletas cromáticas y diseña la jerarquía atencional.
+5. **[04_activacion_y_experiencia.md](04_activacion_y_experiencia.md):** Implementa el marcado semántico estructurado JSON-LD y las métricas de indexabilidad para IA.
+6. **[diagrama_branding.html](diagrama_branding.html):** Abre en tu navegador este diagrama interactivo para visualizar el ciclo de calidad y feedback en cada etapa.
+
+### 2. Para Revisar el Caso de Estudio Real
+Explora la carpeta **[`caso_estudio_qrt/`](caso_estudio_qrt/)** para ver cómo una empresa de trading cuantitativo y consultoría de ingeniería algorítmica aplicó el playbook para construir su identidad verbal, visual y web.
+
+### 3. Para Ejecutar o Probar las Demos
+Ingresa a la carpeta **[`demos/`](demos/)** y abre cualquiera de los archivos `.html` en tu navegador para interactuar con los sandboxes de tipografía, las redes neuronales y las animaciones vectoriales.
+
+---
+
+## 🚀 Despliegue Web
+
+El frontend del sitio está diseñado como una aplicación web estática de alto rendimiento (HTML5 semántico, CSS Vanilla con diseño editorial suizo y JavaScript vanilla sin dependencias externas):
+*   **Despliegue directo:** Compatible con **Vercel**, **GitHub Pages**, **Netlify** o cualquier servidor web estático.
+*   **Punto de entrada:** `index.html`.
+
+---
+
+## 📄 Licencia
+
+Este proyecto está bajo la Licencia MIT. Consulta los archivos individuales para atribuciones teóricas y metodológicas específicas.
