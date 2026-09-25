@@ -8,6 +8,10 @@ Cada archivo es autónomo (HTML + CSS + JS autocontenidos) y puede abrirse direc
 
 ## 📋 Catálogo de Demos
 
+### Propuestas para la consultoría de infraestructura de trading
+
+Abrir [las tres propuestas alineadas al manual vigente](infraestructura-trading/index.html): `del modelo a la operación`, `una infraestructura, tres operaciones` y `construir con evidencia`. Reutilizan el sistema compartido de qrt, admiten modo oscuro y móvil, e incorporan la investigación del producto sin presentar hipótesis comerciales como hechos.
+
 | Archivo | Enfoque / Propósito | Tecnologías Clave |
 | :--- | :--- | :--- |
 | **[`demo_qrt_research_new.html`](demo_qrt_research_new.html)** | Visualización de red neuronal con conexiones curvas, capas secuenciales y nodos dinámicos para el pilar de Research. | SVG dinámico, CSS keyframes, Canvas |
